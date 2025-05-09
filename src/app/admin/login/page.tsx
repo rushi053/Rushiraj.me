@@ -3,13 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-
-type SupabaseError = {
-  message: string;
-  details?: string;
-  hint?: string;
-  code?: string;
-};
+import { SupabaseError } from '@/types/supabase';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);

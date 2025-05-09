@@ -22,6 +22,13 @@ type SupabaseError = {
   code?: string;
 };
 
+type RecentItem = {
+  id: string;
+  title: string;
+  updated_at: string;
+  type: 'app' | 'blog';
+};
+
 export default function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats>({
     totalApps: 0,
@@ -65,8 +72,8 @@ export default function DashboardPage() {
 
         // Merge and sort by updated_at, take top 3
         const merged = [
-          ...recentApps.map((item: any) => ({ ...item, type: 'app' })),
-          ...recentBlogs.map((item: any) => ({ ...item, type: 'blog' })),
+          ...recentApps.map((item) => ({ ...item, type: 'app' as const })),
+          ...recentBlogs.map((item) => ({ ...item, type: 'blog' as const })),
         ];
         merged.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
         const recentlyUpdated = merged.slice(0, 3);

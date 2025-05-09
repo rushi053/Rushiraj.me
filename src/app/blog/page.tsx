@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
+import { SupabaseError } from '@/types/supabase';
 
 // Types
 type BlogPost = {
@@ -19,13 +20,6 @@ type BlogPost = {
   updated_at: string;
 };
 
-type SupabaseError = {
-  message: string;
-  details?: string;
-  hint?: string;
-  code?: string;
-};
-
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,16 +29,13 @@ export default function BlogPage() {
     async function fetchPosts() {
       try {
         setLoading(true);
-        const { data, error } = await supabase
+        const { data, error: fetchError } = await supabase
           .from('blog_posts')
           .select('*')
           .eq('published', true)
           .order('created_at', { ascending: false });
 
-        if (error) {
-          const error = error as SupabaseError;
-          throw error;
-        }
+        if (fetchError) throw fetchError;
 
         setPosts(data || []);
       } catch (err) {

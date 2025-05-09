@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import { SupabaseError } from '@/types/supabase';
 
 // Blog post type definition
 type BlogPost = {
@@ -16,13 +17,6 @@ type BlogPost = {
   tags: string[];
   created_at: string;
   updated_at: string;
-};
-
-type SupabaseError = {
-  message: string;
-  details?: string;
-  hint?: string;
-  code?: string;
 };
 
 export default function BlogPage() {

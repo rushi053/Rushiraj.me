@@ -3,13 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-
-type SupabaseError = {
-  message: string;
-  details?: string;
-  hint?: string;
-  code?: string;
-};
+import { SupabaseError } from '@/types/supabase';
 
 export default function TestConnectionPage() {
   const [loading, setLoading] = useState(true);

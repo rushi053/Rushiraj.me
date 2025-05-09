@@ -1,0 +1,331 @@
+id,title,slug,excerpt,content,published,featured_image,tags,created_at,updated_at
+4e78b1af-d092-4c5a-a3fb-8e4af9813fa7,"SwiftUI Best Practices for iOS Developers","swiftui-best-practices","Learn the best practices for building clean, maintainable SwiftUI apps for iOS.","## Introduction to SwiftUI Best Practices
+
+SwiftUI is Apple's modern framework for building user interfaces across all Apple platforms. While it's powerful and intuitive, following best practices is essential for creating maintainable, performant apps.
+
+### 1. Use View Composition
+
+Break your UI into small, reusable components:
+
+```swift
+struct ProfileHeaderView: View {
+    let user: User
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(user.name)
+                .font(.title)
+            Text(user.bio)
+                .font(.body)
+                .foregroundColor(.secondary)
+        }
+    }
+}
+```
+
+### 2. Separate Logic from Views
+
+Keep your views focused on UI and move business logic elsewhere:
+
+```swift
+// View
+struct UserProfileView: View {
+    @StateObject private var viewModel = UserProfileViewModel()
+    
+    var body: some View {
+        List(viewModel.items) { item in
+            ItemRow(item: item)
+        }
+        .onAppear {
+            viewModel.loadData()
+        }
+    }
+}
+
+// ViewModel
+class UserProfileViewModel: ObservableObject {
+    @Published var items = [Item]()
+    
+    func loadData() {
+        // Business logic here
+    }
+}
+```
+
+### 3. Use Appropriate Property Wrappers
+
+Choose the right property wrapper for your use case:
+- `@State` for simple view-local state
+- `@Binding` for receiving mutable values
+- `@ObservedObject` for external reference types
+- `@StateObject` for view-owned reference types
+- `@EnvironmentObject` for dependencies from the environment
+
+### 4. Optimize Performance
+
+- Use `@ViewBuilder` for conditional views
+- Apply `LazyVStack` and `LazyHGrid` for large collections
+- Implement `Equatable` for complex views to prevent unnecessary redraws
+
+### 5. Write Maintainable Code
+
+- Use meaningful names
+- Create custom modifiers for reusable styles
+- Document complex code with comments
+
+By following these best practices, you'll create SwiftUI apps that are easier to maintain, perform better, and provide a great user experience.",true,"","[""SwiftUI"", ""iOS"", ""Swift""]","2023-03-15T10:30:00Z","2023-03-16T14:45:00Z"
+6c24f9e2-3b75-4180-b25f-40c2d3d3f8ba,"Building Animations in iOS: A Complete Guide","ios-animations-guide","Understand how to create beautiful, performant animations in your iOS applications.","# Building Animations in iOS: A Complete Guide
+
+Creating smooth, meaningful animations is key to delivering a polished iOS experience. This guide covers the essential techniques for animations in both UIKit and SwiftUI.
+
+## UIKit Animations
+
+### Basic Animations
+
+```swift
+UIView.animate(withDuration: 0.3) {
+    view.alpha = 0.5
+    view.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+}
+```
+
+### Spring Animations
+
+```swift
+UIView.animate(withDuration: 0.5, 
+               delay: 0,
+               usingSpringWithDamping: 0.6,
+               initialSpringVelocity: 0.5,
+               options: [],
+               animations: {
+    view.frame.origin.y += 50
+}, completion: nil)
+```
+
+### View Controller Transitions
+
+```swift
+let transition = CATransition()
+transition.duration = 0.5
+transition.type = .push
+transition.subtype = .fromRight
+view.window?.layer.add(transition, forKey: kCATransition)
+```
+
+## SwiftUI Animations
+
+### Implicit Animations
+
+```swift
+Circle()
+    .frame(width: 100, height: 100)
+    .foregroundColor(.blue)
+    .animation(.spring(), value: position)
+```
+
+### Explicit Animations
+
+```swift
+Button(""Toggle"") {
+    withAnimation(.spring()) {
+        isExpanded.toggle()
+    }
+}
+```
+
+### Transition Animations
+
+```swift
+if isShowing {
+    Text(""Hello World"")
+        .transition(.move(edge: .leading))
+}
+```
+
+### Custom Animations
+
+```swift
+struct PulsatingEffect: ViewModifier {
+    @State private var isPulsating = false
+    
+    func body(content: Content) -> some View {
+        content
+            .scaleEffect(isPulsating ? 1.1 : 1.0)
+            .onAppear {
+                withAnimation(.easeInOut.repeatForever()) {
+                    isPulsating.toggle()
+                }
+            }
+    }
+}
+```
+
+## Best Practices
+
+1. **Purpose**: Use animations to provide feedback, guide users, and create delightful experiences
+2. **Subtlety**: Keep animations subtle and appropriate for the context
+3. **Performance**: Monitor CPU/GPU usage and avoid expensive animations
+4. **Consistency**: Maintain consistent timing and style across your app
+5. **Accessibility**: Respect reduced motion settings for users who may be sensitive to animations
+
+By thoughtfully implementing animations in your iOS apps, you'll create a more engaging and intuitive user experience.",true,"","[""Animations"", ""iOS"", ""UIKit"", ""SwiftUI""]","2023-02-10T08:15:00Z","2023-02-11T16:20:00Z"
+7a83c5b1-2ef4-49d9-bcf3-5e472983e0d9,"Getting Started with Swift Concurrency","swift-concurrency-intro","A beginner-friendly introduction to Swift's modern concurrency model.","# Getting Started with Swift Concurrency
+
+Swift's modern concurrency model provides powerful tools for writing asynchronous code. This guide will help you get started with the key concepts.
+
+## Async/Await Basics
+
+The foundation of Swift concurrency is the `async/await` pattern, which makes asynchronous code read almost like synchronous code:
+
+```swift
+func fetchUser() async throws -> User {
+    let url = URL(string: ""https://api.example.com/users/1"")!
+    let (data, _) = try await URLSession.shared.data(from: url)
+    return try JSONDecoder().decode(User.self, from: data)
+}
+```
+
+To call this function:
+
+```swift
+Task {
+    do {
+        let user = try await fetchUser()
+        updateUI(with: user)
+    } catch {
+        handleError(error)
+    }
+}
+```
+
+## Working with Tasks
+
+Tasks are units of asynchronous work:
+
+### Task Creation
+
+```swift
+// Detached task (not inheriting actor context)
+let task = Task.detached {
+    return try await computeExpensiveValue()
+}
+let result = await task.value
+
+// Child task (inherits actor context and priorities)
+Task {
+    let result = await performStep1()
+    await updateUIWithResult(result)
+}
+```
+
+### Task Cancellation
+
+```swift
+let task = Task {
+    try await performLongTask()
+}
+
+// Later...
+task.cancel()
+
+// Inside an async function, check for cancellation
+func performLongTask() async throws {
+    try Task.checkCancellation()
+    // or
+    if Task.isCancelled {
+        throw CancellationError()
+    }
+}
+```
+
+## Structured Concurrency
+
+Swift provides tools for managing groups of tasks:
+
+```swift
+async let first = fetchFirstItem()
+async let second = fetchSecondItem()
+async let third = fetchThirdItem()
+
+let results = await [first, second, third]
+```
+
+Or using task groups:
+
+```swift
+try await withThrowingTaskGroup(of: Item.self) { group in
+    for id in itemIDs {
+        group.addTask {
+            try await fetchItem(id: id)
+        }
+    }
+    
+    var items = [Item]()
+    for try await item in group {
+        items.append(item)
+    }
+    return items
+}
+```
+
+## Actors
+
+Actors provide safe shared mutable state:
+
+```swift
+actor ImageDownloader {
+    private var cache = [URL: UIImage]()
+    
+    func image(from url: URL) async throws -> UIImage {
+        if let cached = cache[url] {
+            return cached
+        }
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        guard let image = UIImage(data: data) else {
+            throw URLError(.badServerResponse)
+        }
+        
+        cache[url] = image
+        return image
+    }
+}
+```
+
+To use an actor:
+
+```swift
+let downloader = ImageDownloader()
+let image = try await downloader.image(from: imageURL)
+```
+
+## MainActor
+
+The `@MainActor` attribute ensures code runs on the main thread:
+
+```swift
+@MainActor
+func updateUI(with user: User) {
+    usernameLabel.text = user.name
+    avatarImageView.image = user.avatar
+}
+```
+
+Or for an entire class:
+
+```swift
+@MainActor
+class MyViewController: UIViewController {
+    // All methods will run on the main thread
+}
+```
+
+## Best Practices
+
+1. Use `async/await` instead of completion handlers when possible
+2. Prefer structured concurrency over raw Task creation
+3. Use actors to protect shared mutable state
+4. Respect task cancellation throughout your code
+5. Annotate UI updates with `@MainActor`
+
+Swift concurrency makes asynchronous programming much more approachable while providing powerful tools to prevent common pitfalls.",false,"","[""Swift"", ""Concurrency"", ""async/await""]","2023-04-20T09:45:00Z","2023-04-21T11:30:00Z" 

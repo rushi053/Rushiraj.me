@@ -1,26 +1,70 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-inter: 'Inter', sans-serif;
+  --font-dm-serif: 'DM Serif Display', serif;
+  --color-black: #212125;
+  --color-sand: #DBD8CD;
+  --color-dark-grey: #626262;
+  --color-westar: #E5E3DB;
+  --color-off-white: #F8F8F8;
+}
+.dark {
+  --color-black: #212125;
+  --color-sand: #DBD8CD;
+  --color-dark-grey: #626262;
+  --color-westar: #E5E3DB;
+  --color-off-white: #F8F8F8;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: var(--font-inter);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    @apply bg-off-white text-black dark:bg-black dark:text-off-white;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1, h2 {
+    font-family: var(--font-inter);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  
+  h3, h4, h5, h6 {
+    font-family: var(--font-inter);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  
+  p, li {
+    font-family: var(--font-inter);
+    line-height: 1.6;
+  }
+  
+  a {
+    font-family: var(--font-inter);
+    transition: all 0.2s ease;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-none transition-all duration-300 font-medium tracking-wide inline-flex items-center justify-center text-sm;
+  }
+  
+  .btn-primary {
+    @apply bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200;
+  }
+  
+  .section {
+    @apply py-16 md:py-24;
+  }
 }

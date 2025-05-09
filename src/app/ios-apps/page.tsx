@@ -21,6 +21,13 @@ type IOSApp = {
   slug: string;
 };
 
+type SupabaseError = {
+  message: string;
+  details?: string;
+  hint?: string;
+  code?: string;
+};
+
 export default function IOSAppsPage() {
   const [apps, setApps] = useState<IOSApp[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,9 +47,10 @@ export default function IOSAppsPage() {
         }
 
         setApps(data || []);
-      } catch (err: any) {
-        console.error('Error fetching apps:', err);
-        setError(err.message);
+      } catch (err) {
+        const error = err as SupabaseError;
+        console.error('Error fetching apps:', error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -83,8 +91,8 @@ export default function IOSAppsPage() {
         >
           <h1 className="text-4xl md:text-5xl font-semibold mb-6">iOS Apps</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mb-12 max-w-2xl leading-relaxed">
-            As an iOS developer, I'm passionate about creating intuitive, beautiful apps that solve real problems. 
-            Here you'll find my current app projects, from those in development to those available on the App Store.
+            As an iOS developer, I&apos;m passionate about creating intuitive, beautiful apps that solve real problems. 
+            Here you&apos;ll find my current app projects, from those in development to those available on the App Store.
           </p>
         </motion.div>
         
@@ -105,10 +113,12 @@ export default function IOSAppsPage() {
                 <div className="flex-shrink-0 flex items-center justify-center w-full md:w-auto mb-6 md:mb-0">
                   <div className="bg-sand-50 dark:bg-neutral-800 rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700 shadow-sm flex items-center justify-center" style={{ width: 200, height: 400 }}>
                     {app.image_url ? (
-                      <img
+                      <Image
                         src={app.image_url}
                         alt={app.title}
-                        className="object-cover w-full h-full"
+                        width={200}
+                        height={400}
+                        className="object-cover"
                         style={{ maxWidth: 200, maxHeight: 400 }}
                       />
                     ) : (
@@ -200,7 +210,7 @@ export default function IOSAppsPage() {
             >
               <h3 className="text-sm uppercase tracking-wider mb-4">Clean, Maintainable Code</h3>
               <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed">
-                I write modular, well-documented code that's easy to maintain and extend. This allows for faster iterations and better long-term stability.
+                I write modular, well-documented code that&apos;s easy to maintain and extend. This allows for faster iterations and better long-term stability.
               </p>
             </motion.div>
             
@@ -222,13 +232,13 @@ export default function IOSAppsPage() {
         <div className="bg-cream-50 dark:bg-neutral-800 p-12 text-center">
           <h2 className="text-2xl md:text-3xl font-semibold mb-6">Have an iOS app idea?</h2>
           <p className="text-neutral-600 dark:text-neutral-400 mb-8 max-w-2xl mx-auto leading-relaxed">
-            I'm always interested in new challenges and collaboration opportunities. If you have an app idea or need iOS development expertise, let's discuss how we can bring your vision to life.
+            I&apos;m always interested in new challenges and collaboration opportunities. If you have an app idea or need iOS development expertise, let&apos;s discuss how we can bring your vision to life.
           </p>
           <Link 
             href="/contact"
             className="btn btn-primary"
           >
-            Let's Discuss Your Project
+            Let&apos;s Discuss Your Project
           </Link>
         </div>
       </section>

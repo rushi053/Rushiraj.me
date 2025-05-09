@@ -34,6 +34,13 @@ type IOSApp = {
   icon_url?: string;
 };
 
+type SupabaseError = {
+  message: string;
+  details?: string;
+  hint?: string;
+  code?: string;
+};
+
 export default function EditAppPage({ params }: { params: { id: string } }) {
   const [app, setApp] = useState<IOSApp | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,7 +55,7 @@ export default function EditAppPage({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     fetchApp();
-  }, [params.id]);
+  }, [params.id, fetchApp]);
 
   async function fetchApp() {
     try {
@@ -73,8 +80,9 @@ export default function EditAppPage({ params }: { params: { id: string } }) {
         if (data.image_url) setImagePreview(data.image_url);
         if (data.icon_url) setIconPreview(data.icon_url);
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const error = err as SupabaseError;
+      setError(error.message || 'An error occurred while fetching the app');
     } finally {
       setLoading(false);
     }
@@ -180,7 +188,8 @@ export default function EditAppPage({ params }: { params: { id: string } }) {
         .eq('id', params.id);
       if (saveError) throw saveError;
       router.push('/admin/apps');
-    } catch (error: any) {
+    } catch (err) {
+      const error = err as SupabaseError;
       setError(error.message || 'Failed to update app');
     } finally {
       setIsSubmitting(false);

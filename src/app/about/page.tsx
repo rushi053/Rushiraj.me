@@ -20,7 +20,7 @@ export default function AboutPage() {
           
           <div className="md:w-2/3">
             <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-              Hello! I'm Rushiraj, a passionate frontend developer and iOS engineer dedicated to creating clean, modern, and user-friendly digital experiences.
+              Hello! I&apos;m Rushiraj, a passionate frontend developer and iOS engineer dedicated to creating clean, modern, and user-friendly digital experiences.
             </p>
             
             <p className="text-zinc-600 dark:text-zinc-400 mb-6">
@@ -28,7 +28,7 @@ export default function AboutPage() {
             </p>
             
             <p className="text-zinc-600 dark:text-zinc-400 mb-6">
-              My journey in tech began several years ago, and I've been continuously learning and growing since then. I'm always excited to explore new technologies and methodologies to improve my craft.
+              My journey in tech began several years ago, and I&apos;ve been continuously learning and growing since then. I&apos;m always excited to explore new technologies and methodologies to improve my craft.
             </p>
             
             <h2 className="text-2xl font-bold mt-8 mb-4">My Skills</h2>
@@ -59,7 +59,7 @@ export default function AboutPage() {
             
             <h2 className="text-2xl font-bold mt-8 mb-4">Beyond Coding</h2>
             <p className="text-zinc-600 dark:text-zinc-400 mb-3">
-              When I'm not immersed in code, you can find me:
+              When I&apos;m not immersed in code, you can find me:
             </p>
             <ul className="list-disc list-inside text-zinc-600 dark:text-zinc-400 space-y-1 mb-6">
               <li>Exploring new music and making playlists</li>
@@ -143,14 +143,14 @@ export default function AboutPage() {
           <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md">
             <h3 className="font-semibold text-xl mb-4">Books</h3>
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              I'm an avid reader of both fiction and non-fiction. Some recent favorites include "Atomic Habits" by James Clear and "The Design of Everyday Things" by Don Norman.
+              I&apos;m an avid reader of both fiction and non-fiction. Some recent favorites include &quot;Atomic Habits&quot; by James Clear and &quot;The Design of Everyday Things&quot; by Don Norman.
             </p>
           </div>
           
           <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md">
             <h3 className="font-semibold text-xl mb-4">Technology</h3>
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              Beyond my work, I'm passionate about technology and gadgets. I enjoy exploring new tools and platforms that enhance productivity and creativity.
+              Beyond my work, I&apos;m passionate about technology and gadgets. I enjoy exploring new tools and platforms that enhance productivity and creativity.
             </p>
           </div>
         </div>

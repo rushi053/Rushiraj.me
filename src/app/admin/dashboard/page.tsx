@@ -15,6 +15,13 @@ type DashboardStats = {
   }>;
 };
 
+type SupabaseError = {
+  message: string;
+  details?: string;
+  hint?: string;
+  code?: string;
+};
+
 export default function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats>({
     totalApps: 0,
@@ -22,6 +29,7 @@ export default function DashboardPage() {
     recentlyUpdated: [],
   });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchStats() {
@@ -68,8 +76,9 @@ export default function DashboardPage() {
           totalBlogPosts: blogCount || 0,
           recentlyUpdated,
         });
-      } catch (error) {
-        console.error('Error fetching dashboard stats:', error);
+      } catch (err) {
+        const error = err as SupabaseError;
+        setError(error.message || 'Failed to fetch stats');
       } finally {
         setLoading(false);
       }

@@ -181,6 +181,9 @@ export default function Home() {
             <p className="text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
               When I&apos;m not coding, you can find me exploring new music, reading, or enjoying nature.
             </p>
+            <p className="text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
+              I&apos;m passionate about creating elegant solutions to complex problems.
+            </p>
             <Link 
               href="/about"
               className="text-sm uppercase tracking-wide flex items-center hover:opacity-60 inline-flex"

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { SupabaseError } from '@supabase/supabase-js';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ export default function ContactPage() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -22,25 +23,34 @@ export default function ContactPage() {
     }));
   };
   
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // This would normally send the data to a server or API
-    // For this example, we'll simulate a successful submission after a delay
+    setSubmitSuccess(false);
+    setSubmitError(null);
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const { error: submitError } = await supabase
+        .from('contact_messages')
+        .insert([{
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          created_at: new Date().toISOString()
+        }]);
+
+      if (submitError) throw submitError;
+
       setSubmitSuccess(true);
-      setSubmitError(false);
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: '',
       });
-    } catch (error) {
-      setSubmitError(true);
-      setSubmitSuccess(false);
+    } catch (err) {
+      const error = err as SupabaseError;
+      setSubmitError(error.message || 'Failed to send message');
     } finally {
       setIsSubmitting(false);
     }
@@ -162,7 +172,7 @@ export default function ContactPage() {
               
               {submitError ? (
                 <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-md text-red-700 dark:text-red-300 mb-6">
-                  <p>Something went wrong. Please try again later.</p>
+                  <p>{submitError}</p>
                 </div>
               ) : null}
               

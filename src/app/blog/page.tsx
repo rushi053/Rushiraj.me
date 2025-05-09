@@ -19,6 +19,13 @@ type BlogPost = {
   updated_at: string;
 };
 
+type SupabaseError = {
+  message: string;
+  details?: string;
+  hint?: string;
+  code?: string;
+};
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,13 +42,14 @@ export default function BlogPage() {
           .order('created_at', { ascending: false });
 
         if (error) {
+          const error = error as SupabaseError;
           throw error;
         }
 
         setPosts(data || []);
-      } catch (err: any) {
-        console.error('Error fetching posts:', err);
-        setError(err.message);
+      } catch (err) {
+        const error = err as SupabaseError;
+        setError(error.message || 'Failed to fetch blog posts');
       } finally {
         setLoading(false);
       }

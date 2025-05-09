@@ -4,6 +4,13 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 
+type SupabaseError = {
+  message: string;
+  details?: string;
+  hint?: string;
+  code?: string;
+};
+
 export default function TestConnectionPage() {
   const [loading, setLoading] = useState(true);
   const [connectionStatus, setConnectionStatus] = useState<'success' | 'error' | 'pending'>('pending');
@@ -93,10 +100,11 @@ export default function TestConnectionPage() {
         // If we made it here, the connection is successful
         setConnectionStatus('success');
         
-      } catch (error: any) {
+      } catch (err) {
+        const error = err as SupabaseError;
         console.error('Connection test failed:', error);
         setConnectionStatus('error');
-        setErrorDetails(error.message || 'Unknown error occurred');
+        setErrorDetails(error.message || 'Failed to test connection');
       } finally {
         setLoading(false);
       }

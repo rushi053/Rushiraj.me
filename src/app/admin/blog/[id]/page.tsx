@@ -220,7 +220,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
       <div className="p-6">
         <div className="bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 p-6 rounded-none mb-8">
           <h2 className="text-lg font-medium mb-2">Post Not Found</h2>
-          <p>The blog post you're looking for doesn't exist.</p>
+          <p>The blog post you&apos;re looking for doesn&apos;t exist.</p>
         </div>
       </div>
     );

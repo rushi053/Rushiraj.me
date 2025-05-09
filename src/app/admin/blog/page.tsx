@@ -18,6 +18,13 @@ type BlogPost = {
   updated_at: string;
 };
 
+type SupabaseError = {
+  message: string;
+  details?: string;
+  hint?: string;
+  code?: string;
+};
+
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -42,9 +49,9 @@ export default function BlogPage() {
       }
 
       setPosts(data || []);
-    } catch (err: any) {
-      console.error('Error fetching posts:', err);
-      setError(err.message);
+    } catch (err) {
+      const error = err as SupabaseError;
+      setError(error.message || 'Failed to fetch blog posts');
     } finally {
       setLoading(false);
     }
@@ -81,9 +88,9 @@ export default function BlogPage() {
 
       // Refresh the posts list
       fetchPosts();
-    } catch (err: any) {
-      console.error('Error deleting post:', err);
-      alert('Failed to delete post: ' + err.message);
+    } catch (err) {
+      const error = err as SupabaseError;
+      setError(error.message || 'Failed to delete blog post');
     }
   }
 

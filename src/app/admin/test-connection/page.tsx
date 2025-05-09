@@ -32,7 +32,7 @@ export default function TestConnectionPage() {
 
         // Test iOS apps table
         try {
-          const { data: iosApps, error: iosAppsError } = await supabase
+          const { error: iosAppsError } = await supabase
             .from('ios_apps')
             .select('id')
             .limit(1);
@@ -47,7 +47,7 @@ export default function TestConnectionPage() {
         
         // Test blog posts table
         try {
-          const { data: blogPosts, error: blogPostsError } = await supabase
+          const { error: blogPostsError } = await supabase
             .from('blog_posts')
             .select('id')
             .limit(1);
@@ -62,7 +62,7 @@ export default function TestConnectionPage() {
         
         // Test app screenshots bucket
         try {
-          const { data: appScreenshots, error: appScreenshotsError } = await supabase
+          const { error: appScreenshotsError } = await supabase
             .storage
             .from('app_screenshots')
             .list();
@@ -77,7 +77,7 @@ export default function TestConnectionPage() {
         
         // Test blog images bucket
         try {
-          const { data: blogImages, error: blogImagesError } = await supabase
+          const { error: blogImagesError } = await supabase
             .storage
             .from('blog_images')
             .list();

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useForm } from 'react-hook-form';
+import Image from 'next/image';
 
 type BlogFormData = {
   title: string;
@@ -163,17 +164,21 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
       // Success - redirect to blog posts list
       router.push('/admin/blog');
       
-    } catch (error: any) {
+    } catch (error: Error | unknown) {
       console.error('Error updating post:', error);
-      setError(error.message || 'Failed to update post');
+      setError(error instanceof Error ? error.message : 'Failed to update post');
       
       // If we uploaded an image but failed to save the post, clean up the image
-      if (error.message && data.imageFile) {
+      if (error instanceof Error && error.message) {
         const fileName = error.message.match(/blog_images\/(.*?)$/)?.[1];
         if (fileName) {
-          await supabase.storage
-            .from('blog_images')
-            .remove([fileName]);
+          try {
+            await supabase.storage
+              .from('blog_images')
+              .remove([fileName]);
+          } catch (cleanupError) {
+            console.error('Failed to clean up uploaded image:', cleanupError);
+          }
         }
       }
     } finally {
@@ -316,7 +321,13 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
               <div className="mt-2">
                 <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Preview:</p>
                 <div className="relative w-full aspect-[16/9] overflow-hidden border border-neutral-300 dark:border-neutral-700">
-                  <img src={imagePreview} alt="Preview" className="object-cover w-full h-full" />
+                  <Image
+                    src={imagePreview}
+                    alt="Preview"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
               </div>
             )}

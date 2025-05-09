@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useForm } from 'react-hook-form';
+import Image from 'next/image';
 
 type BlogFormData = {
   title: string;
@@ -217,7 +218,13 @@ export default function NewBlogPostPage() {
               <div className="mt-2">
                 <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Preview:</p>
                 <div className="relative w-full aspect-[16/9] overflow-hidden border border-neutral-300 dark:border-neutral-700">
-                  <img src={imagePreview} alt="Preview" className="object-cover w-full h-full" />
+                  <Image
+                    src={imagePreview}
+                    alt="Preview"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
               </div>
             )}

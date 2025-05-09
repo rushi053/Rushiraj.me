@@ -52,7 +52,7 @@ export default function Home() {
         <FadeInSection className="w-full">
           <div className="max-w-2xl mx-auto">
             <h1 className="text-5xl md:text-7xl mb-6 text-neutral-900 dark:text-neutral-100 font-bold">
-              Hello, I'm Rushiraj
+              Hello, I&apos;m Rushiraj
             </h1>
             <h2 className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-400 mb-8 font-normal">
               Frontend Developer & iOS Engineer
@@ -179,7 +179,7 @@ export default function Home() {
               I'm a frontend developer and iOS engineer passionate about creating beautiful and functional user experiences. I enjoy working with modern technologies and frameworks.
             </p>
             <p className="text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
-              When I'm not coding, you can find me exploring new music, reading, or enjoying nature.
+              When I&apos;m not coding, you can find me exploring new music, reading, or enjoying nature.
             </p>
             <Link 
               href="/about"

@@ -54,7 +54,7 @@ export default function ContactPage() {
         <div className="flex flex-col md:flex-row gap-12">
           <div className="md:w-1/2">
             <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+              I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
             </p>
             
             <div className="space-y-6 mb-8">
@@ -156,7 +156,7 @@ export default function ContactPage() {
               
               {submitSuccess ? (
                 <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-md text-green-700 dark:text-green-300 mb-6">
-                  <p>Thank you for your message! I'll get back to you soon.</p>
+                  <p>Thank you for your message! I&apos;ll get back to you soon.</p>
                 </div>
               ) : null}
               

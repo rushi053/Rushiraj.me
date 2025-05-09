@@ -4,6 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
+type SupabaseError = {
+  message: string;
+  details?: string;
+  hint?: string;
+  code?: string;
+};
+
 // App type definition
 type IOSApp = {
   id: string;
@@ -45,9 +52,9 @@ export default function AppsPage() {
       }
 
       setApps(data || []);
-    } catch (err: any) {
-      console.error('Error fetching apps:', err);
-      setError(err.message);
+    } catch (err) {
+      const error = err as SupabaseError;
+      setError(error.message || 'Failed to fetch apps');
     } finally {
       setLoading(false);
     }
@@ -84,9 +91,9 @@ export default function AppsPage() {
 
       // Refresh the apps list
       fetchApps();
-    } catch (err: any) {
-      console.error('Error deleting app:', err);
-      alert('Failed to delete app: ' + err.message);
+    } catch (err) {
+      const error = err as SupabaseError;
+      setError(error.message || 'Failed to delete app');
     }
   }
 

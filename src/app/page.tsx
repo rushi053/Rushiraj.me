@@ -176,7 +176,7 @@ export default function Home() {
           <div className="md:w-1/2 mb-12 md:mb-0 md:pr-16">
             <h2 className="text-4xl md:text-5xl mb-6">About Me</h2>
             <p className="text-neutral-600 dark:text-neutral-400 mb-6 leading-relaxed">
-              I'm a frontend developer and iOS engineer passionate about creating beautiful and functional user experiences. I enjoy working with modern technologies and frameworks.
+              I&apos;m a frontend developer and iOS engineer passionate about creating beautiful and functional user experiences. I enjoy working with modern technologies and frameworks.
             </p>
             <p className="text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
               When I&apos;m not coding, you can find me exploring new music, reading, or enjoying nature.
@@ -247,7 +247,7 @@ export default function Home() {
         <div className="text-center max-w-xl mx-auto">
           <h2 className="text-4xl md:text-5xl mb-6">Let's Work Together</h2>
           <p className="text-neutral-600 dark:text-neutral-400 mb-10 leading-relaxed">
-            Have a project in mind or just want to say hello? I'm always open to discussing new opportunities and interesting ideas.
+            Have a project in mind or just want to say hello? I&apos;m always open to discussing new opportunities and interesting ideas.
           </p>
           <motion.div 
             whileHover={{ scale: 1.02 }} 

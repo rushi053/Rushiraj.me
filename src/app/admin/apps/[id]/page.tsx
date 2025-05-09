@@ -55,39 +55,39 @@ export default function EditAppPage({ params }: { params: { id: string } }) {
   const currentStatus = watch('status');
 
   useEffect(() => {
-    fetchApp();
-  }, [params.id, fetchApp]);
-
-  async function fetchApp() {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('ios_apps')
-        .select('*')
-        .eq('id', params.id)
-        .single();
-      if (error) throw error;
-      if (data) {
-        setApp(data);
-        reset({
-          title: data.title,
-          description: data.description,
-          status: data.status,
-          features: data.features.join(', '),
-          technologies: data.technologies.join(', '),
-          appStoreLink: data.app_store_link || '',
-          expectedRelease: data.expected_release || '',
-        });
-        if (data.image_url) setImagePreview(data.image_url);
-        if (data.icon_url) setIconPreview(data.icon_url);
+    async function fetchApp() {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('ios_apps')
+          .select('*')
+          .eq('id', params.id)
+          .single();
+        if (error) throw error;
+        if (data) {
+          setApp(data);
+          reset({
+            title: data.title,
+            description: data.description,
+            status: data.status,
+            features: data.features.join(', '),
+            technologies: data.technologies.join(', '),
+            appStoreLink: data.app_store_link || '',
+            expectedRelease: data.expected_release || '',
+          });
+          if (data.image_url) setImagePreview(data.image_url);
+          if (data.icon_url) setIconPreview(data.icon_url);
+        }
+      } catch (err) {
+        const error = err as SupabaseError;
+        setError(error.message || 'An error occurred while fetching the app');
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const error = err as SupabaseError;
-      setError(error.message || 'An error occurred while fetching the app');
-    } finally {
-      setLoading(false);
     }
-  }
+    
+    fetchApp();
+  }, [params.id, reset]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

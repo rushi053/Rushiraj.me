@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
+import { SupabaseError } from '@supabase/supabase-js';
 
 type BlogFormData = {
   title: string;
@@ -39,44 +40,45 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
   const { register, handleSubmit, formState: { errors }, reset } = useForm<BlogFormData>();
 
   useEffect(() => {
-    fetchPost();
-  }, [params.id]);
+    async function fetchPost() {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .eq('id', params.id)
+          .single();
 
-  async function fetchPost() {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('id', params.id)
-        .single();
-
-      if (error) {
-        throw error;
-      }
-
-      if (data) {
-        setPost(data);
-        // Set form values
-        reset({
-          title: data.title,
-          excerpt: data.excerpt,
-          content: data.content,
-          published: data.published,
-          tags: data.tags.join(', '),
-        });
-        // Set image preview if exists
-        if (data.featured_image) {
-          setImagePreview(data.featured_image);
+        if (error) {
+          throw error;
         }
+
+        if (data) {
+          setPost(data);
+          // Set form values
+          reset({
+            title: data.title,
+            excerpt: data.excerpt,
+            content: data.content,
+            published: data.published,
+            tags: data.tags.join(', '),
+          });
+          // Set image preview if exists
+          if (data.featured_image) {
+            setImagePreview(data.featured_image);
+          }
+        }
+      } catch (err) {
+        const error = err as SupabaseError;
+        console.error('Error fetching post:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
-    } catch (err: any) {
-      console.error('Error fetching post:', err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
     }
-  }
+    
+    fetchPost();
+  }, [params.id, reset]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -122,7 +124,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
           }
         }
         
-        const { error: uploadError, data: uploadData } = await supabase.storage
+        const { error: uploadError } = await supabase.storage
           .from('blog_images')
           .upload(fileName, file);
         

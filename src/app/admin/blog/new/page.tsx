@@ -15,6 +15,13 @@ type BlogFormData = {
   imageFile?: FileList;
 };
 
+type SupabaseError = {
+  message: string;
+  details?: string;
+  hint?: string;
+  code?: string;
+};
+
 export default function NewBlogPostPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,7 +69,7 @@ export default function NewBlogPostPage() {
         const fileExt = file.name.split('.').pop();
         const fileName = `${slug}-${Date.now()}.${fileExt}`;
         
-        const { error: uploadError, data: uploadData } = await supabase.storage
+        const { error: uploadError } = await supabase.storage
           .from('blog_images')
           .upload(fileName, file);
         
@@ -103,7 +110,8 @@ export default function NewBlogPostPage() {
       // Success - redirect to blog posts list
       router.push('/admin/blog');
       
-    } catch (error: any) {
+    } catch (err) {
+      const error = err as SupabaseError;
       console.error('Error creating post:', error);
       setError(error.message || 'Failed to create post');
       

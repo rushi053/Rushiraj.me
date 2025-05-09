@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
+import { SupabaseError } from '@/types/supabase';
 
 type DashboardStats = {
   totalApps: number;
@@ -13,20 +14,6 @@ type DashboardStats = {
     updated_at: string;
     type: 'app' | 'blog';
   }>;
-};
-
-type SupabaseError = {
-  message: string;
-  details?: string;
-  hint?: string;
-  code?: string;
-};
-
-type RecentItem = {
-  id: string;
-  title: string;
-  updated_at: string;
-  type: 'app' | 'blog';
 };
 
 export default function DashboardPage() {
@@ -93,6 +80,17 @@ export default function DashboardPage() {
 
     fetchStats();
   }, []);
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-6 rounded-none mb-8">
+          <h2 className="text-lg font-medium mb-2">Error</h2>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">

@@ -1,12 +1,5 @@
 'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import FadeInSection from "@/components/animations/FadeInSection";
-import StaggeredList from "@/components/animations/StaggeredList";
-import HoverCard from "@/components/animations/HoverCard";
-import ScrollReveal from "@/components/animations/ScrollReveal";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
@@ -34,10 +27,6 @@ export default function Home() {
         .order('updated_at', { ascending: false })
         .limit(3);
       if (!error && data) {
-        console.log('Featured apps data:', data);
-        data.forEach(app => {
-          console.log(`App ${app.title} icon URL:`, app.icon_url);
-        });
         setFeaturedApps(data);
       }
       setLoading(false);
@@ -54,6 +43,27 @@ export default function Home() {
             I&apos;m passionate about creating elegant solutions to complex problems.
           </p>
         </div>
+
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-neutral-100 dark:bg-neutral-800 animate-pulse h-64 rounded-lg"></div>
+            ))}
+          </div>
+        ) : featuredApps.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredApps.map((app) => (
+              <div key={app.id} className="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-sm">
+                <h2 className="text-xl font-semibold mb-4">{app.title}</h2>
+                <p className="text-neutral-600 dark:text-neutral-400 mb-4">{app.description}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-neutral-600 dark:text-neutral-400">
+            No featured apps available.
+          </div>
+        )}
       </div>
     </div>
   );

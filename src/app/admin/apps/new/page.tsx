@@ -84,12 +84,12 @@ export default function NewAppPage() {
         }
         
         // Get the public URL for the uploaded image
-        const { data } = supabase.storage
+        const { data: publicUrlData } = supabase.storage
           .from('app_screenshots')
           .getPublicUrl(fileName);
           
         // Ensure the URL is properly formatted
-        const publicUrl = new URL(data.publicUrl);
+        const publicUrl = new URL(publicUrlData.publicUrl);
         image_url = publicUrl.toString();
 
         // Log the URL for debugging

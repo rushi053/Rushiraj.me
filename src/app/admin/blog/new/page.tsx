@@ -70,12 +70,12 @@ export default function NewBlogPostPage() {
         }
         
         // Get the public URL for the uploaded image
-        const { data } = supabase.storage
+        const { data: publicUrlData } = supabase.storage
           .from('blog_images')
           .getPublicUrl(fileName);
           
         // Ensure the URL is properly formatted
-        const publicUrl = new URL(data.publicUrl);
+        const publicUrl = new URL(publicUrlData.publicUrl);
         featured_image = publicUrl.toString();
       }
       

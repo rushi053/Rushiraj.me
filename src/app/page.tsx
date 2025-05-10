@@ -138,9 +138,11 @@ export default function Home() {
               </HoverCard>
             ))
           ) : (
-            <div className="col-span-3 text-center text-neutral-500 dark:text-neutral-400 py-12">
-              No featured iOS apps found.
-            </div>
+            [
+              <div key="no-apps" className="col-span-3 text-center text-neutral-500 dark:text-neutral-400 py-12">
+                No featured iOS apps found.
+              </div>
+            ]
           )}
         </StaggeredList>
         <div className="mt-16 text-center">

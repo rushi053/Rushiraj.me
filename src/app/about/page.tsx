@@ -10,10 +10,10 @@ export default function AboutPage() {
           <div className="md:w-1/3">
             <div className="relative h-80 w-full rounded-lg overflow-hidden shadow-md">
               <Image
-                src="/profile-placeholder.jpg"
+                src="/profile.PNG"
                 alt="Rushiraj"
                 fill
-                className="object-cover"
+                className="object-contain bg-white"
               />
             </div>
           </div>

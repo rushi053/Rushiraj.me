@@ -51,6 +51,16 @@ export default function Home() {
       <section className="flex flex-col items-center justify-center min-h-[70vh] text-center">
         <FadeInSection className="w-full">
           <div className="max-w-2xl mx-auto">
+            <div className="flex justify-center mb-6">
+              <Image
+                src="/home.PNG"
+                alt="Rushiraj profile"
+                width={180}
+                height={180}
+                className="rounded-full object-contain shadow-md bg-white"
+                priority
+              />
+            </div>
             <h1 className="text-5xl md:text-7xl mb-6 text-neutral-900 dark:text-neutral-100 font-bold">
               Hello, I'm Rushiraj
             </h1>

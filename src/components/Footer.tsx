@@ -9,7 +9,7 @@ export default function Footer() {
         </div>
         <div className="flex space-x-6">
           <a
-            href="https://github.com/"
+            href="https://github.com/rushi053"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors"
@@ -31,7 +31,7 @@ export default function Footer() {
             </svg>
           </a>
           <a
-            href="https://twitter.com/"
+            href="https://twitter.com/rushirajjj"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors"
@@ -53,7 +53,7 @@ export default function Footer() {
             </svg>
           </a>
           <a
-            href="https://linkedin.com/in/"
+            href="https://www.linkedin.com/in/rushirajjadeja"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors"

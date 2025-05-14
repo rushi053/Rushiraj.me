@@ -48,7 +48,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center min-h-[70vh] text-center">
+      <section className="flex flex-col items-center justify-center min-h-[70vh] text-center pb-24">
         <FadeInSection className="w-full">
           <div className="max-w-2xl mx-auto">
             <div className="flex justify-center mb-6">
@@ -91,13 +91,13 @@ export default function Home() {
 
       {/* Featured iOS Apps */}
       <ScrollReveal className="py-24 border-t border-neutral-200 dark:border-neutral-800">
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <h2 className="text-4xl md:text-5xl mb-6">Featured iOS Apps</h2>
-          <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+          <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
             Here are some of my iOS applications. I specialize in creating intuitive and beautiful experiences for Apple devices with clean interfaces and optimal performance.
           </p>
         </div>
-        <StaggeredList className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+        <StaggeredList className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 max-w-5xl mx-auto">
           {loading ? (
             Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="h-72 bg-neutral-100 dark:bg-neutral-800 animate-pulse rounded-lg" />

@@ -72,64 +72,6 @@ export default function AboutPage() {
       </section>
       
       <section className="py-12 border-t border-zinc-200 dark:border-zinc-800">
-        <h2 className="text-3xl font-bold mb-8">My Journey</h2>
-        
-        <div className="space-y-8">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/4">
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">2021 - Present</span>
-            </div>
-            <div className="md:w-3/4">
-              <h3 className="font-semibold text-xl mb-2">Senior Frontend Developer</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-2">Company Name</p>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Leading frontend development for various web applications, implementing modern UI/UX designs, and optimizing performance across all platforms.
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/4">
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">2019 - 2021</span>
-            </div>
-            <div className="md:w-3/4">
-              <h3 className="font-semibold text-xl mb-2">iOS Developer</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-2">Company Name</p>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Developed and maintained iOS applications, collaborated with design and product teams, and contributed to the app architecture and code quality.
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/4">
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">2017 - 2019</span>
-            </div>
-            <div className="md:w-3/4">
-              <h3 className="font-semibold text-xl mb-2">Junior Web Developer</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-2">Company Name</p>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Built responsive websites and web applications, worked closely with senior developers to learn best practices, and participated in code reviews and team discussions.
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/4">
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">2013 - 2017</span>
-            </div>
-            <div className="md:w-3/4">
-              <h3 className="font-semibold text-xl mb-2">Computer Science Degree</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-2">University Name</p>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Studied computer science with a focus on software development and user experience design.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      <section className="py-12 border-t border-zinc-200 dark:border-zinc-800">
         <h2 className="text-3xl font-bold mb-8">Things I Love</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -46,7 +46,19 @@ export default function IOSAppsPage() {
           throw error;
         }
 
-        setApps(data || []);
+        // Sort apps by status priority: Released > In development > Planning
+        const sortedApps = (data || []).sort((a, b) => {
+          const statusPriority = {
+            'Released': 1,
+            'In development': 2,
+            'Planning': 3
+          };
+          
+          return statusPriority[a.status as keyof typeof statusPriority] - 
+                 statusPriority[b.status as keyof typeof statusPriority];
+        });
+
+        setApps(sortedApps);
       } catch (err) {
         const error = err as SupabaseError;
         console.error('Error fetching apps:', error);
@@ -111,18 +123,18 @@ export default function IOSAppsPage() {
                 className="flex flex-col md:flex-row items-center bg-white dark:bg-neutral-900 rounded-xl shadow-md p-6 md:p-8 gap-8"
               >
                 <div className="flex-shrink-0 flex items-center justify-center w-full md:w-auto mb-6 md:mb-0">
-                  <div className="bg-sand-50 dark:bg-neutral-800 rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700 shadow-sm flex items-center justify-center" style={{ width: 200, height: 400 }}>
+                  <div className="bg-sand-50 dark:bg-neutral-800 rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700 shadow-sm" style={{ width: 'fit-content', height: 'fit-content' }}>
                     {app.image_url ? (
                       <Image
                         src={app.image_url}
                         alt={app.title}
                         width={200}
                         height={400}
-                        className="object-cover"
-                        style={{ maxWidth: 200, maxHeight: 400 }}
+                        className="object-contain"
+                        style={{ display: 'block' }}
                       />
                     ) : (
-                      <div className="flex items-center justify-center w-full h-full text-neutral-400">
+                      <div className="flex items-center justify-center w-[200px] h-[400px] text-neutral-400">
                         App Screenshot
                       </div>
                     )}

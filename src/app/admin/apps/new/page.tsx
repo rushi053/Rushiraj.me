@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useForm } from 'react-hook-form';
-import Image from 'next/image';
 
 type AppFormData = {
   title: string;
@@ -76,7 +75,7 @@ export default function NewAppPage() {
         const fileExt = file.name.split('.').pop();
         const fileName = `${slug}-${Date.now()}.${fileExt}`;
         
-        const { error: uploadError } = await supabase.storage
+        const { error: uploadError, data: uploadData } = await supabase.storage
           .from('app_screenshots')
           .upload(fileName, file);
         
@@ -144,21 +143,17 @@ export default function NewAppPage() {
       // Success - redirect to apps list
       router.push('/admin/apps');
       
-    } catch (error: Error | unknown) {
+    } catch (error: any) {
       console.error('Error creating app:', error);
-      setError(error instanceof Error ? error.message : 'Failed to create app');
+      setError(error.message || 'Failed to create app');
       
       // If we uploaded an image but failed to save the app, clean up the image
-      if (error instanceof Error && error.message) {
+      if (error.message && data.imageFile) {
         const fileName = error.message.match(/app_screenshots\/(.*?)$/)?.[1];
         if (fileName) {
-          try {
-            await supabase.storage
-              .from('app_screenshots')
-              .remove([fileName]);
-          } catch (cleanupError) {
-            console.error('Failed to clean up uploaded image:', cleanupError);
-          }
+          await supabase.storage
+            .from('app_screenshots')
+            .remove([fileName]);
         }
       }
     } finally {
@@ -316,13 +311,7 @@ export default function NewAppPage() {
               <div className="mt-2">
                 <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Preview:</p>
                 <div className="w-32 h-64 relative overflow-hidden border border-neutral-300 dark:border-neutral-700">
-                  <Image
-                    src={imagePreview}
-                    alt="Preview"
-                    fill
-                    className="object-cover"
-                    sizes="128px"
-                  />
+                  <img src={imagePreview} alt="Preview" className="object-cover w-full h-full" />
                 </div>
               </div>
             )}
@@ -354,13 +343,7 @@ export default function NewAppPage() {
               <div className="mt-2">
                 <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Preview:</p>
                 <div className="w-20 h-20 relative overflow-hidden border border-neutral-300 dark:border-neutral-700 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
-                  <Image
-                    src={iconPreview}
-                    alt="Icon Preview"
-                    fill
-                    className="object-cover"
-                    sizes="80px"
-                  />
+                  <img src={iconPreview} alt="Icon Preview" className="object-cover w-full h-full" />
                 </div>
               </div>
             )}

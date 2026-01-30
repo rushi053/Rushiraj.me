@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Types
 type IOSApp = {
@@ -66,9 +67,9 @@ export default function TestDataFetchPage() {
         
         setBlogPosts(postsData || []);
         
-      } catch (err: Error | unknown) {
+      } catch (err: any) {
         console.error('Error fetching data:', err);
-        setError(err instanceof Error ? err.message : 'An error occurred while fetching data');
+        setError(err.message || 'An error occurred while fetching data');
       } finally {
         setLoading(false);
       }

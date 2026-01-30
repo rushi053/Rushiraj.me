@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useForm } from 'react-hook-form';
-import Image from 'next/image';
-import { SupabaseError } from '@supabase/supabase-js';
 
 type BlogFormData = {
   title: string;
@@ -40,45 +38,44 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
   const { register, handleSubmit, formState: { errors }, reset } = useForm<BlogFormData>();
 
   useEffect(() => {
-    async function fetchPost() {
-      try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from('blog_posts')
-          .select('*')
-          .eq('id', params.id)
-          .single();
-
-        if (error) {
-          throw error;
-        }
-
-        if (data) {
-          setPost(data);
-          // Set form values
-          reset({
-            title: data.title,
-            excerpt: data.excerpt,
-            content: data.content,
-            published: data.published,
-            tags: data.tags.join(', '),
-          });
-          // Set image preview if exists
-          if (data.featured_image) {
-            setImagePreview(data.featured_image);
-          }
-        }
-      } catch (err) {
-        const error = err as SupabaseError;
-        console.error('Error fetching post:', error);
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    
     fetchPost();
-  }, [params.id, reset]);
+  }, [params.id]);
+
+  async function fetchPost() {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('id', params.id)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        setPost(data);
+        // Set form values
+        reset({
+          title: data.title,
+          excerpt: data.excerpt,
+          content: data.content,
+          published: data.published,
+          tags: data.tags.join(', '),
+        });
+        // Set image preview if exists
+        if (data.featured_image) {
+          setImagePreview(data.featured_image);
+        }
+      }
+    } catch (err: any) {
+      console.error('Error fetching post:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -124,7 +121,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
           }
         }
         
-        const { error: uploadError } = await supabase.storage
+        const { error: uploadError, data: uploadData } = await supabase.storage
           .from('blog_images')
           .upload(fileName, file);
         
@@ -166,21 +163,17 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
       // Success - redirect to blog posts list
       router.push('/admin/blog');
       
-    } catch (error: Error | unknown) {
+    } catch (error: any) {
       console.error('Error updating post:', error);
-      setError(error instanceof Error ? error.message : 'Failed to update post');
+      setError(error.message || 'Failed to update post');
       
       // If we uploaded an image but failed to save the post, clean up the image
-      if (error instanceof Error && error.message) {
+      if (error.message && data.imageFile) {
         const fileName = error.message.match(/blog_images\/(.*?)$/)?.[1];
         if (fileName) {
-          try {
-            await supabase.storage
-              .from('blog_images')
-              .remove([fileName]);
-          } catch (cleanupError) {
-            console.error('Failed to clean up uploaded image:', cleanupError);
-          }
+          await supabase.storage
+            .from('blog_images')
+            .remove([fileName]);
         }
       }
     } finally {
@@ -220,7 +213,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
       <div className="p-6">
         <div className="bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 p-6 rounded-none mb-8">
           <h2 className="text-lg font-medium mb-2">Post Not Found</h2>
-          <p>The blog post you&apos;re looking for doesn&apos;t exist.</p>
+          <p>The blog post you're looking for doesn't exist.</p>
         </div>
       </div>
     );
@@ -323,13 +316,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
               <div className="mt-2">
                 <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Preview:</p>
                 <div className="relative w-full aspect-[16/9] overflow-hidden border border-neutral-300 dark:border-neutral-700">
-                  <Image
-                    src={imagePreview}
-                    alt="Preview"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
+                  <img src={imagePreview} alt="Preview" className="object-cover w-full h-full" />
                 </div>
               </div>
             )}

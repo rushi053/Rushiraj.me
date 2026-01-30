@@ -58,7 +58,7 @@ export default function ProjectsPage() {
       <section className="py-12 md:py-20">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">My Projects</h1>
         <p className="text-zinc-600 dark:text-zinc-400 mb-12 max-w-2xl">
-          Here&apos;s a selection of my recent work spanning web development and iOS applications. Each project represents my passion for clean design and quality code.
+          Here's a selection of my recent work spanning web development and iOS applications. Each project represents my passion for clean design and quality code.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -125,13 +125,13 @@ export default function ProjectsPage() {
         <div className="bg-blue-50 dark:bg-blue-900/10 p-8 rounded-lg">
           <h2 className="text-2xl font-bold mb-4">Have a project idea?</h2>
           <p className="text-zinc-600 dark:text-zinc-400 mb-6">
-            I&apos;m always interested in new and challenging projects. If you have an idea you&apos;d like to discuss, feel free to reach out.
+            I'm always interested in new and challenging projects. If you have an idea you'd like to discuss, feel free to reach out.
           </p>
           <a
             href="/contact"
             className="btn btn-primary inline-block"
           >
-            Let&apos;s Talk
+            Let's Talk
           </a>
         </div>
       </section>

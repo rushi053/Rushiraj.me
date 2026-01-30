@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
-import { SupabaseError } from '@/types/supabase';
 
 // Types
 type BlogPost = {
@@ -29,18 +28,20 @@ export default function BlogPage() {
     async function fetchPosts() {
       try {
         setLoading(true);
-        const { data, error: fetchError } = await supabase
+        const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
           .eq('published', true)
           .order('created_at', { ascending: false });
 
-        if (fetchError) throw fetchError;
+        if (error) {
+          throw error;
+        }
 
         setPosts(data || []);
-      } catch (err) {
-        const error = err as SupabaseError;
-        setError(error.message || 'Failed to fetch blog posts');
+      } catch (err: any) {
+        console.error('Error fetching posts:', err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }

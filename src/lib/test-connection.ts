@@ -40,7 +40,7 @@ async function testSupabaseConnection() {
     
     // Test storage buckets
     try {
-      const { error: appScreenshotsError } = await supabase
+      const { data: appScreenshots, error: appScreenshotsError } = await supabase
         .storage
         .from('app_screenshots')
         .list();
@@ -53,7 +53,7 @@ async function testSupabaseConnection() {
     }
     
     try {
-      const { error: blogImagesError } = await supabase
+      const { data: blogImages, error: blogImagesError } = await supabase
         .storage
         .from('blog_images')
         .list();

@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { SupabaseError } from '@/types/supabase';
 
 type DashboardStats = {
   totalApps: number;
@@ -23,7 +22,6 @@ export default function DashboardPage() {
     recentlyUpdated: [],
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchStats() {
@@ -59,8 +57,8 @@ export default function DashboardPage() {
 
         // Merge and sort by updated_at, take top 3
         const merged = [
-          ...recentApps.map((item) => ({ ...item, type: 'app' as const })),
-          ...recentBlogs.map((item) => ({ ...item, type: 'blog' as const })),
+          ...recentApps.map((item: any) => ({ ...item, type: 'app' })),
+          ...recentBlogs.map((item: any) => ({ ...item, type: 'blog' })),
         ];
         merged.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
         const recentlyUpdated = merged.slice(0, 3);
@@ -70,9 +68,8 @@ export default function DashboardPage() {
           totalBlogPosts: blogCount || 0,
           recentlyUpdated,
         });
-      } catch (err) {
-        const error = err as SupabaseError;
-        setError(error.message || 'Failed to fetch stats');
+      } catch (error) {
+        console.error('Error fetching dashboard stats:', error);
       } finally {
         setLoading(false);
       }
@@ -80,17 +77,6 @@ export default function DashboardPage() {
 
     fetchStats();
   }, []);
-
-  if (error) {
-    return (
-      <div className="p-6">
-        <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-6 rounded-none mb-8">
-          <h2 className="text-lg font-medium mb-2">Error</h2>
-          <p>{error}</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="p-6">

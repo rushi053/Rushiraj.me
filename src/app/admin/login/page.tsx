@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { SupabaseError } from '@/types/supabase';
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -29,9 +30,8 @@ export default function LoginPage() {
 
       // Redirect to admin dashboard upon successful login
       router.push('/admin/dashboard');
-    } catch (err) {
-      const error = err as SupabaseError;
-      setError(error.message || 'Failed to sign in');
+    } catch (error: any) {
+      setError(error.message || 'An error occurred during sign in');
     } finally {
       setLoading(false);
     }

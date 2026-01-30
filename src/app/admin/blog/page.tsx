@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
-import { SupabaseError } from '@/types/supabase';
 
 // Blog post type definition
 type BlogPost = {
@@ -43,9 +42,9 @@ export default function BlogPage() {
       }
 
       setPosts(data || []);
-    } catch (err) {
-      const error = err as SupabaseError;
-      setError(error.message || 'Failed to fetch blog posts');
+    } catch (err: any) {
+      console.error('Error fetching posts:', err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -82,9 +81,9 @@ export default function BlogPage() {
 
       // Refresh the posts list
       fetchPosts();
-    } catch (err) {
-      const error = err as SupabaseError;
-      setError(error.message || 'Failed to delete blog post');
+    } catch (err: any) {
+      console.error('Error deleting post:', err);
+      alert('Failed to delete post: ' + err.message);
     }
   }
 

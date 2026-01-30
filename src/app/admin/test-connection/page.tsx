@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { SupabaseError } from '@/types/supabase';
 
 export default function TestConnectionPage() {
   const [loading, setLoading] = useState(true);
@@ -33,7 +32,7 @@ export default function TestConnectionPage() {
 
         // Test iOS apps table
         try {
-          const { error: iosAppsError } = await supabase
+          const { data: iosApps, error: iosAppsError } = await supabase
             .from('ios_apps')
             .select('id')
             .limit(1);
@@ -48,7 +47,7 @@ export default function TestConnectionPage() {
         
         // Test blog posts table
         try {
-          const { error: blogPostsError } = await supabase
+          const { data: blogPosts, error: blogPostsError } = await supabase
             .from('blog_posts')
             .select('id')
             .limit(1);
@@ -63,7 +62,7 @@ export default function TestConnectionPage() {
         
         // Test app screenshots bucket
         try {
-          const { error: appScreenshotsError } = await supabase
+          const { data: appScreenshots, error: appScreenshotsError } = await supabase
             .storage
             .from('app_screenshots')
             .list();
@@ -78,7 +77,7 @@ export default function TestConnectionPage() {
         
         // Test blog images bucket
         try {
-          const { error: blogImagesError } = await supabase
+          const { data: blogImages, error: blogImagesError } = await supabase
             .storage
             .from('blog_images')
             .list();
@@ -94,11 +93,10 @@ export default function TestConnectionPage() {
         // If we made it here, the connection is successful
         setConnectionStatus('success');
         
-      } catch (err) {
-        const error = err as SupabaseError;
+      } catch (error: any) {
         console.error('Connection test failed:', error);
         setConnectionStatus('error');
-        setErrorDetails(error.message || 'Failed to test connection');
+        setErrorDetails(error.message || 'Unknown error occurred');
       } finally {
         setLoading(false);
       }

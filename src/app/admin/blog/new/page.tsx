@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useForm } from 'react-hook-form';
-import Image from 'next/image';
 
 type BlogFormData = {
   title: string;
@@ -13,13 +12,6 @@ type BlogFormData = {
   published: boolean;
   tags: string;
   imageFile?: FileList;
-};
-
-type SupabaseError = {
-  message: string;
-  details?: string;
-  hint?: string;
-  code?: string;
 };
 
 export default function NewBlogPostPage() {
@@ -69,7 +61,7 @@ export default function NewBlogPostPage() {
         const fileExt = file.name.split('.').pop();
         const fileName = `${slug}-${Date.now()}.${fileExt}`;
         
-        const { error: uploadError } = await supabase.storage
+        const { error: uploadError, data: uploadData } = await supabase.storage
           .from('blog_images')
           .upload(fileName, file);
         
@@ -110,8 +102,7 @@ export default function NewBlogPostPage() {
       // Success - redirect to blog posts list
       router.push('/admin/blog');
       
-    } catch (err) {
-      const error = err as SupabaseError;
+    } catch (error: any) {
       console.error('Error creating post:', error);
       setError(error.message || 'Failed to create post');
       
@@ -226,13 +217,7 @@ export default function NewBlogPostPage() {
               <div className="mt-2">
                 <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">Preview:</p>
                 <div className="relative w-full aspect-[16/9] overflow-hidden border border-neutral-300 dark:border-neutral-700">
-                  <Image
-                    src={imagePreview}
-                    alt="Preview"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
+                  <img src={imagePreview} alt="Preview" className="object-cover w-full h-full" />
                 </div>
               </div>
             )}

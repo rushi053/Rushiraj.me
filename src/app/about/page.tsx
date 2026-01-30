@@ -1,160 +1,100 @@
-import Image from "next/image";
+'use client';
+
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function AboutPage() {
   return (
-    <>
-      <section className="py-12 md:py-20">
-        <h1 className="text-4xl md:text-5xl font-bold mb-8">About Me</h1>
-        
-        <div className="flex flex-col md:flex-row gap-12">
-          <div className="md:w-1/3">
-            <div className="relative h-80 w-full rounded-lg overflow-hidden shadow-md">
-              <Image
-                src="/profile-placeholder.jpg"
-                alt="Rushiraj"
-                fill
-                className="object-cover"
-              />
+    <div className="grid-bg min-h-screen">
+      <section className="container pt-16 pb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <p className="text-white/40 text-sm tracking-widest uppercase mb-3">About</p>
+          <h1 className="font-serif text-5xl md:text-7xl mb-6">Hello, I&apos;m Rushiraj</h1>
+        </motion.div>
+      </section>
+
+      <div className="container"><div className="divider" /></div>
+
+      <section className="section">
+        <div className="container max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="space-y-8 text-white/70 text-lg leading-relaxed"
+          >
+            <p>
+              I&apos;m a frontend developer and iOS engineer based in India. I specialize in 
+              building clean, modern applications that people actually want to use.
+            </p>
+            <p>
+              My approach to development is simple: respect the user. This means creating 
+              software that&apos;s intuitive, fast, and privacy-conscious. I believe the best 
+              products are those that solve real problems without unnecessary complexity.
+            </p>
+            <p>
+              Currently, I&apos;m focused on building CashLens, a privacy-first expense tracker 
+              that keeps all your data local. No accounts, no cloud sync, just a simple 
+              tool that does its job well.
+            </p>
+            <p>
+              When I&apos;m not coding, you&apos;ll find me exploring new music, reading about 
+              design, or planning my next travel adventure.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mt-16"
+          >
+            <h2 className="font-serif text-2xl mb-6">Skills & Technologies</h2>
+            <div className="flex flex-wrap gap-3">
+              {[
+                'Swift', 'SwiftUI', 'React', 'Next.js', 'TypeScript',
+                'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Supabase', 'Git'
+              ].map((skill) => (
+                <span key={skill} className="text-sm text-white/50 px-4 py-2 border border-white/10">
+                  {skill}
+                </span>
+              ))}
             </div>
-          </div>
-          
-          <div className="md:w-2/3">
-            <p className="text-lg text-zinc-700 dark:text-zinc-300 mb-6">
-              Hello! I&apos;m Rushiraj, a passionate frontend developer and iOS engineer dedicated to creating clean, modern, and user-friendly digital experiences.
-            </p>
-            
-            <p className="text-zinc-600 dark:text-zinc-400 mb-6">
-              With a strong foundation in web and mobile development, I enjoy bringing ideas to life through code. I specialize in building responsive websites and intuitive iOS applications that prioritize user experience and performance.
-            </p>
-            
-            <p className="text-zinc-600 dark:text-zinc-400 mb-6">
-              My journey in tech began several years ago, and I&apos;ve been continuously learning and growing since then. I&apos;m always excited to explore new technologies and methodologies to improve my craft.
-            </p>
-            
-            <h2 className="text-2xl font-bold mt-8 mb-4">My Skills</h2>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-              <div>
-                <h3 className="font-semibold mb-2">Frontend Development</h3>
-                <ul className="list-disc list-inside text-zinc-600 dark:text-zinc-400 space-y-1">
-                  <li>React & Next.js</li>
-                  <li>JavaScript/TypeScript</li>
-                  <li>HTML5 & CSS3</li>
-                  <li>Tailwind CSS</li>
-                  <li>Responsive Design</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-semibold mb-2">iOS Development</h3>
-                <ul className="list-disc list-inside text-zinc-600 dark:text-zinc-400 space-y-1">
-                  <li>Swift</li>
-                  <li>SwiftUI</li>
-                  <li>UIKit</li>
-                  <li>Core Data</li>
-                  <li>XCode</li>
-                </ul>
-              </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mt-16"
+          >
+            <h2 className="font-serif text-2xl mb-6">Let&apos;s Connect</h2>
+            <div className="flex flex-wrap gap-6">
+              <a href="https://github.com/rushi053" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white hover-line">
+                GitHub
+              </a>
+              <a href="https://twitter.com/rushirajjadeja" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white hover-line">
+                Twitter
+              </a>
+              <a href="https://linkedin.com/in/rushirajjadeja" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white hover-line">
+                LinkedIn
+              </a>
             </div>
-            
-            <h2 className="text-2xl font-bold mt-8 mb-4">Beyond Coding</h2>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-3">
-              When I&apos;m not immersed in code, you can find me:
-            </p>
-            <ul className="list-disc list-inside text-zinc-600 dark:text-zinc-400 space-y-1 mb-6">
-              <li>Exploring new music and making playlists</li>
-              <li>Reading books on technology, design, and fiction</li>
-              <li>Taking photos of urban landscapes and nature</li>
-              <li>Traveling and experiencing different cultures</li>
-            </ul>
-          </div>
+          </motion.div>
         </div>
       </section>
-      
-      <section className="py-12 border-t border-zinc-200 dark:border-zinc-800">
-        <h2 className="text-3xl font-bold mb-8">My Journey</h2>
-        
-        <div className="space-y-8">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/4">
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">2021 - Present</span>
-            </div>
-            <div className="md:w-3/4">
-              <h3 className="font-semibold text-xl mb-2">Senior Frontend Developer</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-2">Company Name</p>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Leading frontend development for various web applications, implementing modern UI/UX designs, and optimizing performance across all platforms.
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/4">
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">2019 - 2021</span>
-            </div>
-            <div className="md:w-3/4">
-              <h3 className="font-semibold text-xl mb-2">iOS Developer</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-2">Company Name</p>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Developed and maintained iOS applications, collaborated with design and product teams, and contributed to the app architecture and code quality.
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/4">
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">2017 - 2019</span>
-            </div>
-            <div className="md:w-3/4">
-              <h3 className="font-semibold text-xl mb-2">Junior Web Developer</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-2">Company Name</p>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Built responsive websites and web applications, worked closely with senior developers to learn best practices, and participated in code reviews and team discussions.
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/4">
-              <span className="text-blue-600 dark:text-blue-400 font-semibold">2013 - 2017</span>
-            </div>
-            <div className="md:w-3/4">
-              <h3 className="font-semibold text-xl mb-2">Computer Science Degree</h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mb-2">University Name</p>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Studied computer science with a focus on software development and user experience design.
-              </p>
-            </div>
-          </div>
+
+      <div className="container"><div className="divider" /></div>
+
+      <section className="section">
+        <div className="container text-center">
+          <h2 className="font-serif text-3xl mb-6">Want to work together?</h2>
+          <Link href="/contact" className="btn btn-primary">Get in touch</Link>
         </div>
       </section>
-      
-      <section className="py-12 border-t border-zinc-200 dark:border-zinc-800">
-        <h2 className="text-3xl font-bold mb-8">Things I Love</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md">
-            <h3 className="font-semibold text-xl mb-4">Music</h3>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              I enjoy a wide range of music genres, from indie rock to electronic. Some of my favorite artists include Radiohead, Bonobo, and Tycho.
-            </p>
-          </div>
-          
-          <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md">
-            <h3 className="font-semibold text-xl mb-4">Books</h3>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              I&apos;m an avid reader of both fiction and non-fiction. Some recent favorites include &quot;Atomic Habits&quot; by James Clear and &quot;The Design of Everyday Things&quot; by Don Norman.
-            </p>
-          </div>
-          
-          <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md">
-            <h3 className="font-semibold text-xl mb-4">Technology</h3>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-4">
-              Beyond my work, I&apos;m passionate about technology and gadgets. I enjoy exploring new tools and platforms that enhance productivity and creativity.
-            </p>
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   );
-} 
+}

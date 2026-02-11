@@ -87,15 +87,16 @@ export default function CommandPalette() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999]"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex items-start justify-center pt-[20vh]"
             onClick={() => setOpen(false)}
-          />
+          >
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-lg z-[10000] rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--bg)] shadow-2xl"
+            className="w-[90vw] max-w-lg rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--bg)] shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3 px-4 py-3 border-b border-[var(--border)]">
               <svg
@@ -176,6 +177,7 @@ export default function CommandPalette() {
               <span className="flex items-center gap-1"><kbd className="bg-[var(--bg-secondary)] px-1 py-0.5 rounded border border-[var(--border)]">↵</kbd> open</span>
               <span className="flex items-center gap-1"><kbd className="bg-[var(--bg-secondary)] px-1 py-0.5 rounded border border-[var(--border)]">esc</kbd> close</span>
             </div>
+          </motion.div>
           </motion.div>
         </>
       )}

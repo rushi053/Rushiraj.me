@@ -44,7 +44,7 @@ export default function ContactPage() {
       <section className="relative overflow-hidden">
         <div className="gradient-orb gradient-orb-1" style={{ top: '-150px', right: '-100px' }} />
         <div className="dot-grid" />
-        <div className="container relative z-10 pt-20 pb-16">
+        <div className="container relative z-10 pt-32 pb-16">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <p className="section-label">Contact</p>
             <h1 className="heading-display font-heading text-5xl md:text-7xl mb-6">

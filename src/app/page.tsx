@@ -21,7 +21,7 @@ const products = [
     name: 'CashLens',
     tagline: 'Privacy-first expense tracker for iOS',
     description: '100% local storage. No accounts. No cloud. Just your money, your data.',
-    stats: '4.8★ · 500+ downloads',
+    stats: '4.8★ · 2.5K+ downloads',
     url: 'https://cashlens.app',
     appStore: 'https://apps.apple.com/us/app/cashlens-personal-finance/id6743153951',
     emoji: '💰',
@@ -77,39 +77,17 @@ const fadeUp = {
 };
 
 function InterestCard({ item, index }: { item: typeof interests[0]; index: number }) {
-  const [flipped, setFlipped] = useState(false);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.05, duration: 0.35 }}
-      className="cursor-pointer perspective-[600px]"
-      onClick={() => setFlipped(!flipped)}
-      onMouseEnter={() => setFlipped(true)}
-      onMouseLeave={() => setFlipped(false)}
+      className="card card-glow py-4 px-4 hover:border-[var(--accent)]/30 transition-colors"
     >
-      <motion.div
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-        style={{ transformStyle: 'preserve-3d' }}
-        className="relative"
-      >
-        {/* Front */}
-        <div className="card card-glow py-4 px-4" style={{ backfaceVisibility: 'hidden' }}>
-          <div className="text-xl mb-1.5">{item.emoji}</div>
-          <div className="text-sm font-heading font-semibold text-[var(--text)]">{item.label}</div>
-          <div className="text-[var(--text-tertiary)] text-xs mt-0.5">{item.detail}</div>
-        </div>
-        {/* Back */}
-        <div
-          className="card card-glow py-4 px-4 absolute inset-0 flex items-center justify-center"
-          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-        >
-          <div className="text-3xl">{item.emoji}</div>
-        </div>
-      </motion.div>
+      <div className="text-xl mb-1.5">{item.emoji}</div>
+      <div className="text-sm font-heading font-semibold text-[var(--text)]">{item.label}</div>
+      <div className="text-[var(--text-tertiary)] text-xs mt-0.5">{item.detail}</div>
     </motion.div>
   );
 }
@@ -226,7 +204,7 @@ export default function Home() {
           >
             {[
               { value: '4', label: 'Products live', icon: '🚀' },
-              { value: '500+', label: 'App downloads', icon: '📲' },
+              { value: '2.5K+', label: 'App downloads', icon: '📲' },
               { value: '4.8★', label: 'App Store rating', icon: '⭐' },
               { value: '3K+', label: 'X followers', icon: '🐦' },
               { value: '5', label: 'AI agents running', icon: '🤖' },
@@ -381,6 +359,101 @@ export default function Home() {
                     className="text-[var(--text-secondary)] text-lg border-l-2 border-[var(--accent)] pl-5 py-2 rounded-r-lg hover:bg-[var(--card)] transition-colors"
                   >
                     {item}
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="accent-line" />
+
+      {/* Testimonials */}
+      <section className="section relative overflow-hidden">
+        <div className="container relative z-10">
+          <div className="text-center mb-12">
+            <p className="section-label">What people say</p>
+            <ScrollRevealText className="heading-display font-heading text-4xl md:text-5xl">Real reviews, real users</ScrollRevealText>
+          </div>
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={stagger}
+            className="grid md:grid-cols-3 gap-5"
+          >
+            {[
+              {
+                quote: "Finally an expense tracker that doesn't want my email, my location, and my firstborn. Clean UI, works offline, does exactly what it says.",
+                author: 'App Store Review',
+                product: 'CashLens',
+                stars: '⭐⭐⭐⭐⭐',
+              },
+              {
+                quote: "I needed a privacy policy for my app launch and didn't want to pay a lawyer $500. This generated a solid one in 2 minutes. Lifesaver for indie devs.",
+                author: 'Indie Developer',
+                product: 'PrivacyPage',
+                stars: '⭐⭐⭐⭐⭐',
+              },
+              {
+                quote: "Simple, beautiful, no BS. I just needed to send an invoice without creating yet another account somewhere. This nails it.",
+                author: 'Freelancer',
+                product: 'InvoiceZen',
+                stars: '⭐⭐⭐⭐⭐',
+              },
+            ].map((t, i) => (
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                transition={{ duration: 0.4 }}
+                className="card card-glow p-6 flex flex-col"
+              >
+                <div className="text-sm mb-3">{t.stars}</div>
+                <p className="text-[var(--text-secondary)] text-sm leading-relaxed flex-1 mb-4">&ldquo;{t.quote}&rdquo;</p>
+                <div className="pt-4 border-t border-[var(--border)]">
+                  <p className="text-[var(--text-tertiary)] text-xs">{t.author}</p>
+                  <p className="text-[var(--accent)] text-xs font-medium">{t.product}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="accent-line" />
+
+      {/* My Setup */}
+      <section className="section">
+        <div className="container">
+          <div className="grid lg:grid-cols-5 gap-12">
+            <div className="lg:col-span-2">
+              <p className="section-label">Setup</p>
+              <ScrollRevealText className="heading-display font-heading text-4xl md:text-5xl mb-4 lg:mb-0">What I use</ScrollRevealText>
+              <p className="text-[var(--text-tertiary)] text-sm mt-3 hidden lg:block">Hardware, software, and the random stuff on my desk.</p>
+            </div>
+            <div className="lg:col-span-3">
+              <motion.div
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                variants={stagger}
+                className="space-y-6"
+              >
+                {[
+                  { category: '💻 Machines', items: 'MacBook Pro M4 (daily driver) · Mac Mini M4 (24/7 server for AI agents) · Pro Display XDR (impulse buy, zero regrets)' },
+                  { category: '🎮 Gaming', items: 'Xbox Series X · Death Stranding · Cyberpunk 2077 · CoD · Fortnite' },
+                  { category: '🛠️ Dev Tools', items: 'Cursor (AI editor) · Xcode · VS Code · Vercel · Supabase · GitHub' },
+                  { category: '🖨️ Other', items: 'Bambu Labs P1S (3D printer) · AirPods Pro · iPhone 16 Pro' },
+                ].map((setup, i) => (
+                  <motion.div
+                    key={i}
+                    variants={fadeUp}
+                    transition={{ duration: 0.35 }}
+                    className="border-l-2 border-[var(--accent)] pl-5 py-2"
+                  >
+                    <p className="text-[var(--text)] font-heading font-semibold text-sm mb-1">{setup.category}</p>
+                    <p className="text-[var(--text-secondary)] text-sm leading-relaxed">{setup.items}</p>
                   </motion.div>
                 ))}
               </motion.div>

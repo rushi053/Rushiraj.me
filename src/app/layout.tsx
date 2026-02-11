@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
-import CursorGlow from "@/components/CursorGlow";
+// CursorGlow removed
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -54,7 +54,6 @@ export default function RootLayout({
         }} />
       </head>
       <body className={`${spaceGrotesk.variable} ${dmSans.variable} font-body antialiased`}>
-        <CursorGlow />
         <Navigation />
         <main>{children}</main>
       </body>

@@ -11,7 +11,7 @@ const products = [
     description: 'Track your expenses without giving up your data. Everything stays on your device. No accounts, no cloud sync, no tracking. Just a clean, fast expense tracker that respects your privacy.',
     stats: [
       { label: 'Rating', value: '4.8★' },
-      { label: 'Downloads', value: '500+' },
+      { label: 'Downloads', value: '2.5K+' },
       { label: 'Data stored', value: 'Locally' },
       { label: 'Accounts needed', value: '0' },
     ],
@@ -74,7 +74,7 @@ export default function ProductsPage() {
       <section className="relative overflow-hidden">
         <div className="gradient-orb gradient-orb-1" style={{ top: '-150px', right: '-100px' }} />
         <div className="dot-grid" />
-        <div className="container relative z-10 pt-20 pb-16">
+        <div className="container relative z-10 pt-32 pb-16">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <p className="section-label">Products</p>
             <h1 className="heading-display font-heading text-5xl md:text-7xl mb-6">

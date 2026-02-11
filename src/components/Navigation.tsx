@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const links = [
   { href: '/', label: 'Home' },
+  { href: '/products', label: 'Products' },
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
@@ -20,11 +21,11 @@ export default function Navigation() {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <nav className="container flex items-center justify-between h-20">
-          <Link href="/" className="text-xl font-serif">
-            Rushiraj
+          <Link href="/" className="text-xl font-serif tracking-tight">
+            rj<span className="text-white/30">.</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-12">
+          <div className="hidden md:flex items-center gap-10">
             {links.map((link) => (
               <Link
                 key={link.href}
@@ -38,6 +39,14 @@ export default function Navigation() {
                 {link.label}
               </Link>
             ))}
+            <a
+              href="https://x.com/rushirajjj"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-white/30 hover:text-white transition-colors"
+            >
+              @rushirajjj
+            </a>
           </div>
 
           <button
@@ -76,6 +85,15 @@ export default function Navigation() {
                 {link.label}
               </Link>
             ))}
+            <a
+              href="https://x.com/rushirajjj"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="text-lg text-white/30 mt-4"
+            >
+              @rushirajjj ↗
+            </a>
           </motion.div>
         )}
       </AnimatePresence>

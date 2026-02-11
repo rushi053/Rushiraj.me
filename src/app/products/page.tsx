@@ -53,75 +53,90 @@ const products = [
 
 export default function ProductsPage() {
   return (
-    <div className="min-h-screen">
-      <section className="container pt-16 pb-12">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <p className="section-label">Products</p>
-          <h1 className="heading-display font-heading text-5xl md:text-7xl mb-6">
-            3 products.<br />
-            <span className="text-[var(--text-tertiary)]">0 compromises.</span>
-          </h1>
-          <p className="text-[var(--text-secondary)] text-lg max-w-lg">
-            Everything I build is privacy-first. Your data stays yours. No exceptions.
-          </p>
-        </motion.div>
+    <div className="min-h-screen relative">
+      <section className="relative overflow-hidden">
+        <div className="gradient-orb gradient-orb-1" style={{ top: '-150px', right: '-100px' }} />
+        <div className="dot-grid" />
+        <div className="container relative z-10 pt-20 pb-16">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <p className="section-label">Products</p>
+            <h1 className="heading-display font-heading text-5xl md:text-7xl mb-6">
+              3 products.<br />
+              <span className="text-[var(--text-tertiary)]">0 compromises.</span>
+            </h1>
+            <p className="text-[var(--text-secondary)] text-lg max-w-lg">
+              Everything I build is privacy-first. Your data stays yours. No exceptions.
+            </p>
+          </motion.div>
+        </div>
       </section>
 
-      <div className="container"><div className="divider" /></div>
+      <div className="accent-line" />
 
       {products.map((product, i) => (
         <div key={product.name}>
-          <section className="section">
-            <div className="container">
+          <section className="section relative overflow-hidden">
+            {/* Alternating layout */}
+            <div className="gradient-orb gradient-orb-3" style={{
+              width: '400px', height: '400px',
+              [i % 2 === 0 ? 'right' : 'left']: '-100px',
+              top: '50%', transform: 'translateY(-50%)',
+              background: `radial-gradient(circle, ${product.accent}40, transparent 70%)`,
+            }} />
+            
+            <div className="container relative z-10">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1, duration: 0.5 }}
-                className="relative"
               >
-                <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full blur-3xl opacity-20 pointer-events-none" style={{ background: `radial-gradient(circle, ${product.accent}30, transparent)` }} />
-                
-                <div className="relative">
-                  <div className="text-5xl mb-6 w-20 h-20 flex items-center justify-center rounded-3xl bg-[var(--bg-secondary)]">{product.emoji}</div>
-                  <h2 className="heading-display font-heading text-4xl md:text-5xl mb-2">{product.name}</h2>
-                  <p className="text-[var(--text-tertiary)] text-lg mb-6">{product.tagline}</p>
-                  <p className="text-[var(--text-secondary)] text-lg max-w-2xl mb-8 leading-relaxed">
-                    {product.description}
-                  </p>
+                <div className={`grid lg:grid-cols-5 gap-12 items-start ${i % 2 === 1 ? 'direction-rtl' : ''}`}>
+                  <div className={`lg:col-span-3 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+                    <div className="text-5xl mb-6 w-20 h-20 flex items-center justify-center rounded-3xl bg-[var(--bg-secondary)]">{product.emoji}</div>
+                    <h2 className="heading-display font-heading text-4xl md:text-5xl mb-2">{product.name}</h2>
+                    <p className="text-[var(--accent)] text-lg font-medium mb-4" style={{ color: product.accent }}>{product.tagline}</p>
+                    <p className="text-[var(--text-secondary)] text-lg max-w-2xl mb-8 leading-relaxed">
+                      {product.description}
+                    </p>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                    {product.stats.map((stat) => (
-                      <div key={stat.label} className="card py-5 px-5 text-center">
-                        <div className="text-xl font-heading font-bold mb-1">{stat.value}</div>
-                        <div className="text-[var(--text-tertiary)] text-xs uppercase tracking-wider font-medium">{stat.label}</div>
-                      </div>
-                    ))}
-                  </div>
+                    <div className="flex flex-wrap gap-3 mb-8">
+                      {product.tech.map((t) => (
+                        <span key={t} className="text-xs text-[var(--text-tertiary)] border border-[var(--border)] px-3 py-1 rounded-full">{t}</span>
+                      ))}
+                    </div>
 
-                  <div className="flex flex-wrap gap-3 mb-8">
-                    {product.tech.map((t) => (
-                      <span key={t} className="text-xs text-[var(--text-tertiary)] border border-[var(--border)] px-3 py-1 rounded-full">{t}</span>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap gap-4">
-                    <a href={product.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                      Visit {product.name} ↗
-                    </a>
-                    {product.appStore && (
-                      <a href={product.appStore} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-                        App Store ↗
+                    <div className="flex flex-wrap gap-4">
+                      <a href={product.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ background: product.accent }}>
+                        Visit {product.name} ↗
                       </a>
-                    )}
+                      {product.appStore && (
+                        <a href={product.appStore} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                          App Store ↗
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className={`lg:col-span-2 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+                    <div className="grid grid-cols-2 gap-3">
+                      {product.stats.map((stat) => (
+                        <div key={stat.label} className="card card-glow py-5 px-5 text-center">
+                          <div className="text-xl font-heading font-bold mb-1">{stat.value}</div>
+                          <div className="text-[var(--text-tertiary)] text-xs uppercase tracking-wider font-medium">{stat.label}</div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </motion.div>
             </div>
           </section>
-          {i < products.length - 1 && <div className="container"><div className="divider" /></div>}
+          {i < products.length - 1 && <div className="accent-line" />}
         </div>
       ))}
+
+      <div className="h-20" />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
@@ -45,14 +45,14 @@ const products = [
 ];
 
 const interests = [
-  { emoji: '🎮', label: 'Xbox', detail: 'Death Stranding, Cyberpunk, CoD', span: 'col-span-1' },
-  { emoji: '₿', label: 'Bitcoin', detail: 'Not crypto. Bitcoin.', span: 'col-span-1' },
-  { emoji: '🚀', label: 'Space', detail: 'SpaceX fan. Mars or bust.', span: 'col-span-1 md:col-span-2' },
-  { emoji: '🎨', label: 'Design', detail: 'Typography & branding nerd', span: 'col-span-1 md:col-span-2' },
-  { emoji: '🎵', label: 'Music', detail: 'Bollywood · Hip-hop · EDM', span: 'col-span-1' },
-  { emoji: '🖨️', label: '3D Print', detail: 'Bambu Labs P1S owner', span: 'col-span-1' },
-  { emoji: '☕', label: 'Coffee', detail: 'Chai mornings, coffee coding', span: 'col-span-1' },
-  { emoji: '🦾', label: 'Longevity', detail: 'Living forever or dying trying', span: 'col-span-1' },
+  { emoji: '🎮', label: 'Xbox', detail: 'Death Stranding, Cyberpunk, CoD' },
+  { emoji: '₿', label: 'Bitcoin', detail: 'Not crypto. Bitcoin.' },
+  { emoji: '🚀', label: 'Space', detail: 'SpaceX fan. Mars or bust.' },
+  { emoji: '🎨', label: 'Design', detail: 'Typography & branding nerd' },
+  { emoji: '🎵', label: 'Music', detail: 'Bollywood · Hip-hop · EDM' },
+  { emoji: '🖨️', label: '3D Print', detail: 'Bambu Labs P1S owner' },
+  { emoji: '☕', label: 'Coffee', detail: 'Chai mornings, coffee coding' },
+  { emoji: '🦾', label: 'Longevity', detail: 'Living forever or dying trying' },
 ];
 
 const stagger = {
@@ -67,6 +67,9 @@ const fadeUp = {
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const { scrollYProgress } = useScroll();
+  const orbY = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const orbX = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -83,65 +86,81 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="relative">
       {/* Hero */}
-      <section className="container min-h-[90vh] flex flex-col justify-center py-20">
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Gradient orbs */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[var(--accent-light)] border border-[var(--accent)]/20 mb-10">
-            <span className="relative w-2 h-2">
-              <span className="absolute inset-0 bg-green-500 rounded-full" />
-              <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75" />
-            </span>
-            <span className="text-[var(--text-secondary)] text-xs font-medium tracking-wide">Building from Ahmedabad, India</span>
-          </div>
-        </motion.div>
+          className="gradient-orb gradient-orb-1"
+          style={{ y: orbY, x: orbX }}
+        />
+        <motion.div
+          className="gradient-orb gradient-orb-2"
+          style={{ y: useTransform(scrollYProgress, [0, 1], [0, -100]) }}
+        />
+        {/* Dot grid */}
+        <div className="dot-grid" />
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="heading-display font-heading text-5xl md:text-7xl lg:text-[5.5rem] mb-8"
-        >
-          Solo dev.<br />
-          3 products.<br />
-          <span className="text-[var(--text-tertiary)]">0 VC money.</span>
-        </motion.h1>
-        
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.25 }}
-          className="text-[var(--text-secondary)] text-lg md:text-xl max-w-lg mb-10 leading-relaxed"
-        >
-          I&apos;m Rushiraj — I build privacy-first software, run 5 AI agents on a Mac Mini, and believe your data should stay yours.
-        </motion.p>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.35 }}
-          className="flex flex-wrap gap-4"
-        >
-          <Link href="/products" className="btn btn-primary">
-            See what I&apos;m building
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-          <a href="https://x.com/rushirajjj" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-            Follow the journey →
-          </a>
-        </motion.div>
+        <div className="container relative z-10">
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[var(--accent-light)] border border-[var(--accent)]/20 mb-10">
+                <span className="relative w-2 h-2">
+                  <span className="absolute inset-0 bg-green-500 rounded-full" />
+                  <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75" />
+                </span>
+                <span className="text-[var(--text-secondary)] text-xs font-medium tracking-wide">Building from Ahmedabad, India</span>
+              </div>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="heading-display font-heading text-5xl md:text-7xl lg:text-[5.5rem] mb-8"
+            >
+              Solo dev.<br />
+              3 products.<br />
+              <span className="text-[var(--text-tertiary)]">0 VC money.</span>
+            </motion.h1>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+              className="text-[var(--text-secondary)] text-lg md:text-xl max-w-lg mb-10 leading-relaxed"
+            >
+              I&apos;m Rushiraj — I build privacy-first software, run 5 AI agents on a Mac, and believe your data should stay yours.
+            </motion.p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              className="flex flex-wrap gap-4"
+            >
+              <Link href="/products" className="btn btn-primary">
+                See what I&apos;m building
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+              <a href="https://x.com/rushirajjj" target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                Follow the journey →
+              </a>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
-      <div className="container"><div className="divider" /></div>
-
-      {/* Stats */}
-      <section className="section">
+      {/* Stats — full-bleed accent line instead of divider */}
+      <div className="accent-line" />
+      
+      <section className="section relative overflow-hidden">
         <div className="container">
           <motion.div
             initial="initial"
@@ -161,7 +180,7 @@ export default function Home() {
                 key={stat.label}
                 variants={fadeUp}
                 transition={{ duration: 0.4 }}
-                className="card text-center py-8 group"
+                className="card card-glow text-center py-8 group"
               >
                 <div className="text-lg mb-2 opacity-60 group-hover:opacity-100 transition-opacity">{stat.icon}</div>
                 <div className="text-2xl md:text-3xl font-heading font-bold mb-1 text-[var(--text)]">{stat.value}</div>
@@ -172,11 +191,12 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="container"><div className="divider" /></div>
+      <div className="accent-line" />
 
-      {/* Products */}
-      <section className="section">
-        <div className="container">
+      {/* Products — horizontal scroll cards */}
+      <section className="section relative overflow-hidden">
+        <div className="gradient-orb gradient-orb-3" style={{ top: '50%', right: '-200px', transform: 'translateY(-50%)' }} />
+        <div className="container relative z-10">
           <div className="flex justify-between items-end mb-12">
             <div>
               <p className="section-label">Products</p>
@@ -184,33 +204,36 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid gap-5">
+          <div className="horizontal-scroll md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
             {products.map((product, i) => (
               <motion.a
                 key={product.name}
                 href={product.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.4 }}
-                className="card group relative overflow-hidden flex flex-col md:flex-row md:items-center gap-6"
+                transition={{ delay: i * 0.12, duration: 0.5 }}
+                className="card card-glow group relative overflow-hidden flex flex-col min-w-[300px] md:min-w-0"
               >
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `linear-gradient(135deg, ${product.accent}08, transparent)` }} />
-                <div className="relative text-4xl w-14 h-14 flex items-center justify-center rounded-2xl bg-[var(--bg-secondary)]">{product.emoji}</div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `radial-gradient(circle at top right, ${product.accent}15, transparent 60%)` }} />
+                <div className="relative text-4xl w-14 h-14 flex items-center justify-center rounded-2xl bg-[var(--bg-secondary)] mb-5">{product.emoji}</div>
                 <div className="relative flex-1">
-                  <div className="flex items-center gap-3 mb-1">
+                  <div className="flex items-center gap-3 mb-2">
                     <h3 className="text-xl font-heading font-bold">{product.name}</h3>
-                    <span className="text-[var(--text-tertiary)] text-xs border border-[var(--border)] px-2.5 py-0.5 rounded-full">{product.stats}</span>
                   </div>
-                  <p className="text-[var(--text-tertiary)] text-sm mb-1">{product.tagline}</p>
-                  <p className="text-[var(--text-secondary)] text-sm">{product.description}</p>
+                  <p className="text-[var(--accent)] text-sm font-medium mb-2">{product.tagline}</p>
+                  <p className="text-[var(--text-secondary)] text-sm mb-4">{product.description}</p>
+                  <span className="text-[var(--text-tertiary)] text-xs border border-[var(--border)] px-2.5 py-1 rounded-full">{product.stats}</span>
                 </div>
-                <div className="relative text-[var(--text-tertiary)] group-hover:text-[var(--accent)] transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                  </svg>
+                <div className="mt-5 pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                  <span className="text-sm text-[var(--text-secondary)]">View project</span>
+                  <div className="text-[var(--text-tertiary)] group-hover:text-[var(--accent)] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                    </svg>
+                  </div>
                 </div>
               </motion.a>
             ))}
@@ -218,7 +241,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="container"><div className="divider" /></div>
+      <div className="accent-line" />
 
       {/* Supabase Featured Projects */}
       {!loading && projects.length > 0 && (
@@ -245,7 +268,7 @@ export default function Home() {
                     transition={{ delay: i * 0.1, duration: 0.4 }}
                   >
                     <Link href={`/work/${project.slug}`}>
-                      <div className="card group h-full">
+                      <div className="card card-glow group h-full">
                         <span className="text-[var(--accent)] text-sm font-mono font-medium mb-4 block">0{i + 1}</span>
                         <h3 className="text-xl font-heading font-bold mb-3 group-hover:text-[var(--accent)] transition-colors">
                           {project.title}
@@ -269,106 +292,121 @@ export default function Home() {
               </div>
             </div>
           </section>
-          <div className="container"><div className="divider" /></div>
+          <div className="accent-line" />
         </>
       )}
 
-      {/* About snippet */}
-      <section className="section">
-        <div className="container grid lg:grid-cols-2 gap-16 items-start">
-          <div>
-            <p className="section-label">About</p>
-            <h2 className="heading-display font-heading text-4xl md:text-5xl mb-8">
-              MS CS from California.<br />
-              <span className="text-[var(--text-tertiary)]">Now building from India.</span>
-            </h2>
-            <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
-              Born in India, spent 7 years in the US (Texas → Cal State Fullerton for MS in Computer Science). Moved back to Ahmedabad and went full indie dev.
-            </p>
-            <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
-              No VC pitches, no standups, no Jira tickets. Just me, 5 AI agents on a Mac Mini, and an unhealthy amount of chai. I build software that respects your privacy because that&apos;s how it should be.
-            </p>
-            <Link href="/about" className="btn btn-outline">The full story →</Link>
-          </div>
-          
-          <div>
-            <p className="section-label mb-6">Interests & vibes</p>
-            <div className="grid grid-cols-2 gap-3">
-              {interests.map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05, duration: 0.35 }}
-                  className={`card py-5 px-5 ${item.span}`}
-                >
-                  <div className="text-xl mb-2">{item.emoji}</div>
-                  <div className="text-sm font-heading font-semibold text-[var(--text)]">{item.label}</div>
-                  <div className="text-[var(--text-tertiary)] text-xs mt-0.5">{item.detail}</div>
-                </motion.div>
-              ))}
+      {/* About snippet — asymmetric layout */}
+      <section className="section relative overflow-hidden">
+        <div className="dot-grid" style={{ opacity: 0.2 }} />
+        <div className="container relative z-10">
+          <div className="grid lg:grid-cols-5 gap-12 items-start">
+            <div className="lg:col-span-3">
+              <p className="section-label">About</p>
+              <h2 className="heading-display font-heading text-4xl md:text-5xl mb-8">
+                MS CS from California.<br />
+                <span className="text-[var(--text-tertiary)]">Now building from India.</span>
+              </h2>
+              <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
+                Born in India, went to California for my MS in Computer Science at Cal State Fullerton, worked in Texas, then moved back to Ahmedabad and went full indie dev.
+              </p>
+              <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
+                No VC pitches, no standups, no Jira tickets. Just me, 5 AI agents on a Mac, and an unhealthy amount of chai. I build software that respects your privacy because that&apos;s how it should be.
+              </p>
+              <Link href="/about" className="btn btn-outline">The full story →</Link>
+            </div>
+            
+            <div className="lg:col-span-2">
+              <p className="section-label mb-6">Interests & vibes</p>
+              <div className="grid grid-cols-2 gap-3">
+                {interests.map((item, i) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05, duration: 0.35 }}
+                    className="card card-glow py-4 px-4"
+                  >
+                    <div className="text-xl mb-1.5">{item.emoji}</div>
+                    <div className="text-sm font-heading font-semibold text-[var(--text)]">{item.label}</div>
+                    <div className="text-[var(--text-tertiary)] text-xs mt-0.5">{item.detail}</div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="container"><div className="divider" /></div>
+      <div className="accent-line" />
 
-      {/* Now section */}
+      {/* Now section — offset layout */}
       <section className="section">
-        <div className="container max-w-3xl">
-          <p className="section-label">Now</p>
-          <h2 className="heading-display font-heading text-4xl md:text-5xl mb-10">What I&apos;m up to</h2>
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={stagger}
-            className="space-y-4"
-          >
-            {[
-              '🔨 Shipping new features for CashLens on iOS',
-              '🤖 Running 5 AI agents 24/7 on a Mac Mini (yes, really)',
-              '📜 Growing PrivacyPage — making legal docs painless for devs',
-              '🧾 Building out InvoiceZen templates',
-              '🐦 Posting the journey on X @rushirajjj',
-            ].map((item, i) => (
+        <div className="container">
+          <div className="grid lg:grid-cols-5 gap-12">
+            <div className="lg:col-span-2">
+              <p className="section-label">Now</p>
+              <h2 className="heading-display font-heading text-4xl md:text-5xl mb-4 lg:mb-0">What I&apos;m<br />up to</h2>
+            </div>
+            <div className="lg:col-span-3">
               <motion.div
-                key={i}
-                variants={fadeUp}
-                transition={{ duration: 0.35 }}
-                className="text-[var(--text-secondary)] text-lg border-l-2 border-[var(--accent)] pl-5 py-2 rounded-r-lg hover:bg-[var(--card)] transition-colors"
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                variants={stagger}
+                className="space-y-4"
               >
-                {item}
+                {[
+                  '🔨 Shipping new features for CashLens on iOS',
+                  '🤖 Running 5 AI agents 24/7 on a Mac (yes, really)',
+                  '📜 Growing PrivacyPage — making legal docs painless for devs',
+                  '🧾 Building out InvoiceZen templates',
+                  '🐦 Posting the journey on X @rushirajjj',
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    variants={fadeUp}
+                    transition={{ duration: 0.35 }}
+                    className="text-[var(--text-secondary)] text-lg border-l-2 border-[var(--accent)] pl-5 py-2 rounded-r-lg hover:bg-[var(--card)] transition-colors"
+                  >
+                    {item}
+                  </motion.div>
+                ))}
               </motion.div>
-            ))}
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <div className="container"><div className="divider" /></div>
+      <div className="accent-line" />
 
-      {/* Tech Stack */}
-      <section className="section">
-        <div className="container text-center">
+      {/* Tech Stack — marquee */}
+      <section className="section overflow-hidden">
+        <div className="container text-center mb-10">
           <p className="section-label">Stack</p>
-          <h2 className="heading-display font-heading text-3xl md:text-4xl mb-10">Tools I use daily</h2>
-          <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
-            {[
-              'Swift', 'SwiftUI', 'React', 'Next.js', 'TypeScript',
-              'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Supabase',
-              'Vercel', 'Python', 'Git', 'Cursor', 'framer-motion', 'OpenClaw'
-            ].map((tech) => (
-              <span key={tech} className="text-sm text-[var(--text-secondary)] px-4 py-2 rounded-full border border-[var(--border)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors cursor-default">
-                {tech}
-              </span>
+          <h2 className="heading-display font-heading text-3xl md:text-4xl">Tools I use daily</h2>
+        </div>
+        <div className="relative overflow-hidden py-4">
+          <div className="marquee-track">
+            {[...Array(2)].map((_, setIdx) => (
+              <div key={setIdx} className="flex gap-4 px-2">
+                {[
+                  'Swift', 'SwiftUI', 'React', 'Next.js', 'TypeScript',
+                  'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Supabase',
+                  'Vercel', 'Python', 'Git', 'Cursor', 'framer-motion', 'OpenClaw'
+                ].map((tech) => (
+                  <span key={`${setIdx}-${tech}`} className="text-sm text-[var(--text-secondary)] px-5 py-2.5 rounded-full border border-[var(--border)] whitespace-nowrap hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors cursor-default">
+                    {tech}
+                  </span>
+                ))}
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <div className="container"><div className="divider" /></div>
+      <div className="accent-line" />
 
       {/* Footer */}
       <footer className="py-16">
@@ -397,6 +435,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Bottom spacer for dock nav */}
+      <div className="h-20" />
     </div>
   );
 }

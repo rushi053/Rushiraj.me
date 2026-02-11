@@ -239,7 +239,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="horizontal-scroll md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-5 md:overflow-visible">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {products.map((product, i) => (
               <MagneticCard
                 key={product.name}
@@ -247,7 +247,7 @@ export default function Home() {
                 href={product.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="card card-glow group relative overflow-hidden flex flex-col min-w-[280px] md:min-w-0"
+                className="card card-glow group relative overflow-hidden flex flex-col"
               >
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}

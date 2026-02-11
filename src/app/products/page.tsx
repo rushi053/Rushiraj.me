@@ -71,10 +71,10 @@ const products = [
 export default function ProductsPage() {
   return (
     <div className="min-h-screen relative">
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden pt-24 md:pt-32">
         <div className="gradient-orb gradient-orb-1" style={{ top: '-150px', right: '-100px' }} />
         <div className="dot-grid" />
-        <div className="container relative z-10 pt-40 pb-16">
+        <div className="container relative z-10 pb-16">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <p className="section-label">Products</p>
             <h1 className="heading-display font-heading text-5xl md:text-7xl mb-6">

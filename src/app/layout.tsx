@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
-// CursorGlow removed
+import CommandPalette from "@/components/CommandPalette";
+import EasterEggs from "@/components/EasterEggs";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -55,6 +56,8 @@ export default function RootLayout({
       </head>
       <body className={`${spaceGrotesk.variable} ${dmSans.variable} font-body antialiased`}>
         <Navigation />
+        <CommandPalette />
+        <EasterEggs />
         <main>{children}</main>
       </body>
     </html>

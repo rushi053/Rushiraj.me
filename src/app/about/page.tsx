@@ -131,7 +131,7 @@ export default function AboutPage() {
                   <span className="text-[var(--text)] font-heading font-semibold">Design</span> — Typography, branding, clean aesthetics. I&apos;ll spend 2 hours picking a font and 10 minutes writing the copy. Pro Display XDR owner because I have zero impulse control.
                 </p>
                 <p>
-                  <span className="text-[var(--text)] font-heading font-semibold">Music</span> — Bollywood, hip-hop, rap, EDM, game soundtracks. My Spotify Wrapped is a mess and I&apos;m proud of it.
+                  <span className="text-[var(--text)] font-heading font-semibold">Music</span> — My Spotify Wrapped looks like five different people share my account. Arijit Singh into Travis Scott into Illenium into the Cyberpunk 2077 soundtrack. No genre loyalty, just vibes.
                 </p>
                 <p>
                   <span className="text-[var(--text)] font-heading font-semibold">Longevity</span> — I want to live long enough to see Mars colonies, Bitcoin at $10M, and Half-Life 3. In that order.

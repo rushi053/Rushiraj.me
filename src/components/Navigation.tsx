@@ -91,6 +91,18 @@ export default function Navigation() {
 
       <div className="w-px h-6 bg-[var(--border)] mx-1" />
 
+      {/* Cmd+K trigger */}
+      <button
+        onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))}
+        className="hidden sm:flex"
+        title="Search (⌘K)"
+      >
+        <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <span className="dock-tooltip">Search ⌘K</span>
+      </button>
+
       <ThemeToggle />
     </motion.nav>
   );

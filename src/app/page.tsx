@@ -61,7 +61,7 @@ const interests = [
   { emoji: '₿', label: 'Bitcoin', detail: 'Not crypto. Bitcoin.' },
   { emoji: '🚀', label: 'Space', detail: 'SpaceX fan. Mars or bust.' },
   { emoji: '🎨', label: 'Design', detail: 'Typography & branding nerd' },
-  { emoji: '🎵', label: 'Music', detail: 'Bollywood · Hip-hop · EDM' },
+  { emoji: '🎵', label: 'Music', detail: 'Spotify Wrapped is a crime scene' },
   { emoji: '🖨️', label: '3D Print', detail: 'Bambu Labs P1S owner' },
   { emoji: '☕', label: 'Coffee', detail: 'Chai mornings, coffee coding' },
   { emoji: '🦾', label: 'Longevity', detail: 'Living forever or dying trying' },

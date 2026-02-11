@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
+import CursorGlow from "@/components/CursorGlow";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -16,11 +17,11 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Rushiraj Jadeja — Solo Dev, 3 Products, 0 VC",
-  description: "Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen. No VC, no employees, just vibes and code.",
+  title: "Rushiraj Jadeja — Solo Dev, 4 Products, 0 VC",
+  description: "Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen, Cloudo. No VC, no employees, just vibes and code.",
   openGraph: {
-    title: "Rushiraj Jadeja — Solo Dev, 3 Products, 0 VC",
-    description: "Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen.",
+    title: "Rushiraj Jadeja — Solo Dev, 4 Products, 0 VC",
+    description: "Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen, Cloudo.",
     url: "https://rushiraj.me",
     siteName: "Rushiraj Jadeja",
     type: "website",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     creator: "@rushirajjj",
-    title: "Rushiraj Jadeja — Solo Dev, 3 Products, 0 VC",
+    title: "Rushiraj Jadeja — Solo Dev, 4 Products, 0 VC",
     description: "Building privacy-first software from India.",
   },
 };
@@ -53,6 +54,7 @@ export default function RootLayout({
         }} />
       </head>
       <body className={`${spaceGrotesk.variable} ${dmSans.variable} font-body antialiased`}>
+        <CursorGlow />
         <Navigation />
         <main>{children}</main>
       </body>

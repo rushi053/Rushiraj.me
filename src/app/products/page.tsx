@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import MagneticCard from '@/components/MagneticCard';
+import ScrollRevealText from '@/components/ScrollRevealText';
 
 const products = [
   {
@@ -9,7 +11,7 @@ const products = [
     description: 'Track your expenses without giving up your data. Everything stays on your device. No accounts, no cloud sync, no tracking. Just a clean, fast expense tracker that respects your privacy.',
     stats: [
       { label: 'Rating', value: '4.8★' },
-      { label: 'Downloads', value: '227+' },
+      { label: 'Downloads', value: '500+' },
       { label: 'Data stored', value: 'Locally' },
       { label: 'Accounts needed', value: '0' },
     ],
@@ -49,6 +51,21 @@ const products = [
     emoji: '🧾',
     accent: '#A855F7',
   },
+  {
+    name: 'Cloudo',
+    tagline: 'Simple, modern task management for iOS',
+    description: 'Stay organized with a clean minimal interface. Task prioritization, reminders, widgets, and iCloud sync. Built for people who want to get things done without the bloat.',
+    stats: [
+      { label: 'Platform', value: 'iOS' },
+      { label: 'Sync', value: 'iCloud' },
+      { label: 'Widgets', value: 'Yes' },
+      { label: 'Price', value: 'Free' },
+    ],
+    url: 'https://apps.apple.com/app/cloudo/id6744400890',
+    tech: ['Swift', 'SwiftUI', 'CloudKit'],
+    emoji: '☁️',
+    accent: '#06B6D4',
+  },
 ];
 
 export default function ProductsPage() {
@@ -61,7 +78,7 @@ export default function ProductsPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <p className="section-label">Products</p>
             <h1 className="heading-display font-heading text-5xl md:text-7xl mb-6">
-              3 products.<br />
+              4 products.<br />
               <span className="text-[var(--text-tertiary)]">0 compromises.</span>
             </h1>
             <p className="text-[var(--text-secondary)] text-lg max-w-lg">
@@ -76,7 +93,6 @@ export default function ProductsPage() {
       {products.map((product, i) => (
         <div key={product.name}>
           <section className="section relative overflow-hidden">
-            {/* Alternating layout */}
             <div className="gradient-orb gradient-orb-3" style={{
               width: '400px', height: '400px',
               [i % 2 === 0 ? 'right' : 'left']: '-100px',
@@ -95,7 +111,7 @@ export default function ProductsPage() {
                   <div className={`lg:col-span-3 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                     <div className="text-5xl mb-6 w-20 h-20 flex items-center justify-center rounded-3xl bg-[var(--bg-secondary)]">{product.emoji}</div>
                     <h2 className="heading-display font-heading text-4xl md:text-5xl mb-2">{product.name}</h2>
-                    <p className="text-[var(--accent)] text-lg font-medium mb-4" style={{ color: product.accent }}>{product.tagline}</p>
+                    <p className="text-lg font-medium mb-4" style={{ color: product.accent }}>{product.tagline}</p>
                     <p className="text-[var(--text-secondary)] text-lg max-w-2xl mb-8 leading-relaxed">
                       {product.description}
                     </p>
@@ -121,10 +137,10 @@ export default function ProductsPage() {
                   <div className={`lg:col-span-2 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
                     <div className="grid grid-cols-2 gap-3">
                       {product.stats.map((stat) => (
-                        <div key={stat.label} className="card card-glow py-5 px-5 text-center">
+                        <MagneticCard key={stat.label} className="card card-glow py-5 px-5 text-center">
                           <div className="text-xl font-heading font-bold mb-1">{stat.value}</div>
                           <div className="text-[var(--text-tertiary)] text-xs uppercase tracking-wider font-medium">{stat.label}</div>
-                        </div>
+                        </MagneticCard>
                       ))}
                     </div>
                   </div>

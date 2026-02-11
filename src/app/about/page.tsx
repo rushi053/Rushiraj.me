@@ -56,7 +56,7 @@ export default function AboutPage() {
                   Best decision I ever made.
                 </p>
                 <p>
-                  I run 3 products — <a href="https://cashlens.app" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">CashLens</a>, <a href="https://privacy.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">PrivacyPage</a>, and <a href="https://invoice.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">InvoiceZen</a>. Zero VC money. Zero employees. Just me and 5 AI agents running 24/7 on a Mac in my room. That&apos;s the whole company.
+                  I run 4 products — <a href="https://cashlens.app" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">CashLens</a>, <a href="https://privacy.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">PrivacyPage</a>, and <a href="https://invoice.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">InvoiceZen</a>. Zero VC money. Zero employees. Just me and 5 AI agents running 24/7 on a Mac in my room. That&apos;s the whole company.
                 </p>
                 <p>
                   Everything I build is privacy-first. Not because it&apos;s trendy, but because I genuinely believe your data is yours. CashLens stores everything locally on your phone. No accounts, no cloud, no tracking. That&apos;s how software should work.
@@ -184,7 +184,7 @@ export default function AboutPage() {
           <p className="section-label">Inspiration</p>
           <h2 className="heading-display font-heading text-3xl md:text-4xl mb-8">People I admire</h2>
           <div className="flex flex-wrap gap-3">
-            {['Steve Jobs', 'Elon Musk', 'Messi', 'Dhoni', 'Taylor Swift', 'Bieber', 'Pieter Levels'].map((name) => (
+            {['Steve Jobs', 'Elon Musk', 'Messi', 'Dhoni', 'Taylor Swift', 'Bieber'].map((name) => (
               <span key={name} className="text-sm text-[var(--text-secondary)] px-4 py-2 rounded-full border border-[var(--border)] hover:border-[var(--accent)] transition-colors">
                 {name}
               </span>

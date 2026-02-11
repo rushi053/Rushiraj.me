@@ -1,9 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import MagneticCard from '@/components/MagneticCard';
+import ScrollRevealText from '@/components/ScrollRevealText';
+import AnimatedCounter from '@/components/AnimatedCounter';
 
 interface Project {
   id: string;
@@ -18,7 +21,7 @@ const products = [
     name: 'CashLens',
     tagline: 'Privacy-first expense tracker for iOS',
     description: '100% local storage. No accounts. No cloud. Just your money, your data.',
-    stats: '4.8★ · 227+ downloads',
+    stats: '4.8★ · 500+ downloads',
     url: 'https://cashlens.app',
     appStore: 'https://apps.apple.com/us/app/cashlens-personal-finance/id6743153951',
     emoji: '💰',
@@ -42,6 +45,15 @@ const products = [
     emoji: '🧾',
     accent: '#A855F7',
   },
+  {
+    name: 'Cloudo',
+    tagline: 'Simple, modern task management for iOS',
+    description: 'Stay organized with a clean minimal interface. Task prioritization, reminders, widgets, and iCloud sync.',
+    stats: 'Released on App Store',
+    url: 'https://apps.apple.com/app/cloudo/id6744400890',
+    emoji: '☁️',
+    accent: '#06B6D4',
+  },
 ];
 
 const interests = [
@@ -64,12 +76,55 @@ const fadeUp = {
   animate: { opacity: 1, y: 0 },
 };
 
+function InterestCard({ item, index }: { item: typeof interests[0]; index: number }) {
+  const [flipped, setFlipped] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.05, duration: 0.35 }}
+      className="cursor-pointer perspective-[600px]"
+      onClick={() => setFlipped(!flipped)}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+    >
+      <motion.div
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        style={{ transformStyle: 'preserve-3d' }}
+        className="relative"
+      >
+        {/* Front */}
+        <div className="card card-glow py-4 px-4" style={{ backfaceVisibility: 'hidden' }}>
+          <div className="text-xl mb-1.5">{item.emoji}</div>
+          <div className="text-sm font-heading font-semibold text-[var(--text)]">{item.label}</div>
+          <div className="text-[var(--text-tertiary)] text-xs mt-0.5">{item.detail}</div>
+        </div>
+        {/* Back */}
+        <div
+          className="card card-glow py-4 px-4 absolute inset-0 flex items-center justify-center"
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          <div className="text-3xl">{item.emoji}</div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const { scrollYProgress } = useScroll();
   const orbY = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const orbX = useTransform(scrollYProgress, [0, 1], [0, 100]);
+
+  // Parallax refs
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const heroParallax = useTransform(heroProgress, [0, 1], [0, -80]);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -88,7 +143,7 @@ export default function Home() {
   return (
     <div className="relative">
       {/* Hero */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
         {/* Gradient orbs */}
         <motion.div
           className="gradient-orb gradient-orb-1"
@@ -101,7 +156,7 @@ export default function Home() {
         {/* Dot grid */}
         <div className="dot-grid" />
 
-        <div className="container relative z-10">
+        <motion.div className="container relative z-10" style={{ y: heroParallax }}>
           <div className="max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -124,7 +179,7 @@ export default function Home() {
               className="heading-display font-heading text-5xl md:text-7xl lg:text-[5.5rem] mb-8"
             >
               Solo dev.<br />
-              3 products.<br />
+              4 products.<br />
               <span className="text-[var(--text-tertiary)]">0 VC money.</span>
             </motion.h1>
             
@@ -154,10 +209,10 @@ export default function Home() {
               </a>
             </motion.div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Stats — full-bleed accent line instead of divider */}
+      {/* Stats */}
       <div className="accent-line" />
       
       <section className="section relative overflow-hidden">
@@ -170,8 +225,8 @@ export default function Home() {
             className="grid grid-cols-2 md:grid-cols-5 gap-4"
           >
             {[
-              { value: '3', label: 'Products live', icon: '🚀' },
-              { value: '227+', label: 'App downloads', icon: '📲' },
+              { value: '4', label: 'Products live', icon: '🚀' },
+              { value: '500+', label: 'App downloads', icon: '📲' },
               { value: '4.8★', label: 'App Store rating', icon: '⭐' },
               { value: '3K+', label: 'X followers', icon: '🐦' },
               { value: '5', label: 'AI agents running', icon: '🤖' },
@@ -183,7 +238,9 @@ export default function Home() {
                 className="card card-glow text-center py-8 group"
               >
                 <div className="text-lg mb-2 opacity-60 group-hover:opacity-100 transition-opacity">{stat.icon}</div>
-                <div className="text-2xl md:text-3xl font-heading font-bold mb-1 text-[var(--text)]">{stat.value}</div>
+                <div className="text-2xl md:text-3xl font-heading font-bold mb-1 text-[var(--text)]">
+                  <AnimatedCounter value={stat.value} />
+                </div>
                 <div className="text-[var(--text-tertiary)] text-xs font-medium tracking-wider uppercase">{stat.label}</div>
               </motion.div>
             ))}
@@ -193,49 +250,54 @@ export default function Home() {
 
       <div className="accent-line" />
 
-      {/* Products — horizontal scroll cards */}
+      {/* Products */}
       <section className="section relative overflow-hidden">
         <div className="gradient-orb gradient-orb-3" style={{ top: '50%', right: '-200px', transform: 'translateY(-50%)' }} />
         <div className="container relative z-10">
           <div className="flex justify-between items-end mb-12">
             <div>
               <p className="section-label">Products</p>
-              <h2 className="heading-display font-heading text-4xl md:text-5xl">What I&apos;ve built</h2>
+              <ScrollRevealText className="heading-display font-heading text-4xl md:text-5xl">What I&apos;ve built</ScrollRevealText>
             </div>
           </div>
 
-          <div className="horizontal-scroll md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
+          <div className="horizontal-scroll md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-5 md:overflow-visible">
             {products.map((product, i) => (
-              <motion.a
+              <MagneticCard
                 key={product.name}
+                as="a"
                 href={product.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.12, duration: 0.5 }}
-                className="card card-glow group relative overflow-hidden flex flex-col min-w-[300px] md:min-w-0"
+                className="card card-glow group relative overflow-hidden flex flex-col min-w-[280px] md:min-w-0"
               >
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `radial-gradient(circle at top right, ${product.accent}15, transparent 60%)` }} />
-                <div className="relative text-4xl w-14 h-14 flex items-center justify-center rounded-2xl bg-[var(--bg-secondary)] mb-5">{product.emoji}</div>
-                <div className="relative flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-heading font-bold">{product.name}</h3>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.12, duration: 0.5 }}
+                  className="flex flex-col h-full"
+                >
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `radial-gradient(circle at top right, ${product.accent}15, transparent 60%)` }} />
+                  <div className="relative text-4xl w-14 h-14 flex items-center justify-center rounded-2xl bg-[var(--bg-secondary)] mb-5">{product.emoji}</div>
+                  <div className="relative flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl font-heading font-bold">{product.name}</h3>
+                    </div>
+                    <p className="text-[var(--accent)] text-sm font-medium mb-2">{product.tagline}</p>
+                    <p className="text-[var(--text-secondary)] text-sm mb-4">{product.description}</p>
+                    <span className="text-[var(--text-tertiary)] text-xs border border-[var(--border)] px-2.5 py-1 rounded-full">{product.stats}</span>
                   </div>
-                  <p className="text-[var(--accent)] text-sm font-medium mb-2">{product.tagline}</p>
-                  <p className="text-[var(--text-secondary)] text-sm mb-4">{product.description}</p>
-                  <span className="text-[var(--text-tertiary)] text-xs border border-[var(--border)] px-2.5 py-1 rounded-full">{product.stats}</span>
-                </div>
-                <div className="mt-5 pt-4 border-t border-[var(--border)] flex items-center justify-between">
-                  <span className="text-sm text-[var(--text-secondary)]">View project</span>
-                  <div className="text-[var(--text-tertiary)] group-hover:text-[var(--accent)] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                    </svg>
+                  <div className="mt-5 pt-4 border-t border-[var(--border)] flex items-center justify-between">
+                    <span className="text-sm text-[var(--text-secondary)]">View project</span>
+                    <div className="text-[var(--text-tertiary)] group-hover:text-[var(--accent)] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
+                    </div>
                   </div>
-                </div>
-              </motion.a>
+                </motion.div>
+              </MagneticCard>
             ))}
           </div>
         </div>
@@ -243,76 +305,34 @@ export default function Home() {
 
       <div className="accent-line" />
 
-      {/* Supabase Featured Projects */}
-      {!loading && projects.length > 0 && (
-        <>
-          <section className="section">
-            <div className="container">
-              <div className="flex justify-between items-end mb-12">
-                <div>
-                  <p className="section-label">Featured</p>
-                  <h2 className="heading-display font-heading text-4xl md:text-5xl">Selected Work</h2>
-                </div>
-                <Link href="/work" className="text-[var(--text-secondary)] hover:text-[var(--accent)] text-sm font-medium hover-line hidden md:block">
-                  View all →
-                </Link>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-5">
-                {projects.map((project, i) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.4 }}
-                  >
-                    <Link href={`/work/${project.slug}`}>
-                      <div className="card card-glow group h-full">
-                        <span className="text-[var(--accent)] text-sm font-mono font-medium mb-4 block">0{i + 1}</span>
-                        <h3 className="text-xl font-heading font-bold mb-3 group-hover:text-[var(--accent)] transition-colors">
-                          {project.title}
-                        </h3>
-                        <p className="text-[var(--text-secondary)] text-sm line-clamp-2">
-                          {project.description}
-                        </p>
-                        {project.technologies && (
-                          <div className="flex flex-wrap gap-2 mt-4">
-                            {project.technologies.slice(0, 3).map((tech) => (
-                              <span key={tech} className="text-[10px] text-[var(--text-tertiary)] border border-[var(--border)] px-2 py-0.5 rounded-full">
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </section>
-          <div className="accent-line" />
-        </>
-      )}
-
-      {/* About snippet — asymmetric layout */}
+      {/* About snippet — with parallax */}
       <section className="section relative overflow-hidden">
         <div className="dot-grid" style={{ opacity: 0.2 }} />
         <div className="container relative z-10">
           <div className="grid lg:grid-cols-5 gap-12 items-start">
             <div className="lg:col-span-3">
               <p className="section-label">About</p>
-              <h2 className="heading-display font-heading text-4xl md:text-5xl mb-8">
-                MS CS from California.<br />
-                <span className="text-[var(--text-tertiary)]">Now building from India.</span>
-              </h2>
-              <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
+              <ScrollRevealText className="heading-display font-heading text-4xl md:text-5xl mb-8">
+                MS CS from California. Now building from India.
+              </ScrollRevealText>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="text-[var(--text-secondary)] mb-4 leading-relaxed"
+              >
                 Born in India, went to California for my MS in Computer Science at Cal State Fullerton, worked in Texas, then moved back to Ahmedabad and went full indie dev.
-              </p>
-              <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="text-[var(--text-secondary)] mb-6 leading-relaxed"
+              >
                 No VC pitches, no standups, no Jira tickets. Just me, 5 AI agents on a Mac, and an unhealthy amount of chai. I build software that respects your privacy because that&apos;s how it should be.
-              </p>
+              </motion.p>
               <Link href="/about" className="btn btn-outline">The full story →</Link>
             </div>
             
@@ -320,18 +340,7 @@ export default function Home() {
               <p className="section-label mb-6">Interests & vibes</p>
               <div className="grid grid-cols-2 gap-3">
                 {interests.map((item, i) => (
-                  <motion.div
-                    key={item.label}
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.05, duration: 0.35 }}
-                    className="card card-glow py-4 px-4"
-                  >
-                    <div className="text-xl mb-1.5">{item.emoji}</div>
-                    <div className="text-sm font-heading font-semibold text-[var(--text)]">{item.label}</div>
-                    <div className="text-[var(--text-tertiary)] text-xs mt-0.5">{item.detail}</div>
-                  </motion.div>
+                  <InterestCard key={item.label} item={item} index={i} />
                 ))}
               </div>
             </div>
@@ -341,13 +350,13 @@ export default function Home() {
 
       <div className="accent-line" />
 
-      {/* Now section — offset layout */}
+      {/* Now section */}
       <section className="section">
         <div className="container">
           <div className="grid lg:grid-cols-5 gap-12">
             <div className="lg:col-span-2">
               <p className="section-label">Now</p>
-              <h2 className="heading-display font-heading text-4xl md:text-5xl mb-4 lg:mb-0">What I&apos;m<br />up to</h2>
+              <ScrollRevealText className="heading-display font-heading text-4xl md:text-5xl mb-4 lg:mb-0">What I&apos;m up to</ScrollRevealText>
             </div>
             <div className="lg:col-span-3">
               <motion.div
@@ -359,6 +368,7 @@ export default function Home() {
               >
                 {[
                   '🔨 Shipping new features for CashLens on iOS',
+                  '☁️ Just launched Cloudo — task management for iOS',
                   '🤖 Running 5 AI agents 24/7 on a Mac (yes, really)',
                   '📜 Growing PrivacyPage — making legal docs painless for devs',
                   '🧾 Building out InvoiceZen templates',
@@ -385,7 +395,7 @@ export default function Home() {
       <section className="section overflow-hidden">
         <div className="container text-center mb-10">
           <p className="section-label">Stack</p>
-          <h2 className="heading-display font-heading text-3xl md:text-4xl">Tools I use daily</h2>
+          <ScrollRevealText className="heading-display font-heading text-3xl md:text-4xl">Tools I use daily</ScrollRevealText>
         </div>
         <div className="relative overflow-hidden py-4">
           <div className="marquee-track">
@@ -427,6 +437,7 @@ export default function Home() {
                 <a href="https://cashlens.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">CashLens</a>
                 <a href="https://privacy.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">PrivacyPage</a>
                 <a href="https://invoice.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">InvoiceZen</a>
+                <a href="https://apps.apple.com/app/cloudo/id6744400890" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">Cloudo</a>
               </div>
             </div>
           </div>
@@ -436,7 +447,6 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Bottom spacer for dock nav */}
       <div className="h-20" />
     </div>
   );

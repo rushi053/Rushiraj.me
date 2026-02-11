@@ -17,7 +17,7 @@ export default function AboutPage() {
       <section className="relative overflow-hidden">
         <div className="gradient-orb gradient-orb-1" style={{ top: '-100px', right: '-200px' }} />
         <div className="dot-grid" />
-        <div className="container relative z-10 pt-32 pb-16">
+        <div className="container relative z-10 pt-40 pb-16">
           <div className="max-w-3xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <p className="section-label">About</p>

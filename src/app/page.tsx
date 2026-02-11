@@ -50,7 +50,7 @@ const products = [
     tagline: 'Simple, modern task management for iOS',
     description: 'Stay organized with a clean minimal interface. Task prioritization, reminders, widgets, and iCloud sync.',
     stats: 'Released on App Store',
-    url: 'https://apps.apple.com/app/cloudo/id6744400890',
+    url: 'https://apps.apple.com/us/app/cloudo/id6742880068',
     emoji: '☁️',
     accent: '#06B6D4',
   },
@@ -374,7 +374,8 @@ export default function Home() {
         <div className="container relative z-10">
           <div className="text-center mb-12">
             <p className="section-label">What people say</p>
-            <ScrollRevealText className="heading-display font-heading text-4xl md:text-5xl">Real reviews, real users</ScrollRevealText>
+            <ScrollRevealText className="heading-display font-heading text-4xl md:text-5xl">Real reviews from the App Store</ScrollRevealText>
+            <p className="text-[var(--text-tertiary)] text-sm mt-3">Don&apos;t take my word for it — <a href="https://apps.apple.com/us/app/cashlens-personal-finance/id6743153951" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">verify these on the App Store yourself</a>.</p>
           </div>
           <motion.div
             initial="initial"
@@ -385,21 +386,18 @@ export default function Home() {
           >
             {[
               {
-                quote: "Finally an expense tracker that doesn't want my email, my location, and my firstborn. Clean UI, works offline, does exactly what it says.",
-                author: 'App Store Review',
-                product: 'CashLens',
+                quote: "I have never really gotten into budgeting and tracking what I spend, but the design and cleanliness of this app finally inspired me to try. The biggest plus is that all of this is local and there's no ads/no IAP to 'unlock' various features.",
+                author: 'Bluestar2016',
                 stars: '⭐⭐⭐⭐⭐',
               },
               {
-                quote: "I needed a privacy policy for my app launch and didn't want to pay a lawyer $500. This generated a solid one in 2 minutes. Lifesaver for indie devs.",
-                author: 'Indie Developer',
-                product: 'PrivacyPage',
+                quote: "Saw the dev's reddit post and installed it. What an app! Very easy and does the job well. No ads, very convenient.",
+                author: 'kundithan.',
                 stars: '⭐⭐⭐⭐⭐',
               },
               {
-                quote: "Simple, beautiful, no BS. I just needed to send an invoice without creating yet another account somewhere. This nails it.",
-                author: 'Freelancer',
-                product: 'InvoiceZen',
+                quote: "The simple UI makes it very easy to track all expenses and the quick updates to the app make me sure that some great features would be coming soon!",
+                author: 'G_Aryan',
                 stars: '⭐⭐⭐⭐⭐',
               },
             ].map((t, i) => (
@@ -412,8 +410,7 @@ export default function Home() {
                 <div className="text-sm mb-3">{t.stars}</div>
                 <p className="text-[var(--text-secondary)] text-sm leading-relaxed flex-1 mb-4">&ldquo;{t.quote}&rdquo;</p>
                 <div className="pt-4 border-t border-[var(--border)]">
-                  <p className="text-[var(--text-tertiary)] text-xs">{t.author}</p>
-                  <p className="text-[var(--accent)] text-xs font-medium">{t.product}</p>
+                  <p className="text-[var(--text-tertiary)] text-xs">— {t.author} on App Store</p>
                 </div>
               </motion.div>
             ))}
@@ -441,10 +438,10 @@ export default function Home() {
                 className="space-y-6"
               >
                 {[
-                  { category: '💻 Machines', items: 'MacBook Pro M4 (daily driver) · Mac Mini M4 (24/7 server for AI agents) · Pro Display XDR (impulse buy, zero regrets)' },
-                  { category: '🎮 Gaming', items: 'Xbox Series X · Death Stranding · Cyberpunk 2077 · CoD · Fortnite' },
-                  { category: '🛠️ Dev Tools', items: 'Cursor (AI editor) · Xcode · VS Code · Vercel · Supabase · GitHub' },
-                  { category: '🖨️ Other', items: 'Bambu Labs P1S (3D printer) · AirPods Pro · iPhone 16 Pro' },
+                  { category: '💻 Apple Ecosystem', items: 'MacBook Pro 14" M3 Max (daily driver) · Mac Mini M2 (24/7 AI agent server) · iPad Pro 13" · iPad Mini · iPhone 15 Pro Max · Apple Watch Ultra · Vision Pro · AirPods Pro 2 · AirPods Max · Pro Display XDR' },
+                  { category: '🎮 Gaming & Fun', items: 'Xbox Series X · Steam Deck 512GB · Playdate · GoPro Hero Black 13 · Nike Adapt Auto Max' },
+                  { category: '🏠 Home & Audio', items: 'Sonos Arc Ultra · Sonos Era 300s · Raspberry Pi (Home Assistant) · Coldcard MK4 (Bitcoin)' },
+                  { category: '🛠️ Dev & Peripherals', items: 'Cursor · Xcode · Vercel · Supabase · Logitech MX Master 4 · Bambu Labs P1S (3D printer)' },
                 ].map((setup, i) => (
                   <motion.div
                     key={i}
@@ -510,7 +507,7 @@ export default function Home() {
                 <a href="https://cashlens.app" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">CashLens</a>
                 <a href="https://privacy.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">PrivacyPage</a>
                 <a href="https://invoice.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">InvoiceZen</a>
-                <a href="https://apps.apple.com/app/cloudo/id6744400890" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">Cloudo</a>
+                <a href="https://apps.apple.com/us/app/cloudo/id6742880068" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">Cloudo</a>
               </div>
             </div>
           </div>

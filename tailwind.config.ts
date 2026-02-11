@@ -9,16 +9,25 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)'],
+        heading: ['var(--font-heading)'],
+        body: ['var(--font-body)'],
       },
       colors: {
-        primary: {
-          black: '#212125',
-          sand: '#DBDBCD',
-          'dark-grey': '#626262',
-          westar: '#E5E3DB',
-          'off-white': '#F8F8F8',
-        },
+        bg: 'var(--bg)',
+        'bg-secondary': 'var(--bg-secondary)',
+        'text-primary': 'var(--text)',
+        'text-secondary': 'var(--text-secondary)',
+        'text-tertiary': 'var(--text-tertiary)',
+        border: 'var(--border)',
+        card: 'var(--card)',
+        'card-hover': 'var(--card-hover)',
+        accent: 'var(--accent)',
+        surface: 'var(--surface)',
+      },
+      borderRadius: {
+        'xl': '12px',
+        '2xl': '16px',
+        '3xl': '24px',
       },
     },
   },
@@ -26,4 +35,4 @@ const config: Config = {
   darkMode: 'class',
 }
 
-export default config 
+export default config

@@ -3,11 +3,31 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #000000;
-  --color-text: #ffffff;
-  --color-muted: #888888;
-  --color-border: #222222;
-  --color-surface: #111111;
+  --bg: #FAFAF9;
+  --bg-secondary: #F0F0EE;
+  --text: #0A0A0A;
+  --text-secondary: #6B7280;
+  --text-tertiary: #9CA3AF;
+  --border: #E5E5E3;
+  --card: #FFFFFF;
+  --card-hover: #F5F5F3;
+  --accent: #3B82F6;
+  --accent-light: #3B82F620;
+  --surface: #F5F5F4;
+}
+
+.dark {
+  --bg: #0A0A0F;
+  --bg-secondary: #12121A;
+  --text: #F5F5F5;
+  --text-secondary: #9CA3AF;
+  --text-tertiary: #6B7280;
+  --border: #1F1F2E;
+  --card: #141420;
+  --card-hover: #1A1A2A;
+  --accent: #3B82F6;
+  --accent-light: #3B82F615;
+  --surface: #0F0F1A;
 }
 
 * {
@@ -19,18 +39,16 @@ html {
 }
 
 body {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  background: var(--color-bg);
-  color: var(--color-text);
+  font-family: var(--font-body), system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   line-height: 1.6;
-}
-
-.font-serif {
-  font-family: var(--font-serif), Georgia, serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--accent);
+  color: white;
 }
 
 ::-webkit-scrollbar {
@@ -38,16 +56,18 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg);
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: var(--border);
+  border-radius: 3px;
 }
 
+/* Layout */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -68,11 +88,31 @@ body {
   }
 }
 
-.divider {
-  height: 1px;
-  background: var(--color-border);
+/* Section label */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
 }
 
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+}
+
+/* Typography */
+.heading-display {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -81,43 +121,52 @@ body {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.02em;
+  border-radius: 12px;
   transition: all 0.2s ease;
 }
 
 .btn-primary {
-  background: white;
-  color: black;
+  background: var(--accent);
+  color: white;
 }
 
 .btn-primary:hover {
-  background: #e5e5e5;
+  background: #2563EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--accent-light);
 }
 
 .btn-outline {
   background: transparent;
-  color: white;
-  border: 1px solid var(--color-border);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 .btn-outline:hover {
-  border-color: white;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
+/* Cards */
 .card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  padding: 32px;
-  transition: border-color 0.2s ease;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s ease;
 }
 
 .card:hover {
-  border-color: #444;
+  background: var(--card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
 }
 
-.text-muted {
-  color: var(--color-muted);
+.dark .card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
+/* Hover underline */
 .hover-line {
   position: relative;
 }
@@ -128,8 +177,8 @@ body {
   bottom: -2px;
   left: 0;
   width: 0;
-  height: 1px;
-  background: currentColor;
+  height: 1.5px;
+  background: var(--accent);
   transition: width 0.3s ease;
 }
 
@@ -137,9 +186,21 @@ body {
   width: 100%;
 }
 
-.grid-bg {
-  background-image: 
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
+/* Status pulse */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.status-pulse {
+  position: relative;
+}
+
+.status-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #22C55E;
+  animation: pulse-ring 2s ease-out infinite;
 }

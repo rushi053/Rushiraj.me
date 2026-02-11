@@ -517,7 +517,29 @@ export default function Home() {
         </div>
       </footer>
 
-      <div className="h-20" />
+      {/* Hints */}
+      <section className="pb-32">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-[var(--text-tertiary)] text-xs"
+          >
+            <span className="flex items-center gap-2">
+              <kbd className="bg-[var(--bg-secondary)] px-1.5 py-0.5 rounded border border-[var(--border)] text-[10px]">⌘K</kbd>
+              Search anywhere on this site
+            </span>
+            <span className="hidden sm:inline">·</span>
+            <span className="flex items-center gap-1.5">
+              🎮 Gamers might want to try the Konami Code...
+            </span>
+            <span className="hidden sm:inline">·</span>
+            <span>Try switching tabs 👀</span>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

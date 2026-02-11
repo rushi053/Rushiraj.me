@@ -370,14 +370,20 @@ body::before {
 /* Mobile dock */
 @media (max-width: 640px) {
   .dock-nav {
-    bottom: 16px;
-    gap: 2px;
-    padding: 5px;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 1px;
+    padding: 4px;
+    max-width: calc(100vw - 24px);
   }
   .dock-nav a, .dock-nav button {
-    width: 36px;
-    height: 36px;
-    border-radius: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+  .dock-nav .w-px {
+    display: none;
   }
   .dock-tooltip {
     display: none;

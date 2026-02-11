@@ -63,8 +63,9 @@ export default function Navigation() {
   return (
     <motion.nav
       className="dock-nav"
-      initial={{ y: 0, opacity: 1 }}
+      initial={{ x: '-50%', y: 0, opacity: 1 }}
       animate={{ 
+        x: '-50%',
         y: visible ? 0 : 80, 
         opacity: visible ? 1 : 0 
       }}

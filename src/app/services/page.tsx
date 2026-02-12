@@ -158,6 +158,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <div className="h-12" />
       <div className="accent-line" />
 
       {/* Social Proof Stats */}

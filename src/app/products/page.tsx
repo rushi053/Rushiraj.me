@@ -52,6 +52,21 @@ const products = [
     accent: '#A855F7',
   },
   {
+    name: 'DeadBy.ai',
+    tagline: 'AI job replacement countdown timer',
+    description: 'Enter your job title and get a brutally honest countdown to when AI takes over. Powered by dark humor, questionable methodology, and one guy who "has a feeling about these things."',
+    stats: [
+      { label: 'Models used', value: '147*' },
+      { label: 'Careers killed', value: '2,847' },
+      { label: 'Accuracy', value: '~horoscope' },
+      { label: 'Vibes', value: 'Spooky' },
+    ],
+    url: 'https://deadby.rushiraj.me',
+    tech: ['Next.js', 'TypeScript', 'OpenAI', 'Supabase'],
+    emoji: '💀',
+    accent: '#FF4444',
+  },
+  {
     name: 'Cloudo',
     tagline: 'Simple, modern task management for iOS',
     description: 'Stay organized with a clean minimal interface. Task prioritization, reminders, widgets, and iCloud sync. Built for people who want to get things done without the bloat.',
@@ -78,7 +93,7 @@ export default function ProductsPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <p className="section-label">Products</p>
             <h1 className="heading-display font-heading text-5xl md:text-7xl mb-6">
-              4 products.<br />
+              5 products.<br />
               <span className="text-[var(--text-tertiary)]">0 compromises.</span>
             </h1>
             <p className="text-[var(--text-secondary)] text-lg max-w-lg">

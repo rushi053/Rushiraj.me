@@ -46,6 +46,15 @@ const products = [
     accent: '#A855F7',
   },
   {
+    name: 'DeadBy.ai',
+    tagline: 'AI job replacement countdown timer',
+    description: 'Enter your job title. Get a brutally honest countdown to when AI takes over. Dark humor included.',
+    stats: 'Viral fun project',
+    url: 'https://deadby.rushiraj.me',
+    emoji: '💀',
+    accent: '#FF4444',
+  },
+  {
     name: 'Cloudo',
     tagline: 'Simple, modern task management for iOS',
     description: 'Stay organized with a clean minimal interface. Task prioritization, reminders, widgets, and iCloud sync.',
@@ -157,7 +166,7 @@ export default function Home() {
               className="heading-display font-heading text-5xl md:text-7xl lg:text-[5.5rem] mb-8"
             >
               Solo dev.<br />
-              4 products.<br />
+              5 products.<br />
               <span className="text-[var(--text-tertiary)]">0 VC money.</span>
             </motion.h1>
             
@@ -508,6 +517,7 @@ export default function Home() {
                 <a href="https://privacy.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">PrivacyPage</a>
                 <a href="https://invoice.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">InvoiceZen</a>
                 <a href="https://apps.apple.com/us/app/cloudo/id6742880068" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">Cloudo</a>
+                <a href="https://deadby.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] text-xs hover-line">DeadBy.ai</a>
               </div>
             </div>
           </div>

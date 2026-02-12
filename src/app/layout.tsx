@@ -18,10 +18,10 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Rushiraj Jadeja — Solo Dev, 4 Products, 0 VC",
+  title: "Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC",
   description: "Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen, Cloudo. No VC, no employees, just vibes and code.",
   openGraph: {
-    title: "Rushiraj Jadeja — Solo Dev, 4 Products, 0 VC",
+    title: "Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC",
     description: "Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen, Cloudo.",
     url: "https://rushiraj.me",
     siteName: "Rushiraj Jadeja",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     creator: "@rushirajjj",
-    title: "Rushiraj Jadeja — Solo Dev, 4 Products, 0 VC",
+    title: "Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC",
     description: "Building privacy-first software from India.",
   },
 };

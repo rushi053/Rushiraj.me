@@ -45,6 +45,15 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DLKEQ0N44H" />
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-DLKEQ0N44H');
+          `,
+        }} />
         <script dangerouslySetInnerHTML={{
           __html: `
             (function() {

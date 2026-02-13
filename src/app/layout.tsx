@@ -18,7 +18,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://rushiraj.me'),
+  metadataBase: new URL('https://www.rushiraj.me'),
   title: {
     default: 'Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC',
     template: '%s | Rushiraj Jadeja',
@@ -31,11 +31,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC',
     description: 'Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen, Cloudo, DeadBy.ai.',
-    url: 'https://rushiraj.me',
+    url: 'https://www.rushiraj.me',
     siteName: 'Rushiraj Jadeja',
     type: 'website',
     locale: 'en_US',
-    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Rushiraj Jadeja — Solo Dev' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -43,7 +42,7 @@ export const metadata: Metadata = {
     site: '@rushirajjj',
     title: 'Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC',
     description: 'Building privacy-first software from India.',
-    images: ['/og.png'],
+    images: ['/opengraph-image'],
   },
   alternates: {
     canonical: '/',
@@ -100,7 +99,7 @@ export default function RootLayout({
                 '@context': 'https://schema.org',
                 '@type': 'Person',
                 name: 'Rushiraj Jadeja',
-                url: 'https://rushiraj.me',
+                url: 'https://www.rushiraj.me',
                 jobTitle: 'Full-Stack Developer & Indie Maker',
                 description: 'Full-stack developer and indie maker from India. Building privacy-first software — CashLens, PrivacyPage, InvoiceZen, DeadBy.ai, Cloudo.',
                 sameAs: [
@@ -113,7 +112,7 @@ export default function RootLayout({
                 '@context': 'https://schema.org',
                 '@type': 'WebSite',
                 name: 'Rushiraj Jadeja',
-                url: 'https://rushiraj.me',
+                url: 'https://www.rushiraj.me',
                 description: 'Portfolio and blog of Rushiraj Jadeja — solo developer building privacy-first software.',
               },
             ]),

@@ -1,4 +1,13 @@
+import { Metadata } from "next";
 import ProjectCard from "@/components/ProjectCard";
+
+export const metadata: Metadata = {
+  title: "Projects by Rushiraj Jadeja",
+  description: "Featured projects and case studies by Rushiraj Jadeja. Full-stack web and mobile development work.",
+  alternates: {
+    canonical: '/projects',
+  },
+};
 
 // This data would ideally come from a CMS or API
 const projects = [

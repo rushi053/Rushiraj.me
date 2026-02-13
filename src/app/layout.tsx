@@ -18,20 +18,46 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC",
-  description: "Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen, Cloudo. No VC, no employees, just vibes and code.",
+  metadataBase: new URL('https://rushiraj.me'),
+  title: {
+    default: 'Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC',
+    template: '%s | Rushiraj Jadeja',
+  },
+  description: 'Full-stack developer and indie maker from India. Building privacy-first software — CashLens, PrivacyPage, InvoiceZen, DeadBy.ai, Cloudo. Available for hire.',
+  keywords: ['Rushiraj Jadeja', 'indie developer', 'solo developer', 'full stack developer India', 'Next.js developer', 'privacy-first software', 'CashLens', 'PrivacyPage', 'InvoiceZen', 'MVP development', 'SaaS developer', 'hire developer India'],
+  authors: [{ name: 'Rushiraj Jadeja', url: 'https://rushiraj.me' }],
+  creator: 'Rushiraj Jadeja',
+  publisher: 'Rushiraj Jadeja',
   openGraph: {
-    title: "Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC",
-    description: "Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen, Cloudo.",
-    url: "https://rushiraj.me",
-    siteName: "Rushiraj Jadeja",
-    type: "website",
+    title: 'Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC',
+    description: 'Building privacy-first software from India. CashLens, PrivacyPage, InvoiceZen, Cloudo, DeadBy.ai.',
+    url: 'https://rushiraj.me',
+    siteName: 'Rushiraj Jadeja',
+    type: 'website',
+    locale: 'en_US',
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Rushiraj Jadeja — Solo Dev' }],
   },
   twitter: {
-    card: "summary_large_image",
-    creator: "@rushirajjj",
-    title: "Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC",
-    description: "Building privacy-first software from India.",
+    card: 'summary_large_image',
+    creator: '@rushirajjj',
+    site: '@rushirajjj',
+    title: 'Rushiraj Jadeja — Solo Dev, 5 Products, 0 VC',
+    description: 'Building privacy-first software from India.',
+    images: ['/og.png'],
+  },
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large' as const,
+      'max-snippet': -1,
+    },
   },
 };
 
@@ -66,6 +92,33 @@ export default function RootLayout({
         }} />
       </head>
       <body className={`${spaceGrotesk.variable} ${dmSans.variable} font-body antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Person',
+                name: 'Rushiraj Jadeja',
+                url: 'https://rushiraj.me',
+                jobTitle: 'Full-Stack Developer & Indie Maker',
+                description: 'Full-stack developer and indie maker from India. Building privacy-first software — CashLens, PrivacyPage, InvoiceZen, DeadBy.ai, Cloudo.',
+                sameAs: [
+                  'https://x.com/rushirajjj',
+                  'https://github.com/rushi053',
+                  'https://linkedin.com/in/rushirajjadeja',
+                ],
+              },
+              {
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                name: 'Rushiraj Jadeja',
+                url: 'https://rushiraj.me',
+                description: 'Portfolio and blog of Rushiraj Jadeja — solo developer building privacy-first software.',
+              },
+            ]),
+          }}
+        />
         <Navigation />
         <CommandPalette />
         <EasterEggs />

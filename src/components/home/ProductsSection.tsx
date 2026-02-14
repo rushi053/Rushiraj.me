@@ -43,6 +43,15 @@ const products = [
     accent: '#FF4444',
   },
   {
+    name: 'StackRadar',
+    tagline: 'X-ray any website\'s tech stack',
+    description: 'Detect 150+ technologies, compare sites side-by-side, and share results. Free and instant.',
+    stats: 'Free & open',
+    url: 'https://stackradar.rushiraj.me',
+    emoji: '📡',
+    accent: '#8B5CF6',
+  },
+  {
     name: 'Cloudo',
     tagline: 'Simple, modern task management for iOS',
     description: 'Stay organized with a clean minimal interface. Task prioritization, reminders, widgets, and iCloud sync.',

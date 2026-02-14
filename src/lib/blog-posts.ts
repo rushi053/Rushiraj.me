@@ -11,6 +11,87 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'stackradar-x-ray-any-website-tech-stack',
+    title: 'I Built a Wappalyzer Alternative — Here\'s What I Learned',
+    excerpt: 'StackRadar detects 150+ technologies on any website instantly. Here\'s why I built it, how it works under the hood, and what I\'d do differently.',
+    date: '2026-02-14',
+    readTime: '5 min',
+    tags: ['StackRadar', 'Web Dev', 'Open Source'],
+    emoji: '📡',
+    content: `
+Ever visited a website and wondered "what's this built with?" Maybe you're scoping out a competitor, researching a potential client, or just genuinely curious about the tech behind a beautiful site.
+
+There are tools for this — Wappalyzer, BuiltWith, WhatRuns. But they're either paywalled, require browser extensions, or show you more ads than data. I wanted something simpler: paste a URL, get the tech stack. No sign-up, no extension, no BS.
+
+So I built [StackRadar](https://stackradar.rushiraj.me).
+
+## What It Does
+
+StackRadar scans any website and detects **150+ technologies** across 25 categories:
+
+- **Frameworks** — Next.js, React, Vue, Angular, Svelte, and more
+- **Hosting** — Vercel, Netlify, AWS, Cloudflare, Fly.io
+- **Analytics** — Google Analytics, PostHog, Mixpanel, Plausible, Heap
+- **Payments** — Stripe, Razorpay, PayPal, Paddle
+- **CMS** — WordPress, Shopify, Webflow, Contentful, Sanity
+- **And 20 more categories** — Auth, CDN, Build Tools, Monitoring, Email, Search, you name it
+
+Each detection comes with a confidence indicator (High, Medium, Low) based on how many matching patterns were found.
+
+## How It Works Under the Hood
+
+The detection engine is surprisingly straightforward. When you enter a URL, StackRadar:
+
+1. **Fetches the page** server-side with a browser-like User-Agent
+2. **Reads HTTP headers** — \`X-Powered-By\`, \`Server\`, \`X-Vercel-Id\`, \`CF-Ray\`, etc.
+3. **Scans the HTML** for script sources, meta tags, link tags, and inline patterns
+4. **Matches against 150+ regex patterns** — each technology has 2-4 unique signatures
+5. **Extracts version numbers** where possible from script URLs and meta tags
+
+For example, detecting Next.js is as simple as looking for \`/_next/static\` or \`__NEXT_DATA__\` in the HTML. Stripe? Check for \`js.stripe.com\`. Tailwind CSS? Look for utility class patterns.
+
+The tricky part is **avoiding false positives**. A word like "express" appears on tons of websites in regular text. So for server-side frameworks, we rely on headers (\`X-Powered-By: Express\`) rather than body content.
+
+## Features That Set It Apart
+
+**Compare Mode** — Scan two sites side-by-side and see what they share vs. what's unique. Great for competitive analysis.
+
+**Scan History** — Your last 10 scans are saved locally. One click to revisit any previous result.
+
+**Share & Download** — Generate shareable links or download results as images. Perfect for reports or social sharing.
+
+**Version Detection** — Where possible, StackRadar extracts version numbers (e.g., \`Next.js v14.1.0\`).
+
+## The Tech Stack (Yes, It Scans Itself)
+
+- **Next.js 15** with App Router
+- **Tailwind CSS** for styling
+- **Framer Motion** for animations
+- **Lucide React** for icons
+- **Vercel** for hosting
+- **Supabase** for the waitlist backend
+
+If you scan \`stackradar.rushiraj.me\` with StackRadar... it detects itself. Meta.
+
+## What's Next
+
+StackRadar is free and always will be for basic scans. I'm working on a Pro tier with:
+
+- **Bulk scanning** — paste 50+ URLs, get a CSV
+- **API access** — for developers who want to integrate
+- **Export as PDF/PNG** — branded reports for agencies
+- **90-day history** — track how sites evolve over time
+
+If that sounds useful, [join the waitlist](https://stackradar.rushiraj.me).
+
+## Try It
+
+Head to [stackradar.rushiraj.me](https://stackradar.rushiraj.me) and scan your favorite website. It takes about 3 seconds. Let me know what you find — I'm always adding new technologies to the detection engine.
+
+The source code is on [GitHub](https://github.com/rushi053/stackradar) if you want to peek under the hood or contribute.
+`,
+  },
+  {
     slug: 'why-your-expense-tracker-is-spying-on-you',
     title: 'Why Your Expense Tracker Is Spying on You',
     excerpt: 'Most finance apps collect more data than they need. I built CashLens to prove you can track expenses without sacrificing privacy.',

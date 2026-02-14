@@ -67,6 +67,21 @@ const products = [
     accent: '#FF4444',
   },
   {
+    name: 'StackRadar',
+    tagline: 'X-ray any website\'s tech stack',
+    description: 'Detect 150+ technologies on any website instantly. Compare sites side-by-side, track scan history, download results. The free Wappalyzer alternative you\'ve been waiting for.',
+    stats: [
+      { label: 'Technologies', value: '150+' },
+      { label: 'Categories', value: '25' },
+      { label: 'Price', value: 'Free' },
+      { label: 'Compare', value: 'Yes' },
+    ],
+    url: 'https://stackradar.rushiraj.me',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    emoji: '📡',
+    accent: '#8B5CF6',
+  },
+  {
     name: 'Cloudo',
     tagline: 'Simple, modern task management for iOS',
     description: 'Stay organized with a clean minimal interface. Task prioritization, reminders, widgets, and iCloud sync. Built for people who want to get things done without the bloat.',

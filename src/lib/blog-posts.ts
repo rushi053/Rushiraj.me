@@ -246,13 +246,13 @@ The future isn't about replacing yourself. It's about giving yourself a team.
   {
     slug: 'solo-dev-4-products-zero-vc',
     title: 'Solo Dev, 4 Products, Zero VC: My Playbook',
-    excerpt: "I left a US tech job, moved back to India, and launched 4 products in under a year. No co-founders, no funding, no Jira.",
+    excerpt: "I left a US tech job, moved back to India, and launched 6 products in under a year. No co-founders, no funding, no Jira.",
     date: '2026-01-28',
     readTime: '10 min',
     tags: ['Indie Dev', 'Building in Public', 'Strategy'],
     emoji: '🚀',
     content: `
-In the last year, I've shipped 4 products — [CashLens](https://cashlens.app), [PrivacyPage](https://privacy.rushiraj.me), [InvoiceZen](https://invoice.rushiraj.me), and [Cloudo](https://apps.apple.com/us/app/cloudo/id6742880068). No venture capital. No co-founder. No full-time employees. Just me, working from my room in Ahmedabad, India.
+In the last year, I've shipped 6 products — [CashLens](https://cashlens.app), [PrivacyPage](https://privacy.rushiraj.me), [InvoiceZen](https://invoice.rushiraj.me), [DeadBy.ai](https://deadby.rushiraj.me), [StackRadar](https://stackradar.rushiraj.me), and [Cloudo](https://apps.apple.com/us/app/cloudo/id6742880068). No venture capital. No co-founder. No full-time employees. Just me, working from my room in Ahmedabad, India.
 
 I'm not going to pretend I have it all figured out. But I've learned enough to have a playbook, and I think it's worth sharing.
 
@@ -295,7 +295,7 @@ As an indie dev, I have none of those constraints. I can say "your data never le
 
 ## Rule 5: Spend Money on Time, Not Things
 
-My total infrastructure cost across all 4 products:
+My total infrastructure cost across all 6 products:
 
 - **Vercel:** Free tier (hobby plan)
 - **Supabase:** Free tier
@@ -324,7 +324,7 @@ This isn't about "cheap labor." It's about buying yourself runway. Every month y
 
 ## What's Next
 
-I'm not done. The goal isn't 4 products — it's building a sustainable indie business that generates enough revenue to keep going indefinitely. No investors to please, no board meetings, no quarterly earnings calls.
+I'm not done. The goal isn't 6 products — it's building a sustainable indie business that generates enough revenue to keep going indefinitely. No investors to please, no board meetings, no quarterly earnings calls.
 
 Just me, my Mac, my AI agents, and the products.
 
@@ -472,7 +472,7 @@ If you're an Indian developer in the US, thinking about moving back:
 
 ## One Year Later
 
-As I write this, I have 4 products live, 2.5K+ downloads on CashLens, a 4.8-star rating, and a team of AI agents running my marketing. I work from my room, on my schedule, building things I believe in.
+As I write this, I have 6 products live, 2.5K+ downloads on CashLens, a 4.8-star rating, and a team of AI agents running my marketing. I work from my room, on my schedule, building things I believe in.
 
 Is it harder than a tech job? In some ways, yes. There's no guaranteed paycheck. No health insurance from an employer. No team to fall back on.
 
@@ -484,7 +484,7 @@ I didn't come home because the American dream failed me. I came home because I f
   {
     slug: 'the-tools-that-actually-matter',
     title: "The Tools That Actually Matter (And the Ones That Don't)",
-    excerpt: "After shipping 4 products, here's my honest take on dev tools. Spoiler: the best tool is the one you stop thinking about.",
+    excerpt: "After shipping 6 products, here's my honest take on dev tools. Spoiler: the best tool is the one you stop thinking about.",
     date: '2026-01-10',
     readTime: '6 min',
     tags: ['Dev Tools', 'Productivity', 'Honest Review'],

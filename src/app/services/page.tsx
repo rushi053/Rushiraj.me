@@ -89,7 +89,7 @@ const faqs = [
   { q: 'Do I own the code?', a: '100%. Full source code, deployed to your accounts. No lock-in, no recurring fees.' },
   { q: 'Can you build mobile apps?', a: 'iOS apps in Swift/SwiftUI, yes. I have two apps on the App Store (CashLens, Cloudo).' },
   { q: 'What\'s your tech stack?', a: 'Next.js, React, TypeScript, Tailwind, Supabase, Vercel. Modern, fast, maintainable.' },
-  { q: 'Why so fast?', a: 'I\'ve shipped 5 products. I use AI-assisted development. I know what works and skip what doesn\'t.' },
+  { q: 'Why so fast?', a: 'I\'ve shipped 6 products. I use AI-assisted development. I know what works and skip what doesn\'t.' },
 ];
 
 function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {

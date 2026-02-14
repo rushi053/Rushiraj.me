@@ -41,7 +41,7 @@ export default function HeroSection() {
             className="heading-display font-heading text-5xl md:text-7xl lg:text-[5.5rem] mb-8"
           >
             Solo dev.<br />
-            5 products.<br />
+            6 products.<br />
             <span className="text-[var(--text-tertiary)]">0 VC money.</span>
           </motion.h1>
 

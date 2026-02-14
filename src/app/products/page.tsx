@@ -93,7 +93,7 @@ export default function ProductsPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <p className="section-label">Products</p>
             <h1 className="heading-display font-heading text-5xl md:text-7xl mb-6">
-              5 products.<br />
+              6 products.<br />
               <span className="text-[var(--text-tertiary)]">0 compromises.</span>
             </h1>
             <p className="text-[var(--text-secondary)] text-lg max-w-lg">

@@ -206,7 +206,7 @@ I built all of it with Cursor IDE and Claude. Here's exactly how — not the hyp
 
 I've used GitHub Copilot, ChatGPT, and raw Claude in the browser. They're all useful. But Cursor with Claude is a different category entirely because of one thing: **codebase awareness**.
 
-When I tell Cursor "add region-aware pricing to the Perplexity service," it doesn't just generate code. It reads my existing \\\`perplexity.ts\\\`, understands my \\\`region-config.ts\\\` data structure, checks how I'm handling caching in \\\`cache.ts\\\`, and generates code that actually fits. No hallucinated imports. No invented function signatures.
+When I tell Cursor "add region-aware pricing to the Perplexity service," it doesn't just generate code. It reads my existing \`perplexity.ts\`, understands my \`region-config.ts\` data structure, checks how I'm handling caching in \`cache.ts\`, and generates code that actually fits. No hallucinated imports. No invented function signatures.
 
 That's the difference between "AI that writes code" and "AI that writes code *for your project*."
 
@@ -270,7 +270,7 @@ I build iOS on my MacBook Pro M3 Max (faster Xcode builds) and backend on the Ma
 
 **Days 8-10: Core Views**
 
-For SwiftUI, my Cursor workflow changes slightly. I write a detailed design spec first (font sizes, colors, spacing, component hierarchy), save it as \\\`DESIGN-SPEC-v2.md\\\` in the project, and reference it in every prompt:
+For SwiftUI, my Cursor workflow changes slightly. I write a detailed design spec first (font sizes, colors, spacing, component hierarchy), save it as \`DESIGN-SPEC-v2.md\` in the project, and reference it in every prompt:
 
 "Build SearchView.swift following DESIGN-SPEC-v2.md. Light theme first (white bg, #F5F5F5 cards). Search bar at top, results as cards below. Each card shows product name, verdict badge (green/yellow/red), price range, and retailer count."
 
@@ -282,7 +282,7 @@ MVVM architecture with SwiftUI. I wrote the ViewModel interfaces myself and let 
 
 One pattern that works incredibly well:
 
-\\\`\\\`\\\`
+\`\`\`
 // I write this:
 protocol SearchViewModelProtocol: ObservableObject {
     var searchText: String { get set }
@@ -294,9 +294,9 @@ protocol SearchViewModelProtocol: ObservableObject {
 // Then tell Cursor: "Implement SearchViewModel conforming to this protocol.
 // Use APIClient for network calls. Handle loading states, errors,
 // and cache results locally."
-\\\`\\\`\\\`
+\`\`\`
 
-Claude generates a complete, working ViewModel in seconds. Including proper \\\`@Published\\\` properties, async/await handling, and error states. I'd estimate this saves 30-40 minutes per ViewModel.
+Claude generates a complete, working ViewModel in seconds. Including proper \`@Published\` properties, async/await handling, and error states. I'd estimate this saves 30-40 minutes per ViewModel.
 
 **Days 13-14: Polish**
 
@@ -319,7 +319,7 @@ Screenshots, metadata, description, keywords. Claude helped write the App Store 
 It's not all magic. Here's what went wrong:
 
 ### 1. Hallucinated URLs
-Early on, I asked Perplexity to return retailer URLs for products. It confidently returned URLs that didn't exist. \\\`amazon.in/dp/B0FAKE123\\\` — looks real, completely made up. **Fix:** Generate search URLs instead of direct product links. Never trust LLM-generated URLs.
+Early on, I asked Perplexity to return retailer URLs for products. It confidently returned URLs that didn't exist. \`amazon.in/dp/B0FAKE123\` — looks real, completely made up. **Fix:** Generate search URLs instead of direct product links. Never trust LLM-generated URLs.
 
 ### 2. Server-Side Scraping Failure
 Claude suggested scraping Amazon and Flipkart server-side to extract product names from URLs. Sounds reasonable. Except these sites block cloud server IPs with CAPTCHAs and 403s. **Fix:** Client-side URL resolution on the iOS device, which has a real browser user agent.

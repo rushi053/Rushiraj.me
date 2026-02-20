@@ -187,7 +187,7 @@ The goal isn't to maximize revenue from existing users. It's to make the free ve
 ---
 
 *CashLens is free on the [App Store](https://apps.apple.com/us/app/cashlens-personal-finance/id6743153951). If you try it, I'd genuinely love to hear what you think — [@rushirajjj on X](https://x.com/rushirajjj).*
-\`,
+`,
   },
   {
     slug: 'cursor-claude-ship-mvp-3-weeks',
@@ -197,7 +197,7 @@ The goal isn't to maximize revenue from existing users. It's to make the free ve
     readTime: '12 min',
     tags: ['Cursor', 'Claude', 'AI', 'Vibe Coding', 'Tutorial'],
     emoji: '⚡',
-    content: \`
+    content: `
 Three weeks ago, I had an idea: an app that tells you whether to buy something now or wait for a better price. Today, [Savvit](https://savvit.app) has a live backend serving 8 global markets, an iOS app in final polish, and a landing page ranking on Google.
 
 I built all of it with Cursor IDE and Claude. Here's exactly how — not the hype version, the real one.
@@ -401,7 +401,7 @@ I'm one person. I have 7 products live. That math only works with tools like thi
 ---
 
 *Building something with Cursor? I'd love to hear about it — find me on [X @rushirajjj](https://x.com/rushirajjj).*
-\`,
+`,
   },
   {
     slug: 'stackradar-x-ray-any-website-tech-stack',

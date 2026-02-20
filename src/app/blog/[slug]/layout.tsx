@@ -1,14 +1,5 @@
 import { Metadata } from 'next'
-import { getPost, getAllSlugs } from '@/lib/blog-posts'
-
-type Props = {
-  params: Promise<{ slug: string }>
-  children: React.ReactNode
-}
-
-export async function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }))
-}
+import { getPost } from '@/lib/blog-posts'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params

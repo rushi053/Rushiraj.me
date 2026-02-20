@@ -45,28 +45,6 @@ function renderMarkdown(content: string) {
       continue;
     }
 
-    // Code blocks
-    if (line.trim().startsWith('```')) {
-      flushList();
-      const lang = line.trim().replace('```', '').trim();
-      i++;
-      const codeLines: string[] = [];
-      while (i < lines.length && !lines[i].trim().startsWith('```')) {
-        codeLines.push(lines[i]);
-        i++;
-      }
-      i++; // skip closing ```
-      elements.push(
-        <div key={`code-${elements.length}`} className="my-6 rounded-lg overflow-hidden border border-[var(--border)]">
-          {lang && <div className="text-xs text-[var(--text-tertiary)] bg-[var(--bg-secondary)] px-4 py-2 border-b border-[var(--border)]">{lang}</div>}
-          <pre className="bg-[var(--bg-secondary)] p-4 overflow-x-auto">
-            <code className="text-sm text-[var(--text-secondary)] leading-relaxed">{codeLines.join('\n')}</code>
-          </pre>
-        </div>
-      );
-      continue;
-    }
-
     // Tables
     if (line.includes('|') && lines[i + 1]?.includes('---')) {
       flushList();
@@ -98,24 +76,6 @@ function renderMarkdown(content: string) {
             </tbody>
           </table>
         </div>
-      );
-      continue;
-    }
-
-    // Blockquotes
-    if (line.trimStart().startsWith('> ')) {
-      flushList();
-      const quoteLines: string[] = [];
-      while (i < lines.length && lines[i].trimStart().startsWith('> ')) {
-        quoteLines.push(lines[i].trimStart().replace(/^>\s*/, ''));
-        i++;
-      }
-      elements.push(
-        <blockquote
-          key={`bq-${elements.length}`}
-          className="my-6 pl-5 border-l-2 border-[var(--accent)] text-[var(--text-secondary)] italic leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: inlineFormat(quoteLines.join(' ')) }}
-        />
       );
       continue;
     }
@@ -186,28 +146,8 @@ export default function BlogPostPage() {
   const prevPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
   const nextPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.date,
-    author: {
-      '@type': 'Person',
-      name: 'Rushiraj Jadeja',
-      url: 'https://www.rushiraj.me',
-    },
-    publisher: {
-      '@type': 'Person',
-      name: 'Rushiraj Jadeja',
-    },
-    mainEntityOfPage: `https://www.rushiraj.me/blog/${slug}`,
-    keywords: post.tags.join(', '),
-  };
-
   return (
     <div className="min-h-screen relative">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="relative overflow-hidden pt-24 md:pt-32">
         <div className="gradient-orb gradient-orb-1" style={{ top: '-150px', right: '-100px' }} />
         <div className="dot-grid" />

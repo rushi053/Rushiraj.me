@@ -11,6 +11,185 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: '3000-downloads-zero-marketing-budget',
+    title: '3,000 Downloads with $0 Marketing: My App Store SEO Playbook',
+    excerpt: 'How CashLens hit 3,000 downloads and a 4.8★ rating with zero ad spend. Real App Store Connect data, keyword strategy, and the Reddit post that changed everything.',
+    date: '2026-02-21',
+    readTime: '10 min',
+    tags: ['App Store', 'ASO', 'CashLens', 'Marketing', 'iOS'],
+    emoji: '📈',
+    content: `
+CashLens has been downloaded over 3,000 times. It has a 4.8-star rating from real users. My total marketing spend is exactly $0.
+
+No paid ads. No influencer deals. No App Store Search Ads. No TikTok campaigns. Just a privacy-first expense tracker, some strategic decisions, and one Reddit post that snowballed into everything.
+
+Here's the complete playbook with real numbers from App Store Connect.
+
+## The Numbers (January–February 2026)
+
+Let me start with actual data, not vibes:
+
+| Metric | Value | Benchmark |
+|--------|-------|-----------|
+| Total downloads | 3,000+ | — |
+| App Store impressions (30-day) | 3,410 | +35% month-over-month |
+| Product page views (30-day) | 666 | +19% MoM |
+| Conversion rate | 14.78% | Above 75th percentile |
+| Rating | 4.8★ (6 ratings) | Top tier |
+| Day 7 retention | 5.56% | 25th percentile (room to improve) |
+| Revenue | ~$0 | Tip jars only, no Pro yet |
+
+That conversion rate is the key number. **14.78% means roughly 1 in 7 people who see the product page download the app.** The App Store average for finance apps is around 8-10%. So something about the listing is working.
+
+## Where the Downloads Come From
+
+App Store Connect breaks down sources:
+
+| Source | Percentage |
+|--------|-----------|
+| App Store Search | 73.6% |
+| App Store Browse | 12.4% |
+| Web Referral | 8.2% |
+| App Referral | 5.8% |
+
+**73.6% from search.** That's almost three-quarters of all downloads coming from people typing something into the App Store and finding CashLens. This is the entire game — App Store Optimization (ASO).
+
+## The ASO Strategy
+
+### 1. Name + Subtitle Are Everything
+
+Your app name and subtitle are the two most powerful keyword fields. Apple gives you:
+- **App name:** 30 characters
+- **Subtitle:** 30 characters
+- **Keyword field:** 100 characters (hidden from users)
+
+CashLens uses:
+- **Name:** CashLens - Personal Finance
+- **Subtitle:** Private Expense Tracker
+
+Every word is deliberate. "Personal Finance" catches people searching that category. "Private" and "Expense Tracker" hit two high-volume keywords. No wasted characters on fluff like "The Best" or emojis.
+
+### 2. The Keyword Field Strategy
+
+You get 100 characters for hidden keywords. No spaces — use commas to separate. Here's the approach:
+
+**Don't repeat words already in your name or subtitle.** Apple indexes those automatically. If your app is called "CashLens - Personal Finance," you don't need "personal" or "finance" in the keyword field.
+
+**Use singular, not plural.** Apple matches both. "budget" matches "budget" and "budgets." Save the character.
+
+**Think like your user.** What would someone frustrated with their current expense tracker type? "no subscription," "offline," "no account," "simple." These are long-tail keywords with less competition.
+
+**Include misspellings and variations.** "expence" is a common typo. "money tracker" is an alternative to "expense tracker." "spending" vs "expenses."
+
+### 3. Screenshots Tell the Story
+
+I use 5 screenshots. Each one answers a specific objection:
+
+1. **First screenshot:** Shows the main dashboard — clean, minimal, no clutter. Answers "Is this app well-designed?"
+2. **Second screenshot:** Highlights "100% Private — No accounts, no cloud, no tracking." Answers "Is my data safe?"
+3. **Third screenshot:** Shows spending categories with charts. Answers "Can I actually track meaningful data?"
+4. **Fourth screenshot:** Demonstrates subscription tracking and recurring expenses. Answers "Does it handle my subscriptions?"
+5. **Fifth screenshot:** Shows the weekly digest feature. Answers "Will this help me long-term?"
+
+**The order matters.** Most people only see the first 2-3 screenshots before deciding. Lead with design (visual appeal) and privacy (your differentiator).
+
+### 4. The Description Nobody Reads (But Apple Does)
+
+Your long description isn't indexed for search, but it affects conversion. People who scroll down to read it are on the fence — they need one more push.
+
+My structure:
+- **First line:** One sentence that nails the value prop. "Track your spending without giving up your privacy."
+- **Feature list:** Bullet points, not paragraphs. Scannable.
+- **Social proof:** "4.8★ on the App Store" (once you have it)
+- **Privacy commitment:** Explicit paragraph about what data you DON'T collect. This converts the privacy-conscious crowd.
+
+## The Reddit Post That Changed Everything
+
+In early January 2026, I posted on r/iOSProgramming. The title was something like "I built a privacy-first expense tracker — no accounts, no cloud, everything stays on your device."
+
+**Why it worked:**
+- Developers appreciate privacy-first architecture
+- The "no accounts, no cloud" hook is unusual enough to click
+- I was genuinely asking for feedback, not hard-selling
+- I responded to every single comment
+
+That post got ~200 upvotes and drove the first wave of downloads. But more importantly, **those early users left the 5-star reviews that boosted my App Store ranking**, which drove organic search traffic, which drove more downloads.
+
+This is the flywheel: **Reddit → early adopters → reviews → search ranking → organic downloads → more reviews → higher ranking.**
+
+I also posted on r/privacy, r/personalfinance, and r/apple — each time with a different angle:
+- r/privacy: "Most expense trackers collect your financial data. I built one that doesn't."
+- r/personalfinance: "Free expense tracker with no ads, no subscriptions, no accounts."
+- r/apple: "SwiftUI expense tracker — everything runs locally on your device."
+
+Same app, different framing for different audiences. Each subreddit cares about different things.
+
+## The Geographic Surprise
+
+My top download markets:
+
+| Country | Downloads (30-day) |
+|---------|-------------------|
+| India | 65 |
+| USA | 37 |
+| Brazil | 21 |
+| Germany | 15 |
+| UK | 12 |
+
+**Brazil at #3 was completely unexpected.** I had zero marketing there, zero localized content, and no Portuguese keywords. Turns out the privacy angle resonates globally — especially in countries with growing digital privacy awareness.
+
+**Lesson:** Don't assume your market. Let the data tell you where to invest. I'm now planning Portuguese and German localizations based on this data.
+
+## What's NOT Working
+
+Honesty time:
+
+**Day 7 retention is 5.56%.** That's 25th percentile — meaning 75% of finance apps retain users better after a week. This tells me people download, try it, and many don't come back.
+
+Possible reasons:
+- No push notification reminders to log expenses
+- No habit-building features (streaks, daily prompts)
+- Manual entry only — no bank sync (by design, for privacy)
+- Users might prefer the convenience of Mint/YNAB despite privacy tradeoffs
+
+**Revenue is basically zero.** Tip jars exist but rarely get used. This is fine for now — the strategy is to build audience first, then add a Pro tier with genuinely new features. Not locking existing features behind a paywall. Ever.
+
+**No virality mechanism.** CashLens has no reason for users to tell other people about it. There's no "shared budgets" or "split expenses with friends" feature. Every download is acquired independently. That's expensive (in effort) and limits growth.
+
+## The Playbook (Steal This)
+
+If you're launching an iOS app with no budget:
+
+### Before Launch
+1. **Research keywords with App Store Search Ads.** Even if you don't run ads, the keyword suggestion tool shows search volume. Use it for free.
+2. **Design screenshots that answer objections.** Not screenshots that show features — screenshots that convince someone to download.
+3. **Write your Reddit posts before launch.** Draft 3-4 posts for different subreddits, each with a different angle.
+
+### Launch Week
+4. **Post on Reddit first.** Developers, then niche communities, then broader ones. Respond to every comment.
+5. **Ask for reviews (but not annoyingly).** After the user has logged 10+ expenses, prompt once. Never more than once.
+6. **Monitor App Store Connect daily.** Watch which keywords drive impressions. Double down on what works.
+
+### Post-Launch
+7. **Iterate keywords monthly.** The App Store is dynamic. Keywords that didn't work at launch might work later as your app gains authority.
+8. **Localize for surprise markets.** Check your geographic data. If a country shows up unexpectedly, add basic localization — even just translated keywords and screenshots can 3x downloads there.
+9. **Cross-promote from your other products.** If you have a website, blog, or other apps — link to each other. Every backlink and every cross-reference helps.
+10. **Build the review flywheel.** Great reviews → better ranking → more downloads → more reviews. Protect this at all costs. Fix bugs fast. Respond to feedback.
+
+## What's Next for CashLens
+
+I'm working on CashLens Pro — new features behind a subscription, while everything that's currently free stays free forever. The first Pro feature will be budget limits with notifications. Followed by advanced charts, export to CSV, and widgets.
+
+The goal isn't to maximize revenue from existing users. It's to make the free version so good that it keeps growing organically, while Pro converts the power users who want more.
+
+3,000 downloads with $0 spent. Not bad for a solo dev in Ahmedabad with no marketing budget and a lot of chai.
+
+---
+
+*CashLens is free on the [App Store](https://apps.apple.com/us/app/cashlens-personal-finance/id6743153951). If you try it, I'd genuinely love to hear what you think — [@rushirajjj on X](https://x.com/rushirajjj).*
+\`,
+  },
+  {
     slug: 'cursor-claude-ship-mvp-3-weeks',
     title: 'How I Ship an MVP in 3 Weeks with Cursor + Claude',
     excerpt: 'My exact workflow for building Savvit — a full-stack AI app with iOS frontend, Node.js backend, and 8-region global support — in 21 days using Cursor IDE and Claude.',

@@ -11,6 +11,220 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'cursor-claude-ship-mvp-3-weeks',
+    title: 'How I Ship an MVP in 3 Weeks with Cursor + Claude',
+    excerpt: 'My exact workflow for building Savvit — a full-stack AI app with iOS frontend, Node.js backend, and 8-region global support — in 21 days using Cursor IDE and Claude.',
+    date: '2026-02-20',
+    readTime: '12 min',
+    tags: ['Cursor', 'Claude', 'AI', 'Vibe Coding', 'Tutorial'],
+    emoji: '⚡',
+    content: \`
+Three weeks ago, I had an idea: an app that tells you whether to buy something now or wait for a better price. Today, [Savvit](https://savvit.app) has a live backend serving 8 global markets, an iOS app in final polish, and a landing page ranking on Google.
+
+I built all of it with Cursor IDE and Claude. Here's exactly how — not the hype version, the real one.
+
+## Why Cursor + Claude (and Not Just Copilot)
+
+I've used GitHub Copilot, ChatGPT, and raw Claude in the browser. They're all useful. But Cursor with Claude is a different category entirely because of one thing: **codebase awareness**.
+
+When I tell Cursor "add region-aware pricing to the Perplexity service," it doesn't just generate code. It reads my existing \\\`perplexity.ts\\\`, understands my \\\`region-config.ts\\\` data structure, checks how I'm handling caching in \\\`cache.ts\\\`, and generates code that actually fits. No hallucinated imports. No invented function signatures.
+
+That's the difference between "AI that writes code" and "AI that writes code *for your project*."
+
+### My Model Strategy
+
+I don't use one model for everything:
+
+| Task | Model | Why |
+|------|-------|-----|
+| Architecture decisions, complex logic | **Claude Opus 4.6** | Best reasoning, worth the cost for foundational code |
+| UI components, quick features | **Claude Sonnet 4** | Fast, good enough for 90% of tasks |
+| Bug fixes, small tweaks | **Claude Sonnet 4** | Speed matters more than depth |
+| Design specs, planning docs | **Claude Opus 4.6** | Needs to understand the full picture |
+
+**Cost:** About $20-30/week during active development. That's less than a single hour of freelance dev time.
+
+## The Savvit Timeline: Week by Week
+
+### Week 1: Architecture + Backend (Days 1-7)
+
+**Day 1: The Spec**
+
+Before writing a single line of code, I spent 4 hours with Claude Opus writing a comprehensive product spec. This is the most important step that most people skip.
+
+I didn't say "build me a price comparison app." I described the *problem*:
+
+> "Users Google 'should I buy MacBook now or wait' and get SEO spam. I want an app where you type a product name, and AI tells you: buy now (green), wait (yellow), or don't buy (red) — with actual price data, retailer links, and reasoning."
+
+From that conversation, Claude helped me design:
+- Database schema (5 tables in Supabase)
+- API architecture (Node.js + Hono on Render)
+- AI pipeline (Perplexity for price search → Gemini for verdict)
+- Revenue model (freemium + affiliate links)
+
+**Days 2-4: Backend Core**
+
+This is where Cursor shines. I created the project structure manually (I always do this — don't let AI scaffold your entire project), then used Cursor's Agent mode for the heavy lifting.
+
+My workflow for each backend feature:
+
+1. **Write the interface first** — I define TypeScript types manually. This is my contract with the AI.
+2. **Prompt Cursor with context** — "Implement the Perplexity price search service. It should accept a product name + region, query Perplexity Sonar for current prices across major retailers in that region, and return structured price data matching the PriceResult interface."
+3. **Review the diff** — Cursor shows you exactly what it wants to change. I accept ~70% as-is, modify ~20%, reject ~10%.
+4. **Test immediately** — I run the code before moving on. AI-generated code that isn't tested is a liability.
+
+The Perplexity integration took 2 hours. The Gemini verdict engine took 3 hours. Caching layer, 1 hour. Authentication middleware, 30 minutes.
+
+**Days 5-7: Global Expansion**
+
+This is the part that would've taken weeks without AI. I needed the backend to support 8 markets (India, US, UK, Germany, Canada, Australia, Japan, France) — each with different retailers, currencies, sale calendars, and deal types.
+
+I built India first (manually), then told Cursor: "Using region-config.ts as the template, extend this to support US, UK, DE, CA, AU, JP, FR. Each region needs: trusted retailer list with domains, currency code, locale, and region-specific deal types (e.g., bank offers for India, cashback for US, VAT deals for Germany)."
+
+Claude generated 200+ lines of region config that was about 85% correct. I spent an hour fixing edge cases (UK using "GB" internally but "UK" in user-facing code, Japan needing different price formatting). Without AI, this would've been a full day of research per region.
+
+### Week 2: iOS App (Days 8-14)
+
+**The Two-Machine Setup**
+
+I build iOS on my MacBook Pro M3 Max (faster Xcode builds) and backend on the Mac Mini. Code syncs via GitHub. This matters because Cursor with Claude Opus on the MacBook gives me the best possible iOS development experience.
+
+**Days 8-10: Core Views**
+
+For SwiftUI, my Cursor workflow changes slightly. I write a detailed design spec first (font sizes, colors, spacing, component hierarchy), save it as \\\`DESIGN-SPEC-v2.md\\\` in the project, and reference it in every prompt:
+
+"Build SearchView.swift following DESIGN-SPEC-v2.md. Light theme first (white bg, #F5F5F5 cards). Search bar at top, results as cards below. Each card shows product name, verdict badge (green/yellow/red), price range, and retailer count."
+
+The key insight: **give Claude the design system, not pixel-perfect mockups.** It's much better at implementing a coherent system than matching a screenshot.
+
+**Days 11-12: Data Flow**
+
+MVVM architecture with SwiftUI. I wrote the ViewModel interfaces myself and let Cursor implement the networking, state management, and error handling. This is the sweet spot — you define the contracts, AI fills in the implementation.
+
+One pattern that works incredibly well:
+
+\\\`\\\`\\\`
+// I write this:
+protocol SearchViewModelProtocol: ObservableObject {
+    var searchText: String { get set }
+    var results: [ProductResult] { get }
+    var isLoading: Bool { get }
+    func search() async
+}
+
+// Then tell Cursor: "Implement SearchViewModel conforming to this protocol.
+// Use APIClient for network calls. Handle loading states, errors,
+// and cache results locally."
+\\\`\\\`\\\`
+
+Claude generates a complete, working ViewModel in seconds. Including proper \\\`@Published\\\` properties, async/await handling, and error states. I'd estimate this saves 30-40 minutes per ViewModel.
+
+**Days 13-14: Polish**
+
+Onboarding screens, settings with region picker, PostHog analytics integration, App Store review prompt after 3rd search. Each of these is a 15-30 minute task with Cursor. Without AI, each would be 1-2 hours.
+
+### Week 3: Launch Prep (Days 15-21)
+
+**Landing Page (1 evening)**
+
+The Savvit website is static HTML/CSS — no framework needed for a marketing page. I told Cursor to build it section by section, referencing the app's design language (blue + lime accent, Inter font, dark sections for contrast).
+
+Full SEO implementation took another hour: structured data (WebSite, SoftwareApplication, FAQPage), Open Graph tags, sitemap, robots.txt, security headers. This is where AI saves the most tedious time — SEO boilerplate is mind-numbing to write manually.
+
+**App Store Assets (2 days)**
+
+Screenshots, metadata, description, keywords. Claude helped write the App Store description targeting "should I buy now or wait" — the exact query people type into Google.
+
+## The Mistakes (And How AI Caused Them)
+
+It's not all magic. Here's what went wrong:
+
+### 1. Hallucinated URLs
+Early on, I asked Perplexity to return retailer URLs for products. It confidently returned URLs that didn't exist. \\\`amazon.in/dp/B0FAKE123\\\` — looks real, completely made up. **Fix:** Generate search URLs instead of direct product links. Never trust LLM-generated URLs.
+
+### 2. Server-Side Scraping Failure
+Claude suggested scraping Amazon and Flipkart server-side to extract product names from URLs. Sounds reasonable. Except these sites block cloud server IPs with CAPTCHAs and 403s. **Fix:** Client-side URL resolution on the iOS device, which has a real browser user agent.
+
+### 3. Over-Reliance on AI for Architecture
+I initially let Claude design the entire caching strategy. It was "correct" but over-engineered — a multi-layer cache with TTLs, invalidation hooks, and Redis support. For an MVP. **Fix:** I replaced it with a simple in-memory Map with a 1-hour TTL. 10 lines instead of 200.
+
+### 4. The 8GB RAM Lesson
+My Mac Mini has 8GB RAM. Claude generated a TypeScript build script that OOM-killed the machine. It had no idea about my hardware constraints because I never told it. **Fix:** Push to GitHub, let Render build. Always tell the AI about your constraints.
+
+**The pattern:** AI fails when it lacks context about the real world — hardware limits, API behavior, network conditions. It excels at pure logic and code generation. Know the boundary.
+
+## My Rules for AI-Assisted Development
+
+After shipping 7 products with AI assistance, here's my framework:
+
+**1. You define architecture. AI implements.**
+Never let AI make structural decisions. Database schema, API design, state management patterns — these are yours. Let AI fill in the functions within your structure.
+
+**2. Write interfaces first, implementations second.**
+TypeScript interfaces. Swift protocols. Function signatures. These are your contract with the AI. The more precise your interface, the better the generated code.
+
+**3. Test every generated function immediately.**
+Don't batch AI-generated code. Write → Generate → Test → Commit. If you generate 500 lines without testing, you'll spend more time debugging than you saved.
+
+**4. Keep prompts specific and contextual.**
+Bad: "Add authentication"
+Good: "Add Bearer token validation middleware to the Express router in routes/products.ts. Token is checked against AUTH_TOKEN env var. Return 401 with { error: 'Unauthorized' } on failure."
+
+**5. Don't use Opus for everything.**
+Opus is $15/M input tokens. Sonnet is $3. For a bug fix or a simple component, Sonnet is plenty. Save Opus for architecture sessions and complex multi-file changes.
+
+**6. Review diffs like you're reviewing a junior dev's PR.**
+Because that's essentially what you're doing. The AI is a very fast junior developer with encyclopedic knowledge and zero judgment. Your job is the judgment.
+
+## The Economics
+
+Let me be real about what this cost:
+
+| Item | Cost |
+|------|------|
+| Cursor Pro subscription | $20/month |
+| Claude API (via Cursor) | ~$80 over 3 weeks |
+| Supabase | Free tier |
+| Render (backend hosting) | Free tier |
+| Vercel (landing page) | Free tier |
+| Domain (savvit.app) | $12/year |
+| Apple Developer Account | Already had it ($99/year) |
+| **Total for Savvit MVP** | **~$112** |
+
+Three weeks. ~$112. A full-stack AI-powered app with iOS client, Node.js backend, landing page, and global region support.
+
+I'm not saying anyone can do this — I have 7+ years of software engineering experience. The AI doesn't replace knowing how to code. It replaces the tedious parts of coding so you can focus on the creative parts.
+
+## Should You Try This?
+
+**Yes, if:**
+- You already know how to code and want to ship faster
+- You're building an MVP and speed matters more than perfection
+- You're a solo dev who needs to cover frontend, backend, and infrastructure
+
+**No, if:**
+- You're learning to code (you need to understand what the AI generates)
+- You're building something safety-critical (AI-generated code needs extra scrutiny)
+- You think AI will do all the work (it won't — you're the architect, it's the builder)
+
+## Try It Yourself
+
+1. Download [Cursor](https://cursor.com) (free tier available, Pro is $20/mo)
+2. Start a project with a clear spec (spend time on this)
+3. Build one feature end-to-end with AI assistance
+4. Notice how much faster it is. Then notice the mistakes.
+5. Develop your own review instinct. That's the real skill.
+
+The future of development isn't AI replacing developers. It's developers with AI shipping what used to take teams of 5.
+
+I'm one person. I have 7 products live. That math only works with tools like this.
+
+---
+
+*Building something with Cursor? I'd love to hear about it — find me on [X @rushirajjj](https://x.com/rushirajjj).*
+\`,
+  },
+  {
     slug: 'stackradar-x-ray-any-website-tech-stack',
     title: 'I Built a Wappalyzer Alternative — Here\'s What I Learned',
     excerpt: 'StackRadar detects 150+ technologies on any website instantly. Here\'s why I built it, how it works under the hood, and what I\'d do differently.',

@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { posts } from '@/lib/blog-posts'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.rushiraj.me'
@@ -15,10 +16,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/work', changeFrequency: 'monthly' as const, priority: 0.7 },
   ]
 
-  return routes.map((route) => ({
+  const staticPages = routes.map((route) => ({
     url: `${baseUrl}${route.path}`,
     lastModified: new Date(),
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }))
+
+  const blogPages = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
+  return [...staticPages, ...blogPages]
 }

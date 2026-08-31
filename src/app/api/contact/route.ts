@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(200),
@@ -83,16 +83,26 @@ export async function POST(request: Request) {
 
   // Belt and suspenders: keep the Supabase record even though email is the
   // primary delivery channel. The table has no subject column, so the subject
-  // is prepended to the message body.
+  // is prepended to the message body. The client is created lazily and only
+  // when its env vars exist (the shared lib/supabase module instantiates at
+  // import time and would throw before Resend could run), so each delivery
+  // channel degrades independently.
   let savedToDb = false;
-  try {
-    const { error } = await supabase.from('contact_messages').insert([
-      { name, email, message: `[${subject}]\n\n${message}` },
-    ]);
-    savedToDb = !error;
-    if (error) console.error('Contact form: Supabase insert failed:', error.message);
-  } catch (err) {
-    console.error('Contact form: Supabase insert threw:', err);
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (supabaseUrl && supabaseAnonKey) {
+    try {
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      const { error } = await supabase.from('contact_messages').insert([
+        { name, email, message: `[${subject}]\n\n${message}` },
+      ]);
+      savedToDb = !error;
+      if (error) console.error('Contact form: Supabase insert failed:', error.message);
+    } catch (err) {
+      console.error('Contact form: Supabase insert threw:', err);
+    }
+  } else {
+    console.error('Contact form: Supabase env vars are not configured; DB backup skipped.');
   }
 
   // Email via Resend REST API. Wrapped in try/catch so an email failure
@@ -146,5 +156,5 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ ok: true, emailSent, savedToDb });
+  return NextResponse.json({ ok: true });
 }

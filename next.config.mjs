@@ -1,10 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
-    // /projects held fake template projects; the real work lives at /products.
+    // /projects held fake template projects; /work and /ios-apps were removed
+    // but are still in the live sitemap/index. The real work lives at /products.
     return [
       { source: '/projects', destination: '/products', statusCode: 301 },
       { source: '/projects/:path*', destination: '/products', statusCode: 301 },
+      { source: '/work', destination: '/products', statusCode: 301 },
+      { source: '/work/:path*', destination: '/products', statusCode: 301 },
+      { source: '/ios-apps', destination: '/products', statusCode: 301 },
     ];
   },
   eslint: {

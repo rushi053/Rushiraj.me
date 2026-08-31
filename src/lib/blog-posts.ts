@@ -334,7 +334,7 @@ My Mac Mini has 8GB RAM. Claude generated a TypeScript build script that OOM-kil
 
 ## My Rules for AI-Assisted Development
 
-After shipping 7 products with AI assistance, here's my framework:
+After shipping 6 products with AI assistance, here's my framework:
 
 **1. You define architecture. AI implements.**
 Never let AI make structural decisions. Database schema, API design, state management patterns — these are yours. Let AI fill in the functions within your structure.
@@ -396,7 +396,7 @@ I'm not saying anyone can do this — I have 7+ years of software engineering ex
 
 The future of development isn't AI replacing developers. It's developers with AI shipping what used to take teams of 5.
 
-I'm one person. I have 7 products live. That math only works with tools like this.
+I'm one person. I have 6 products live. That math only works with tools like this.
 
 ---
 
@@ -638,7 +638,7 @@ The future isn't about replacing yourself. It's about giving yourself a team.
   },
   {
     slug: 'solo-dev-4-products-zero-vc',
-    title: 'Solo Dev, 4 Products, Zero VC: My Playbook',
+    title: 'Solo Dev, 6 Products, Zero VC: My Playbook',
     excerpt: "I left a US tech job, moved back to India, and launched 6 products in under a year. No co-founders, no funding, no Jira.",
     date: '2026-01-28',
     readTime: '10 min',

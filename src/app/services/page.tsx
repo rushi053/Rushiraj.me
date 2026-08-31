@@ -30,6 +30,14 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
   return <span ref={ref}>{count}{suffix}</span>;
 }
 
+const auditIncludes = [
+  'Full review of your codebase and live app',
+  'Security check: auth, data exposure, API keys, permissions',
+  'Payment and paywall integrity testing',
+  'Broken or fragile user flows, documented',
+  'A prioritized fix list you can act on — with me or anyone else',
+];
+
 const tiers = [
   {
     name: 'Starter MVP',
@@ -76,19 +84,22 @@ const tiers = [
 ];
 
 const steps = [
-  { num: '01', title: 'Discovery Call', desc: '15 minutes. You tell me what you need. I tell you if I can build it.' },
-  { num: '02', title: 'Proposal & Payment', desc: 'Fixed-price quote within 24 hours. 50% upfront to start.' },
-  { num: '03', title: 'I Build', desc: 'You get daily updates. I ship in 5-7 business days.' },
+  { num: '01', title: 'Discovery Call', desc: '15 minutes. You tell me what you need. I tell you if I can build it. For audits, you can skip the call and book directly.' },
+  { num: '02', title: 'Proposal & Payment', desc: 'Fixed-price quote within 24 hours. 50% upfront to start. The audit is always a flat $500.' },
+  { num: '03', title: 'I Build', desc: 'You get daily updates. Audit reports land in 3 business days. Builds ship in 5-7.' },
   { num: '04', title: 'You Launch', desc: 'Deployed, tested, yours. Full code ownership. Zero lock-in.' },
 ];
 
 const techStack = ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Supabase', 'Stripe', 'Vercel', 'Swift', 'SwiftUI', 'OpenAI'];
 
 const faqs = [
-  { q: 'What if I need changes after delivery?', a: 'Every tier includes revision rounds. Additional work is quoted separately at fair rates.' },
+  { q: 'What exactly do I get from the $500 audit?', a: 'A prioritized report in 3 business days: security holes, broken flows, payment and paywall integrity, and what to fix first — in plain language, not jargon. The report is yours; any competent developer can work from it.' },
+  { q: 'What if the audit finds nothing critical?', a: 'Then you get good news and half your money back. If I find no critical security or payment issues, I refund $250 and you keep the full report.' },
+  { q: 'What happens after the audit?', a: 'No obligation. Fix things yourself with the report, hand it to another developer, or hire me. If you hire me, the scope is the critical issues we identify together in the audit report, quoted at a fixed price, and your $500 audit fee is credited toward the work.' },
+  { q: 'Which AI tools and stacks do you cover?', a: 'Apps built with Lovable, Bolt, v0, Cursor, Replit, and similar — which in practice means React, Next.js, Supabase, Firebase, Stripe, and Tailwind. If your stack is unusual, ask; I\'ll tell you honestly whether I\'m the right person.' },
+  { q: 'What if I need changes after delivery?', a: 'Every build tier includes revision rounds. Additional work is quoted separately at fair rates.' },
   { q: 'Do I own the code?', a: '100%. Full source code, deployed to your accounts. No lock-in, no recurring fees.' },
   { q: 'Can you build mobile apps?', a: 'iOS apps in Swift/SwiftUI, yes. I have two apps on the App Store (CashLens, Cloudo).' },
-  { q: 'What\'s your tech stack?', a: 'Next.js, React, TypeScript, Tailwind, Supabase, Vercel. Modern, fast, maintainable.' },
   { q: 'Why so fast?', a: 'I\'ve shipped 6 products. I use AI-assisted development. I know what works and skip what doesn\'t.' },
 ];
 
@@ -140,19 +151,28 @@ export default function ServicesPage() {
               <p className="section-label">Services</p>
               <h1 className="heading-display font-heading text-5xl md:text-7xl mb-6">
                 I build your MVP.<br />
-                <span className="text-[var(--text-tertiary)]">You launch your business.</span>
+                <span className="text-[var(--text-tertiary)]">And rescue the one AI built.</span>
               </h1>
               <p className="text-[var(--text-secondary)] text-lg md:text-xl mb-8 max-w-xl">
-                Full-stack development. 7 days. Fixed price. No surprises.
+                Full-stack development. Fixed prices. No surprises. Start with a
+                $500 audit or a full build — either way, you know the cost upfront.
               </p>
-              <a
-                href="https://cal.com/rushiraj"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-              >
-                Book a Discovery Call
-              </a>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="#audit"
+                  className="btn btn-primary"
+                >
+                  Get a $500 Audit
+                </a>
+                <a
+                  href="https://cal.com/rushiraj"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline"
+                >
+                  Book a Discovery Call
+                </a>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -166,7 +186,7 @@ export default function ServicesPage() {
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { value: 5, suffix: '', label: 'Products Shipped' },
+              { value: 6, suffix: '', label: 'Products Shipped' },
               { value: 7, suffix: '', label: 'Days Average Delivery' },
               { value: 0, suffix: '', label: 'Employees Needed' },
               { value: 100, suffix: '%', label: 'Client Code Ownership' },
@@ -191,13 +211,139 @@ export default function ServicesPage() {
 
       <div className="accent-line" />
 
+      {/* AI App Rescue — audit entry tier */}
+      <section id="audit" className="section relative overflow-hidden scroll-mt-24">
+        <div className="gradient-orb gradient-orb-1" style={{ top: '-100px', left: '-200px' }} />
+        <div className="container relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <p className="section-label">AI App Rescue</p>
+              <h2 className="heading-display font-heading text-3xl md:text-5xl mb-6">
+                Your AI-built app works&hellip;<br />
+                <span className="text-[var(--text-tertiary)]">until it doesn&apos;t.</span>
+              </h2>
+              <div className="space-y-5 text-[var(--text-secondary)] leading-relaxed">
+                <p>
+                  You built something real with Lovable, Bolt, v0, Cursor, or Replit.
+                  Then payments started failing, users hit errors you can&apos;t
+                  reproduce, or you realized you have no idea if your data is secure.
+                </p>
+                <p>
+                  I go through your app the way an attacker and a paying customer
+                  would, and tell you exactly what&apos;s broken and what to fix
+                  first. Then you decide: fix it yourself with the report, hand it
+                  to another developer, or hire me to do the rescue.
+                </p>
+                <p className="text-[var(--text)] font-medium">
+                  If I find no critical security or payment issues, half your money
+                  comes back. Either way, you stop guessing.
+                </p>
+              </div>
+            </div>
+
+            {/* Audit offer card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="relative rounded-2xl p-6 md:p-8 border border-[var(--accent)] bg-[var(--card)]"
+              style={{ boxShadow: '0 0 40px -10px var(--glow)' }}
+            >
+              <span className="absolute -top-3 left-6 bg-[var(--accent)] text-white text-xs font-bold tracking-wider uppercase px-4 py-1 rounded-full">
+                Start Here
+              </span>
+              <p className="text-[var(--text-tertiary)] text-xs font-medium tracking-widest uppercase mb-2 mt-2">Code &amp; Security Audit</p>
+              <div className="flex items-baseline gap-2 mb-1">
+                <p className="font-heading text-4xl font-bold text-[var(--text)]">$500</p>
+                <p className="text-[var(--text-tertiary)] text-sm">fixed price</p>
+              </div>
+              <p className="text-[var(--text-secondary)] text-sm mb-6">Prioritized report in 3 business days</p>
+              <ul className="space-y-3 mb-6">
+                {auditIncludes.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-[var(--text-secondary)] text-sm">
+                    <svg className="w-4 h-4 mt-0.5 flex-shrink-0 text-[var(--accent)]" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[var(--text-tertiary)] text-xs mb-6 leading-relaxed">
+                Nothing critical found? $250 refunded, and you keep the full report.
+                Hire me for the rescue and the $500 is credited toward the work.
+              </p>
+              <div className="space-y-3">
+                <Link
+                  href="/contact?subject=AI%20App%20Audit"
+                  className="block text-center py-3 px-6 rounded-xl font-medium text-sm bg-[var(--accent)] text-white hover:opacity-90 transition-colors"
+                >
+                  Book a $500 Audit
+                </Link>
+                <a
+                  href="https://cal.com/rushiraj"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center py-3 px-6 rounded-xl font-medium text-sm border border-[var(--border)] text-[var(--text)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
+                >
+                  Questions first? Book a call
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <div className="accent-line" />
+
+      {/* Case study */}
+      <section className="section">
+        <div className="container">
+          <div className="max-w-3xl">
+            <p className="section-label">Case Study</p>
+            <h2 className="heading-display font-heading text-3xl md:text-4xl mb-8">
+              It happened to my own product.
+            </h2>
+            <div className="space-y-5 text-[var(--text-secondary)] leading-relaxed">
+              <p>
+                PrivacyPage is my legal document generator. For months, its paywall
+                was silently broken — users could reach paid features without
+                paying — and the AI generation behind the core product had quietly
+                died. No errors, no alerts. The site looked fine. It just
+                wasn&apos;t making money and wasn&apos;t delivering the product.
+              </p>
+              <p>
+                When I finally sat down and audited it the way I audit client
+                apps — tracing every step from landing page to payment to
+                delivery — I found the full extent of the damage in hours, and
+                rebuilt the entire money path in one day. Checkout, paywall
+                enforcement, generation, delivery: all verified working end to end.
+              </p>
+              <p className="text-[var(--text)] font-medium">
+                That&apos;s the uncomfortable truth about apps assembled fast, with
+                or without AI: they can look perfectly healthy while the part that
+                makes money is broken. A systematic audit finds it in days, not
+                months. That&apos;s exactly what the $500 audit is.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="accent-line" />
+
       {/* Pricing Tiers */}
       <section className="section relative overflow-hidden">
         <div className="gradient-orb gradient-orb-2" style={{ bottom: '-150px', left: '-150px' }} />
         <div className="container relative z-10">
           <div className="text-center mb-12">
             <p className="section-label">Pricing</p>
-            <h2 className="heading-display font-heading text-3xl md:text-5xl">Simple, transparent pricing</h2>
+            <h2 className="heading-display font-heading text-3xl md:text-5xl mb-4">Simple, transparent pricing</h2>
+            <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
+              Building from scratch, or rebuilding after an audit — same fixed
+              prices either way. Audit clients get the $500 fee credited toward
+              any tier.
+            </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {tiers.map((tier, i) => (
@@ -247,6 +393,11 @@ export default function ServicesPage() {
               </motion.div>
             ))}
           </div>
+          <p className="text-center text-[var(--text-tertiary)] text-sm mt-8 max-w-xl mx-auto">
+            Rescue work after an audit is scoped to the critical issues we
+            identify together in the audit report, quoted as a fixed price before
+            any work starts.
+          </p>
         </div>
       </section>
 
@@ -331,18 +482,24 @@ export default function ServicesPage() {
       {/* Bottom CTA */}
       <section className="section">
         <div className="container text-center">
-          <h2 className="heading-display font-heading text-3xl md:text-5xl mb-4">Ready to ship?</h2>
+          <h2 className="heading-display font-heading text-3xl md:text-5xl mb-4">Find out what&apos;s actually broken.</h2>
           <p className="text-[var(--text-secondary)] text-lg mb-8 max-w-md mx-auto">
-            Book a free discovery call. 15 minutes. No commitment.
+            $500, three business days, a prioritized report. Or book a free
+            15-minute call — no commitment.
           </p>
-          <a
-            href="https://cal.com/rushiraj"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary"
-          >
-            Let&apos;s Talk
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/contact?subject=AI%20App%20Audit" className="btn btn-primary">
+              Book a $500 Audit
+            </Link>
+            <a
+              href="https://cal.com/rushiraj"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline"
+            >
+              Let&apos;s Talk
+            </a>
+          </div>
         </div>
       </section>
 

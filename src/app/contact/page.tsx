@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
 
 const socials = [
   { name: '𝕏 @rushirajjj', url: 'https://x.com/rushirajjj', icon: '𝕏' },
@@ -17,28 +17,261 @@ const funFacts = [
   '💬 DMs open on X',
 ];
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+const SUBJECT_OPTIONS = [
+  'AI App Audit',
+  'MVP Build',
+  'Rescue / Rebuild',
+  'Project Inquiry',
+  'Other',
+];
+
+function ContactForm() {
+  const searchParams = useSearchParams();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    xf_review_notes: '', // Honeypot — hidden from real users
+  });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const [focused, setFocused] = useState<string | null>(null);
+
+  // Pre-fill the subject from ?subject= (used by /services CTAs)
+  useEffect(() => {
+    const subject = searchParams.get('subject');
+    if (subject && SUBJECT_OPTIONS.includes(subject)) {
+      setFormData((prev) => ({ ...prev, subject }));
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
-    
+
     try {
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert([formData]);
-      
-      if (error) throw error;
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          subject: formData.subject || 'Website contact',
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        throw new Error(data?.error ?? 'Something went wrong. Please try again.');
+      }
+
       setStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-    } catch {
+      setFormData({ name: '', email: '', subject: '', message: '', xf_review_notes: '' });
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : 'Something went wrong. Please try again.'
+      );
       setStatus('error');
     }
   };
 
+  return (
+    <AnimatePresence mode="wait">
+      {status === 'success' ? (
+        <motion.div
+          key="success"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          className="card card-glow text-center py-16"
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.1 }}
+            className="text-6xl mb-6"
+          >
+            ✅
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="heading-display font-heading text-3xl mb-4"
+          >
+            Message sent!
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-[var(--text-secondary)] mb-8"
+          >
+            I&apos;ll get back to you as soon as possible. Usually within 24 hours.
+          </motion.p>
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            onClick={() => setStatus('idle')}
+            className="btn btn-outline"
+          >
+            Send another message
+          </motion.button>
+        </motion.div>
+      ) : (
+        <motion.form
+          key="form"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          onSubmit={handleSubmit}
+          className="space-y-6"
+        >
+          {/*
+            Honeypot: off-screen, aria-hidden, unfocusable, autocomplete off,
+            and named so browser autofill heuristics never fill it.
+          */}
+          <div
+            aria-hidden="true"
+            style={{ position: 'absolute', left: '-9999px', top: 'auto', width: '1px', height: '1px', overflow: 'hidden' }}
+          >
+            <label htmlFor="xf_review_notes">Leave this field empty</label>
+            <input
+              type="text"
+              id="xf_review_notes"
+              name="xf_review_notes"
+              tabIndex={-1}
+              autoComplete="off"
+              value={formData.xf_review_notes}
+              onChange={(e) => setFormData({ ...formData, xf_review_notes: e.target.value })}
+            />
+          </div>
+
+          {[
+            { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
+            { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
+          ].map((field) => (
+            <div key={field.id} className="relative">
+              <label
+                htmlFor={field.id}
+                className={`absolute left-4 transition-all duration-200 pointer-events-none ${
+                  focused === field.id || formData[field.id as 'name' | 'email']
+                    ? 'top-2 text-xs text-[var(--accent)] font-medium'
+                    : 'top-4 text-sm text-[var(--text-tertiary)]'
+                }`}
+              >
+                {field.label}
+              </label>
+              <input
+                type={field.type}
+                id={field.id}
+                required
+                value={formData[field.id as 'name' | 'email']}
+                onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}
+                onFocus={() => setFocused(field.id)}
+                onBlur={() => setFocused(null)}
+                className="w-full bg-[var(--card)] border border-[var(--border)] rounded-xl px-4 pt-6 pb-3 text-[var(--text)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 focus:outline-none transition-all duration-200"
+              />
+            </div>
+          ))}
+
+          <div className="relative">
+            <label
+              htmlFor="subject"
+              className={`absolute left-4 transition-all duration-200 pointer-events-none ${
+                focused === 'subject' || formData.subject
+                  ? 'top-2 text-xs text-[var(--accent)] font-medium'
+                  : 'top-4 text-sm text-[var(--text-tertiary)]'
+              }`}
+            >
+              Subject
+            </label>
+            <select
+              id="subject"
+              value={formData.subject}
+              onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+              onFocus={() => setFocused('subject')}
+              onBlur={() => setFocused(null)}
+              className="w-full appearance-none bg-[var(--card)] border border-[var(--border)] rounded-xl px-4 pt-6 pb-3 text-[var(--text)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 focus:outline-none transition-all duration-200"
+            >
+              <option value="" disabled hidden />
+              {SUBJECT_OPTIONS.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+            <svg
+              className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-tertiary)]"
+              fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+
+          <div className="relative">
+            <label
+              htmlFor="message"
+              className={`absolute left-4 transition-all duration-200 pointer-events-none ${
+                focused === 'message' || formData.message
+                  ? 'top-2 text-xs text-[var(--accent)] font-medium'
+                  : 'top-4 text-sm text-[var(--text-tertiary)]'
+              }`}
+            >
+              Message
+            </label>
+            <textarea
+              id="message"
+              required
+              rows={6}
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              onFocus={() => setFocused('message')}
+              onBlur={() => setFocused(null)}
+              className="w-full bg-[var(--card)] border border-[var(--border)] rounded-xl px-4 pt-6 pb-3 text-[var(--text)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 focus:outline-none transition-all duration-200 resize-none"
+            />
+          </div>
+
+          {status === 'error' && (
+            <motion.p
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-red-500 text-sm"
+            >
+              {errorMessage || 'Something went wrong. Please try again.'}
+            </motion.p>
+          )}
+
+          <motion.button
+            type="submit"
+            disabled={status === 'loading'}
+            className="btn btn-primary w-full justify-center group"
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {status === 'loading' ? (
+              <motion.span
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+                className="inline-block"
+              >
+                ⏳
+              </motion.span>
+            ) : (
+              <>
+                Send Message
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </>
+            )}
+          </motion.button>
+        </motion.form>
+      )}
+    </AnimatePresence>
+  );
+}
+
+export default function ContactPage() {
   return (
     <div className="min-h-screen relative">
       <section className="relative overflow-hidden pt-24 md:pt-32">
@@ -64,146 +297,9 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-5 gap-12">
             {/* Form */}
             <div className="lg:col-span-3">
-              <AnimatePresence mode="wait">
-                {status === 'success' ? (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="card card-glow text-center py-16"
-                  >
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.1 }}
-                      className="text-6xl mb-6"
-                    >
-                      ✅
-                    </motion.div>
-                    <motion.h2
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className="heading-display font-heading text-3xl mb-4"
-                    >
-                      Message sent!
-                    </motion.h2>
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.4 }}
-                      className="text-[var(--text-secondary)] mb-8"
-                    >
-                      I&apos;ll get back to you as soon as possible. Usually within 24 hours.
-                    </motion.p>
-                    <motion.button
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 }}
-                      onClick={() => setStatus('idle')}
-                      className="btn btn-outline"
-                    >
-                      Send another message
-                    </motion.button>
-                  </motion.div>
-                ) : (
-                  <motion.form
-                    key="form"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    onSubmit={handleSubmit}
-                    className="space-y-6"
-                  >
-                    {[
-                      { id: 'name', label: 'Name', type: 'text', placeholder: 'Your name' },
-                      { id: 'email', label: 'Email', type: 'email', placeholder: 'your@email.com' },
-                    ].map((field) => (
-                      <div key={field.id} className="relative">
-                        <label
-                          htmlFor={field.id}
-                          className={`absolute left-4 transition-all duration-200 pointer-events-none ${
-                            focused === field.id || formData[field.id as keyof typeof formData]
-                              ? 'top-2 text-xs text-[var(--accent)] font-medium'
-                              : 'top-4 text-sm text-[var(--text-tertiary)]'
-                          }`}
-                        >
-                          {field.label}
-                        </label>
-                        <input
-                          type={field.type}
-                          id={field.id}
-                          required
-                          value={formData[field.id as keyof typeof formData]}
-                          onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}
-                          onFocus={() => setFocused(field.id)}
-                          onBlur={() => setFocused(null)}
-                          className="w-full bg-[var(--card)] border border-[var(--border)] rounded-xl px-4 pt-6 pb-3 text-[var(--text)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 focus:outline-none transition-all duration-200"
-                        />
-                      </div>
-                    ))}
-
-                    <div className="relative">
-                      <label
-                        htmlFor="message"
-                        className={`absolute left-4 transition-all duration-200 pointer-events-none ${
-                          focused === 'message' || formData.message
-                            ? 'top-2 text-xs text-[var(--accent)] font-medium'
-                            : 'top-4 text-sm text-[var(--text-tertiary)]'
-                        }`}
-                      >
-                        Message
-                      </label>
-                      <textarea
-                        id="message"
-                        required
-                        rows={6}
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        onFocus={() => setFocused('message')}
-                        onBlur={() => setFocused(null)}
-                        className="w-full bg-[var(--card)] border border-[var(--border)] rounded-xl px-4 pt-6 pb-3 text-[var(--text)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 focus:outline-none transition-all duration-200 resize-none"
-                      />
-                    </div>
-                    
-                    {status === 'error' && (
-                      <motion.p
-                        initial={{ opacity: 0, y: -5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-red-500 text-sm"
-                      >
-                        Something went wrong. Please try again.
-                      </motion.p>
-                    )}
-                    
-                    <motion.button
-                      type="submit"
-                      disabled={status === 'loading'}
-                      className="btn btn-primary w-full justify-center group"
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      {status === 'loading' ? (
-                        <motion.span
-                          animate={{ rotate: 360 }}
-                          transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
-                          className="inline-block"
-                        >
-                          ⏳
-                        </motion.span>
-                      ) : (
-                        <>
-                          Send Message
-                          <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                          </svg>
-                        </>
-                      )}
-                    </motion.button>
-                  </motion.form>
-                )}
-              </AnimatePresence>
+              <Suspense fallback={null}>
+                <ContactForm />
+              </Suspense>
             </div>
 
             {/* Sidebar */}

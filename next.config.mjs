@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    // /projects held fake template projects; the real work lives at /products.
+    return [
+      { source: '/projects', destination: '/products', statusCode: 301 },
+      { source: '/projects/:path*', destination: '/products', statusCode: 301 },
+    ];
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

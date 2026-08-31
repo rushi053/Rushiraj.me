@@ -9,11 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/about', changeFrequency: 'monthly' as const, priority: 0.9 },
     { path: '/services', changeFrequency: 'monthly' as const, priority: 0.8 },
     { path: '/products', changeFrequency: 'weekly' as const, priority: 0.9 },
-    { path: '/projects', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/blog', changeFrequency: 'weekly' as const, priority: 0.8 },
-    { path: '/ios-apps', changeFrequency: 'monthly' as const, priority: 0.7 },
     { path: '/contact', changeFrequency: 'monthly' as const, priority: 0.6 },
-    { path: '/work', changeFrequency: 'monthly' as const, priority: 0.7 },
   ]
 
   const staticPages = routes.map((route) => ({

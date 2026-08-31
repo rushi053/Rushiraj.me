@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { getPost, posts } from '@/lib/blog-posts';
 import { notFound } from 'next/navigation';
+import BlogAuditCTA from '@/components/BlogAuditCTA';
 
 function renderMarkdown(content: string) {
   // Simple markdown-ish renderer for our blog content
@@ -205,6 +206,17 @@ export default function BlogPostPage() {
                 <a href="https://x.com/rushirajjj" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] text-sm hover-line mt-1 inline-block">Follow @rushirajjj →</a>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="accent-line" />
+
+      {/* Services funnel */}
+      <section className="section">
+        <div className="container">
+          <div className="max-w-2xl">
+            <BlogAuditCTA />
           </div>
         </div>
       </section>

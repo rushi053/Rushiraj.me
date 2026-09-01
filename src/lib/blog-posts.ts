@@ -11,6 +11,133 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'ai-built-app-audit-checklist',
+    title: 'The AI-Built App Audit Checklist: What I Check Before You Charge Real Users',
+    excerpt: 'Before auditing anyone else\'s app, I audited my own six products. I found a paywall that was pure CSS blur, an AI feature that had been silently dead for six months, and a contact form that faked success. Here\'s the full checklist.',
+    date: '2026-09-02',
+    readTime: '11 min',
+    tags: ['Audits', 'Security', 'AI', 'Indie Dev', 'Building in Public'],
+    emoji: '🔍',
+    content: `
+I need to start with a confession.
+
+I haven't audited anyone else's app yet. What I have done is audit my own — all six products, line by line, the way an attacker and a paying customer would. I built every one of them with heavy AI assistance, shipped fast, and assumed things worked because the UI said they did.
+
+Here's what I found in software I wrote, tested, and charged money for:
+
+- A paywall that was **pure CSS blur**. The full "locked" document was sitting in the DOM. Anyone who opened dev tools could read every premium doc, and had been able to since launch.
+- An AI generation feature that had been **silently dead for about six months**. Missing environment keys after a migration, no error surfaced anywhere. Paying customers were getting static templates and neither they nor I knew.
+- **No payment webhook.** Purchase success was handled entirely client-side. If the redirect back from checkout failed, a paying customer got nothing, and there was no server-side record to fix it from.
+- A contact form that **faked success with a \`setTimeout\`** — spinner, green checkmark, "message sent" — while delivering nothing. The "backup" Supabase table it supposedly wrote to had never been created.
+- A repo that was **9 months stale versus production**. Someone had been editing files directly on the server. One \`git push\` came within a deploy of wiping an entire redesign.
+- A license "restore purchase" flow that **had never worked once**, because the purchase flow never captured the customer's email in the first place. There was nothing to restore against.
+
+Six products. Six real problems. And every single one was invisible from the UI — the app looked finished, felt finished, and demoed perfectly.
+
+That's the specific danger of AI-built apps. Tools like Lovable, Bolt, v0, Cursor, and Replit are extremely good at making things *look* done. The happy path works in the demo. What they don't guarantee is that the paths you can't see — webhooks, error handling, database rules, the gap between "the button turned green" and "the thing actually happened" — exist at all.
+
+So before you charge real users, run this checklist. It's the one I built from my own wreckage. Each item includes a way to check it in about ten minutes with no special tools.
+
+## 1. Payments & Entitlements Integrity
+
+This is where the most expensive failures live, because it's where money changes hands based on logic nobody verified.
+
+**Check: does a webhook actually exist?**
+
+Client-side success handling means your app grants access when the browser comes back from checkout and says "paid." Browsers crash. Tabs close. Redirects fail. When that happens, you've taken money and delivered nothing — and you have no server-side record to make it right.
+
+*Ten-minute check:* open your Stripe (or Razorpay, or Paddle) dashboard and look for a configured webhook endpoint. Then look for the handler in your codebase — search for \`webhook\` and for the signature verification call (\`constructEvent\` for Stripe). If the dashboard has no endpoint, or the code grants entitlements anywhere *except* the webhook handler, you have my bug. Buy your own product in test mode, close the tab immediately after paying, and see whether you got what you paid for.
+
+**Check: is the paywall real or cosmetic?**
+
+My "locked" documents were blurred with a CSS filter. The content was fully present in the page — the lock was an instruction to the browser, politely asking it not to show something it already had.
+
+*Ten-minute check:* open a locked page, right-click, View Page Source (or open dev tools and delete the blur/overlay element). If the premium content is readable, your paywall is decoration. The fix is server-side: gated content should never be sent to a client that hasn't paid. Same test for "hidden" premium features — check whether the API endpoint behind them validates entitlement, or just trusts that the button was hidden.
+
+**Check: can a customer recover their purchase?**
+
+My restore flow failed for a reason one layer deeper than the flow itself: the purchase never captured an email. There was no identifier to restore against. AI tools build the flow you asked for; they don't ask whether the data it depends on exists.
+
+*Ten-minute check:* buy in test mode, clear your cookies (or open an incognito window), and try to get your purchase back using only what a real customer would have — the receipt email. If you can't, neither can they, and every device change or cleared cache is a refund request.
+
+## 2. Silent-Failure Detection
+
+My AI generation feature didn't crash. That was the problem. The code caught the missing-API-key error, fell back to a static template, and returned it with a 200. Everything green, feature dead, for six months.
+
+AI-generated code loves this pattern — \`try/catch\` blocks that swallow errors and return something plausible. It looks like robustness. It's actually a mechanism for hiding breakage from you indefinitely.
+
+**Check: do your critical paths fail loudly?**
+
+*Ten-minute check:* pick your most important feature — the one people pay for. In a local environment, delete the API key it depends on and use the feature. If you see a clear error, good. If you get a plausible-looking result, you have a silent failure waiting for the day a key expires, a quota runs out, or an env var doesn't survive a migration. Mine didn't survive one, and no alarm existed to tell me.
+
+*Ten-minute check:* grep your codebase for \`catch\` and read every block. Any catch that returns fallback content, an empty array, or \`null\` without logging *and* alerting is a place your app can die without telling you. You don't need a monitoring stack on day one — a \`console.error\` you actually read, or an email to yourself, beats a swallowed exception.
+
+**Check: does the output actually vary?**
+
+If your "AI-powered" feature returns suspiciously consistent results, test it: run the same request twice, then run two very different requests. Static-template fallbacks produce identical structure with the nouns swapped. I should have noticed. I didn't look.
+
+## 3. Auth & Data Security (Including Supabase RLS)
+
+Most AI-built apps I've studied use Supabase, and most of the horror stories trace to the same root: Row Level Security either disabled or written by an AI that optimized for "make the error go away."
+
+**Check: is RLS actually on, and are the policies real?**
+
+The anon key in your frontend JavaScript is public — that's by design. RLS policies are the *only* thing standing between that public key and your entire database. A policy of \`USING (true)\` on a table of user data means anyone with your URL and anon key (both visible in your page source) can read every row.
+
+*Ten-minute check:* in the Supabase dashboard, open each table and confirm RLS is enabled. Then read the policies — not their names, their conditions. Anything that doesn't reference \`auth.uid()\` (or an equivalent ownership check) on user-scoped data deserves suspicion. For a live test: copy your anon key from your deployed site's source, and from a terminal try to select another user's rows. If it works for you, it works for anyone.
+
+**Check: what's exposed in the client bundle?**
+
+*Ten-minute check:* view source on your deployed app and search for \`key\`, \`secret\`, and \`sk_\`. Anything prefixed \`NEXT_PUBLIC_\` (or the equivalent in your framework) ships to every visitor. Anon keys and publishable keys are fine there. Service-role keys, API keys for OpenAI or Resend, and anything with "secret" in the name are not — and AI tools will happily put them there if the alternative is a CORS error.
+
+**Check: can users reach each other's data through the API?**
+
+*Ten-minute check:* create two test accounts. Log in as user A, open dev tools, and find a request that fetches A's data — then replay it with B's IDs swapped in. If it returns B's data, your authorization lives in the UI, not the backend.
+
+## 4. Lead & Contact Flows
+
+The contact form is the least glamorous feature on your site, and the one whose failure you'll never hear about — by definition, the people it fails are the ones trying to reach you.
+
+Mine was worse than broken. It was *theater*: a \`setTimeout\`, a success animation, and no network request that delivered anything. The AI that built it was asked for a contact form and produced something indistinguishable from one, right up to the part where a message would arrive.
+
+**Check: send yourself a message.**
+
+*Ten-minute check:* fill out your own contact form on the live production site — not localhost — and confirm the message arrives where you'd actually see it. Then check the failure path: what does the user see if delivery fails? If the answer is "the same success state," you're lying to your leads.
+
+**Check: does the backup exist?**
+
+If your form claims to save submissions to a database as a fallback, open the database and look for the table. Mine didn't have one. The insert failed silently on every submission — see section 2 — and the email path was fake, so the total delivery rate was zero.
+
+*Ten-minute check:* submit the form, then look at the actual table rows and the actual inbox. Trust nothing that you haven't watched arrive.
+
+## 5. Deploy & Repo Hygiene
+
+This category feels bureaucratic until it costs you a redesign. It nearly cost me mine: the production site had drifted 9 months ahead of the repo because changes were being made directly on the server. The repo said one thing, production said another, and a routine deploy from the repo would have silently rolled back everything.
+
+**Check: does your repo match production?**
+
+*Ten-minute check:* run a fresh build from a clean clone of your repo and compare it to the live site. A few pages is enough — if the copy, styles, or features differ, you have drift, and every deploy is a loaded gun. The fix is a rule, not a tool: production only changes through the repo. No SSH edits, no dashboard file editors, no exceptions.
+
+**Check: can you deploy from scratch?**
+
+*Ten-minute check:* clone your repo to a new directory and try to run it using only what's in the README. Missing env vars, undocumented setup steps, and dependencies that only exist on your machine all surface immediately. Every one of them is a thing that breaks the day you're deploying under pressure — which is the only day deploys break.
+
+**Check: are your env vars accounted for?**
+
+List every environment variable your code reads (grep for \`process.env\`), and compare it against what's configured in your hosting dashboard. My six-months-dead AI feature was exactly this: a key that existed in one environment and not the other, with no startup check to notice. A ten-line script that asserts required env vars at boot would have saved me half a year of selling a broken feature.
+
+## The Point of All This
+
+Every item on this list was invisible in the UI. That's the pattern worth internalizing: **the failures that matter in AI-built apps are almost never on the happy path.** The demo works. The screenshots are real. The gaps are in webhooks, catch blocks, database policies, and the space between a green checkmark and an event that actually occurred.
+
+You can run everything above yourself in an afternoon. Genuinely — the ten-minute checks are the audit. If you built your app with AI tools and you're about to put a price on it, block out three hours and go through each section with dev tools open and a test card ready.
+
+And if you'd rather have someone who's seen these exact failures do it: I now do this professionally. $500, fixed. You get a prioritized report in 3 business days covering everything above — payments integrity, silent failures, auth and data security, lead flows, deploy hygiene — with reproduction steps and fixes ranked by severity. If I find nothing critical, half your money comes back. The details are on my [services page](/services).
+
+Either way, run the checklist before your users run it for you. Mine did, for six months, and nobody told me.
+`,
+  },
+  {
     slug: '3000-downloads-zero-marketing-budget',
     title: '3,000 Downloads with $0 Marketing: My App Store SEO Playbook',
     excerpt: 'How CashLens hit 3,000 downloads and a 4.8★ rating with zero ad spend. Real App Store Connect data, keyword strategy, and the Reddit post that changed everything.',

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { getPost, posts } from '@/lib/blog-posts';
 import { notFound } from 'next/navigation';
 import BlogAuditCTA from '@/components/BlogAuditCTA';
+import NewsletterSignup from '@/components/NewsletterSignup';
 
 function renderMarkdown(content: string) {
   // Simple markdown-ish renderer for our blog content
@@ -212,10 +213,11 @@ export default function BlogPostPage() {
 
       <div className="accent-line" />
 
-      {/* Services funnel */}
+      {/* Newsletter + services funnel */}
       <section className="section">
         <div className="container">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl space-y-6">
+            <NewsletterSignup />
             <BlogAuditCTA />
           </div>
         </div>

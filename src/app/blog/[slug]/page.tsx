@@ -34,6 +34,8 @@ function renderMarkdown(content: string) {
   const inlineFormat = (text: string) => {
     return text
       .replace(/\*\*(.*?)\*\*/g, '<strong class="text-[var(--text)] font-semibold">$1</strong>')
+      // Single-asterisk italics; runs after bold so only lone asterisks remain
+      .replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>')
       .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover-line">$1</a>')
       .replace(/`(.*?)`/g, '<code class="text-sm bg-[var(--bg-secondary)] px-1.5 py-0.5 rounded text-[var(--text)]">$1</code>');
   };

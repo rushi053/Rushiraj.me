@@ -21,7 +21,7 @@ export const posts: BlogPost[] = [
     content: `
 I need to start with a confession.
 
-I haven't audited anyone else's app yet. What I have done is audit my own — all six products, line by line, the way an attacker and a paying customer would. I built every one of them with heavy AI assistance, shipped fast, and assumed things worked because the UI said they did.
+I haven't audited anyone else's app yet. What I have done is audit my own six products — the two that make money, line by line; the rest end to end — the way an attacker and a paying customer would. I built every one of them with heavy AI assistance, shipped fast, and assumed things worked because the UI said they did.
 
 Here's what I found in software I wrote, tested, and charged money for:
 
@@ -29,10 +29,10 @@ Here's what I found in software I wrote, tested, and charged money for:
 - An AI generation feature that had been **silently dead for about six months**. Missing environment keys after a migration, no error surfaced anywhere. Paying customers were getting static templates and neither they nor I knew.
 - **No payment webhook.** Purchase success was handled entirely client-side. If the redirect back from checkout failed, a paying customer got nothing, and there was no server-side record to fix it from.
 - A contact form that **faked success with a \`setTimeout\`** — spinner, green checkmark, "message sent" — while delivering nothing. The "backup" Supabase table it supposedly wrote to had never been created.
-- A repo that was **9 months stale versus production**. Someone had been editing files directly on the server. One \`git push\` came within a deploy of wiping an entire redesign.
+- A local repo that was **9 months behind production** — I work across multiple machines, and the one I was building on had never pulled a redesign that shipped from another. One deploy from the stale clone would have silently wiped that redesign; it was caught hours before it happened.
 - A license "restore purchase" flow that **had never worked once**, because the purchase flow never captured the customer's email in the first place. There was nothing to restore against.
 
-Six products. Six real problems. And every single one was invisible from the UI — the app looked finished, felt finished, and demoed perfectly.
+Six findings, every one in software I believed was working. And every single one was invisible from the UI — the apps looked finished, felt finished, and demoed perfectly.
 
 That's the specific danger of AI-built apps. Tools like Lovable, Bolt, v0, Cursor, and Replit are extremely good at making things *look* done. The happy path works in the demo. What they don't guarantee is that the paths you can't see — webhooks, error handling, database rules, the gap between "the button turned green" and "the thing actually happened" — exist at all.
 
@@ -112,11 +112,11 @@ If your form claims to save submissions to a database as a fallback, open the da
 
 ## 5. Deploy & Repo Hygiene
 
-This category feels bureaucratic until it costs you a redesign. It nearly cost me mine: the production site had drifted 9 months ahead of the repo because changes were being made directly on the server. The repo said one thing, production said another, and a routine deploy from the repo would have silently rolled back everything.
+This category feels bureaucratic until it costs you a redesign. It nearly cost me mine: I build across multiple machines, and the clone I was working from had quietly fallen 9 months behind the branch production actually deploys from. My local repo said one thing, production said another, and building "new" features on the stale clone came within hours of rolling back an entire redesign.
 
 **Check: does your repo match production?**
 
-*Ten-minute check:* run a fresh build from a clean clone of your repo and compare it to the live site. A few pages is enough — if the copy, styles, or features differ, you have drift, and every deploy is a loaded gun. The fix is a rule, not a tool: production only changes through the repo. No SSH edits, no dashboard file editors, no exceptions.
+*Ten-minute check:* run a fresh build from a clean clone of the branch production deploys from and compare it to the live site. A few pages is enough — if the copy, styles, or features differ from what your working copy would produce, you have drift, and every deploy is a loaded gun. The fix is a rule, not a tool: production only changes through the repo, and every machine pulls before it builds. No server-side edits, no "I'll sync later," no exceptions.
 
 **Check: can you deploy from scratch?**
 

@@ -1,12 +1,17 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import NewsletterSignup from '@/components/NewsletterSignup';
 
 export default function FooterSection() {
   return (
     <>
       <footer className="py-16">
         <div className="container">
+          <div className="mb-12">
+            <NewsletterSignup compact />
+          </div>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div>
               <p className="text-2xl font-heading font-bold mb-2">Rushiraj Jadeja</p>
@@ -30,6 +35,10 @@ export default function FooterSection() {
           </div>
           <div className="mt-12 pt-8 border-t border-[var(--border)] text-center text-[var(--text-tertiary)] text-sm">
             © {new Date().getFullYear()} Rushiraj Jadeja · Built with Next.js, Tailwind, and too much coffee
+            <span className="mx-2">·</span>
+            <Link href="/now" className="hover:text-[var(--text-secondary)] hover-line">Now</Link>
+            <span className="mx-2">·</span>
+            <a href="/feed.xml" className="hover:text-[var(--text-secondary)] hover-line">RSS</a>
           </div>
         </div>
       </footer>

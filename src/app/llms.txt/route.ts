@@ -17,6 +17,8 @@ The $500 audit delivers a prioritized report in 3 business days covering securit
 ## Blog
 
 - [Blog index](https://www.rushiraj.me/blog): Writing on indie development, App Store growth, AI-assisted workflows, and privacy-first products.
+- [RSS feed](https://www.rushiraj.me/feed.xml): RSS 2.0 feed of all blog posts.
+- [The AI-Built App Audit Checklist](https://www.rushiraj.me/blog/ai-built-app-audit-checklist): What to check before an AI-built app charges real users — payments, silent failures, auth, lead flows, and deploy hygiene, drawn from auditing his own six products.
 - [3,000 Downloads with $0 Marketing: My App Store SEO Playbook](https://www.rushiraj.me/blog/3000-downloads-zero-marketing-budget): How CashLens reached 3,000 downloads and a 4.8-star rating with zero ad spend, with real App Store Connect data and keyword strategy.
 - [How I Ship an MVP in 3 Weeks with Cursor + Claude](https://www.rushiraj.me/blog/cursor-claude-ship-mvp-3-weeks): The exact workflow for building a full-stack AI app — iOS frontend, Node.js backend, 8-region support — in 21 days.
 - [Solo Dev, 6 Products, Zero VC: My Playbook](https://www.rushiraj.me/blog/solo-dev-4-products-zero-vc): Leaving a US tech job, moving back to India, and launching 6 products in under a year with no co-founders or funding.
@@ -26,6 +28,7 @@ The $500 audit delivers a prioritized report in 3 business days covering securit
 ## About & Contact
 
 - [About](https://www.rushiraj.me/about): Background — MS in CS from Cal State Fullerton, US tech industry experience, now building solo from Ahmedabad.
+- [Now](https://www.rushiraj.me/now): What he's focused on right now — current work, recent ships, and what's next. Updated regularly.
 - [Contact](https://www.rushiraj.me/contact): Get in touch for audits, rescues, or builds.
 `
 

@@ -15,6 +15,7 @@ in `.env.local` for local development:
 | `RESEND_API_KEY` | Yes | `re_...` | Resend API key (create at resend.com/api-keys) |
 | `CONTACT_EMAIL` | Yes | `hello@rushiraj.me` | Where form submissions are delivered |
 | `CONTACT_FROM` | No | `Rushiraj <hello@rushiraj.me>` | Sender address. Defaults to `rushiraj.me <onboarding@resend.dev>`, which works without domain verification. Set this after verifying rushiraj.me in Resend for better deliverability. |
+| `RESEND_AUDIENCE_ID` | Yes (for newsletter) | `78261eea-...` | ID of the Resend audience/segment that newsletter signups are added to. In the Resend dashboard, go to **Audiences** (recently renamed **Segments**), create one (e.g. "Newsletter"), and copy its ID. Until this is set, `/api/subscribe` returns a 503 and signups are disabled. |
 
 The existing `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` vars
 are still used for the Supabase backup write.
@@ -36,3 +37,20 @@ Redeploy after adding the variables.
   enough to blunt naive spam, not a hard guarantee.
 - Services CTAs link to `/contact?subject=AI%20App%20Audit` so audit leads
   arrive with a distinguishing subject line.
+
+## Newsletter (`/api/subscribe`)
+
+The newsletter signup (blog index, end of blog posts, home footer) POSTs to
+`/api/subscribe`, which adds the email to a Resend audience via
+`POST https://api.resend.com/audiences/{RESEND_AUDIENCE_ID}/contacts`.
+
+- Resend audiences have no double opt-in by default — a signup is immediately
+  subscribed, which is why the success copy says "You're in" rather than
+  "check your inbox."
+- The endpoint reuses the contact form's protections: zod validation, the
+  `xf_review_notes` honeypot (filled honeypot → fake success), and the same
+  in-memory 5-per-IP-per-10-minutes rate limit.
+- A 409 from Resend (contact already exists) is treated as success so the
+  endpoint can't be used to probe which emails are subscribed.
+- If `RESEND_API_KEY` or `RESEND_AUDIENCE_ID` is missing, the endpoint logs
+  the problem and returns a generic 503; no internals are leaked to clients.

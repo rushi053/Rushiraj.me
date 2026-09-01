@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import ScrollRevealText from '@/components/ScrollRevealText';
+import NewsletterSignup from '@/components/NewsletterSignup';
 import { posts } from '@/lib/blog-posts';
 
 const stagger = {
@@ -78,6 +79,16 @@ export default function BlogPage() {
                 </Link>
               </motion.div>
             ))}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="mt-12 max-w-3xl"
+          >
+            <NewsletterSignup />
           </motion.div>
 
           <motion.div

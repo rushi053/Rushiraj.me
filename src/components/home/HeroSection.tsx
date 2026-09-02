@@ -51,7 +51,11 @@ export default function HeroSection() {
             transition={{ duration: 0.5, delay: 0.25 }}
             className="text-[var(--text-secondary)] text-lg md:text-xl max-w-lg mb-10 leading-relaxed"
           >
-            I&apos;m Rushiraj — I build privacy-first software, run 5 AI agents on a Mac, and believe your data should stay yours.
+            I&apos;m Rushiraj. I ship privacy-first products from Ahmedabad — and I{' '}
+            <Link href="/services" className="text-[var(--text)] underline underline-offset-4 decoration-[var(--accent)]/50 hover:decoration-[var(--accent)]">
+              audit AI-built apps
+            </Link>{' '}
+            for the stuff that looks finished and isn&apos;t.
           </motion.p>
 
           <motion.div

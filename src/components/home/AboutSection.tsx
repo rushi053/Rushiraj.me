@@ -58,7 +58,7 @@ export default function AboutSection() {
               transition={{ delay: 0.4 }}
               className="text-[var(--text-secondary)] mb-6 leading-relaxed"
             >
-              No VC pitches, no standups, no Jira tickets. Just me, 5 AI agents on a Mac, and an unhealthy amount of chai. I build software that respects your privacy because that&apos;s how it should be.
+              No VC pitches, no standups, no Jira tickets. Just me and too much chai. I build software that respects your privacy because that&apos;s how it should be.
             </motion.p>
             <Link href="/about" className="btn btn-outline">The full story →</Link>
           </div>

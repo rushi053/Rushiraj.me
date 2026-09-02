@@ -9,7 +9,7 @@ const products = [
     name: 'CashLens',
     tagline: 'Privacy-first expense tracker for iOS',
     description: '100% local storage. No accounts. No cloud. Just your money, your data.',
-    stats: '4.8★ · 2.5K+ downloads',
+    stats: '4.8★ · 3.5K+ downloads',
     url: 'https://cashlens.app',
     appStore: 'https://apps.apple.com/us/app/cashlens-personal-finance/id6743153951',
     emoji: '💰',

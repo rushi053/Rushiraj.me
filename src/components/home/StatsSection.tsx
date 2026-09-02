@@ -14,7 +14,7 @@ const fadeUp = {
 
 const stats = [
   { value: '6', label: 'Products live', icon: '🚀' },
-  { value: '2.5K+', label: 'App downloads', icon: '📲' },
+  { value: '3.5K+', label: 'App downloads', icon: '📲' },
   { value: '4.8★', label: 'App Store rating', icon: '⭐' },
   { value: '3K+', label: 'X followers', icon: '🐦' },
 ];

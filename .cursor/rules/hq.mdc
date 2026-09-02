@@ -1,0 +1,22 @@
+---
+description: rushiraj.me — personal site, services funnel, blog, newsletter. Repo facts and conventions; HQ lives at ~/Desktop/hq
+alwaysApply: true
+---
+
+# rushiraj.me (Stream A services funnel + Stream D audience)
+
+Business context and protocols: `/Users/rushiraj/Desktop/hq/` — read `CONTEXT.md`, `LOG.md`, `BACKLOG.md`, `PLAYBOOK.md` first.
+
+## Facts
+- Next.js 15.5 App Router, TypeScript, Tailwind, framer-motion. Deployed on Vercel project `rushiraj-me` (prod = `main`, auto-deploy). Live: https://www.rushiraj.me
+- Preview deployments are behind Vercel Authentication — test them via the Vercel MCP share-link tool, not plain curl.
+- Email: Resend (`RESEND_API_KEY`, `RESEND_AUDIENCE_ID`, `CONTACT_FROM`, `CONTACT_EMAIL`). Contact form → `src/app/api/contact/route.ts`; newsletter → `src/app/api/subscribe/route.ts`. Both: zod, `xf_review_notes` honeypot, in-memory per-IP rate limit, generic responses.
+- Blog: `src/lib/blog-posts.ts` — posts are template literals (escape backticks as \`), MUST stay in descending date order (index + prev/next depend on it). Renderer in `src/app/blog/[slug]/page.tsx` supports `**bold**`, `*italic*`, links, backtick code, `##`/`###`, `-` lists, `|` tables. Nothing else.
+- Routes that exist: `/services` ($500 audit, rescue sprint, ship-to-store), `/blog`, `/now`, `/feed.xml`, `/llms.txt`, `/sitemap.xml`. Legacy `/work`, `/ios-apps`, `/projects` 301 → `/products`.
+- Every blog post ends with `NewsletterSignup` + `BlogAuditCTA`. New posts: add to `blog-posts.ts`, sitemap, llms.txt, feed picks it up automatically.
+- Build check: `npm run build` (SWC/browserslist warnings are pre-existing noise).
+
+## Conventions
+- Branch → preview → Rushiraj approves → `--no-ff` merge → verify live. Never commit features directly to `main`.
+- Content under Rushiraj's name gets a truth-pass against `hq/LOG.md` before publishing.
+- Never read `.env*`.

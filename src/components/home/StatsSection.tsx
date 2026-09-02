@@ -17,7 +17,6 @@ const stats = [
   { value: '2.5K+', label: 'App downloads', icon: '📲' },
   { value: '4.8★', label: 'App Store rating', icon: '⭐' },
   { value: '3K+', label: 'X followers', icon: '🐦' },
-  { value: '5', label: 'AI agents running', icon: '🤖' },
 ];
 
 export default function StatsSection() {
@@ -29,7 +28,7 @@ export default function StatsSection() {
           whileInView="animate"
           viewport={{ once: true }}
           variants={stagger}
-          className="grid grid-cols-2 md:grid-cols-5 gap-4"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {stats.map((stat) => (
             <motion.div

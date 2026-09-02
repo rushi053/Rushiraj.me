@@ -13,12 +13,10 @@ const fadeUp = {
 };
 
 const items = [
-  '🔨 Shipping new features for CashLens on iOS',
-  '☁️ Just launched Cloudo — task management for iOS',
+  'Shipping CashLens on iOS',
   'Catching what AI-built apps get wrong — $500 audits',
-  '📜 Growing PrivacyPage — making legal docs painless for devs',
-  '🧾 Building out InvoiceZen templates',
-  '🐦 Posting the journey on X @rushirajjj',
+  'Growing PrivacyPage',
+  'Posting the journey on X @rushirajjj',
 ];
 
 export default function NowSection() {

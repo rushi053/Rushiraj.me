@@ -49,7 +49,7 @@ export default function AboutSection() {
               transition={{ delay: 0.3 }}
               className="text-[var(--text-secondary)] mb-4 leading-relaxed"
             >
-              Born in India, went to California for my MS in Computer Science at Cal State Fullerton, worked in Texas, then moved back to Ahmedabad and went full indie dev.
+              Born in India, MS in Computer Science at Cal State Fullerton, a stint in Texas, then home — and full indie.
             </motion.p>
             <motion.p
               initial={{ opacity: 0 }}

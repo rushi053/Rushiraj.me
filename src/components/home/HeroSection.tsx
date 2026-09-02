@@ -30,7 +30,7 @@ export default function HeroSection() {
                 <span className="absolute inset-0 bg-green-500 rounded-full" />
                 <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75" />
               </span>
-              <span className="text-[var(--text-secondary)] text-xs font-medium tracking-wide">Building from Ahmedabad, India</span>
+              <span className="text-[var(--text-secondary)] text-xs font-medium tracking-wide">Taking $500 audits</span>
             </div>
           </motion.div>
 
@@ -51,9 +51,9 @@ export default function HeroSection() {
             transition={{ duration: 0.5, delay: 0.25 }}
             className="text-[var(--text-secondary)] text-lg md:text-xl max-w-lg mb-10 leading-relaxed"
           >
-            I&apos;m Rushiraj. I ship privacy-first products from Ahmedabad — and I{' '}
+            I ship software that doesn&apos;t spy on you. Then I{' '}
             <Link href="/services" className="text-[var(--text)] underline underline-offset-4 decoration-[var(--accent)]/50 hover:decoration-[var(--accent)]">
-              audit AI-built apps
+              audit the AI-built ones
             </Link>{' '}
             for the stuff that looks finished and isn&apos;t.
           </motion.p>

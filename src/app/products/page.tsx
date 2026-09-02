@@ -11,7 +11,7 @@ const products = [
     description: 'Track your expenses without giving up your data. Everything stays on your device. No accounts, no cloud sync, no tracking. Just a clean, fast expense tracker that respects your privacy.',
     stats: [
       { label: 'Rating', value: '4.8★' },
-      { label: 'Downloads', value: '2.5K+' },
+      { label: 'Downloads', value: '3.5K+' },
       { label: 'Data stored', value: 'Locally' },
       { label: 'Accounts needed', value: '0' },
     ],

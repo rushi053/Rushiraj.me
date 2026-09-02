@@ -49,7 +49,7 @@ export default function AboutSection() {
               transition={{ delay: 0.3 }}
               className="text-[var(--text-secondary)] mb-4 leading-relaxed"
             >
-              Born in India, went to California for my MS in Computer Science at Cal State Fullerton, worked in Texas, then moved back to Ahmedabad and went full indie dev.
+              Born in India, MS in Computer Science at Cal State Fullerton, a stint in Texas, then home — and full indie.
             </motion.p>
             <motion.p
               initial={{ opacity: 0 }}
@@ -58,7 +58,7 @@ export default function AboutSection() {
               transition={{ delay: 0.4 }}
               className="text-[var(--text-secondary)] mb-6 leading-relaxed"
             >
-              No VC pitches, no standups, no Jira tickets. Just me, 5 AI agents on a Mac, and an unhealthy amount of chai. I build software that respects your privacy because that&apos;s how it should be.
+              No VC pitches, no standups, no Jira tickets. Just me and too much chai. I build software that respects your privacy because that&apos;s how it should be.
             </motion.p>
             <Link href="/about" className="btn btn-outline">The full story →</Link>
           </div>

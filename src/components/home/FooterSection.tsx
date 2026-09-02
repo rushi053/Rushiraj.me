@@ -15,7 +15,7 @@ export default function FooterSection() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
             <div>
               <p className="text-2xl font-heading font-bold mb-2">Rushiraj Jadeja</p>
-              <p className="text-[var(--text-secondary)] text-sm">Solo dev · Ahmedabad, India</p>
+              <p className="text-[var(--text-secondary)] text-sm">Solo dev. 0 VC.</p>
               <p className="text-[var(--text-tertiary)] text-xs mt-1">Night owl. Chai mornings. Building things nobody asked for.</p>
             </div>
             <div className="flex flex-col gap-3 md:text-right">

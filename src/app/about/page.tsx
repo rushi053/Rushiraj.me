@@ -56,10 +56,10 @@ export default function AboutPage() {
                   Best decision I ever made.
                 </p>
                 <p>
-                  I run 6 products — <a href="https://cashlens.app" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">CashLens</a>, <a href="https://privacy.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">PrivacyPage</a>, <a href="https://invoice.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">InvoiceZen</a>, <a href="https://deadby.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">DeadBy.ai</a>, <a href="https://stackradar.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">StackRadar</a>, and <a href="https://apps.apple.com/us/app/cloudo/id6742880068" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">Cloudo</a>. Zero VC money. Zero employees. Just me and 5 AI agents running 24/7 on a Mac in my room. That&apos;s the whole company.
+                  I run 6 products — <a href="https://cashlens.app" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">CashLens</a>, <a href="https://privacy.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">PrivacyPage</a>, <a href="https://invoice.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">InvoiceZen</a>, <a href="https://deadby.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">DeadBy.ai</a>, <a href="https://stackradar.rushiraj.me" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">StackRadar</a>, and <a href="https://apps.apple.com/us/app/cloudo/id6742880068" target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover-line">Cloudo</a>. Zero VC money. Zero employees. Just me. That&apos;s the whole company.
                 </p>
                 <p>
-                  Everything I build is privacy-first. Not because it&apos;s trendy, but because I genuinely believe your data is yours. CashLens stores everything locally on your phone. No accounts, no cloud, no tracking. That&apos;s how software should work.
+                  CashLens is privacy-first. Not because it&apos;s trendy, but because I genuinely believe your data is yours. It stores everything locally on your phone. No accounts, no cloud, no tracking. That&apos;s how software should work.
                 </p>
               </motion.div>
             </div>
@@ -76,7 +76,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-5 gap-12">
             <div className="lg:col-span-2">
               <p className="section-label">The setup</p>
-              <h2 className="heading-display font-heading text-3xl md:text-4xl mb-4 lg:mb-0">5 AI agents<br />on a Mac</h2>
+              <h2 className="heading-display font-heading text-3xl md:text-4xl mb-4 lg:mb-0">Solo,<br />with AI</h2>
             </div>
             <div className="lg:col-span-3">
               <motion.div
@@ -87,13 +87,10 @@ export default function AboutPage() {
                 className="space-y-6 text-[var(--text-secondary)] text-lg leading-relaxed"
               >
                 <p>
-                  My Mac runs 24/7 with 5 AI agents handling different parts of my business — customer support, code review, content, monitoring, and deployment. It&apos;s like having a team without having a team.
+                  I ship with heavy AI assistance. No employees, no contractors. Cursor on the desk, a Mac that stays on, and me.
                 </p>
                 <p>
-                  I use <span className="text-[var(--text)] font-medium">OpenClaw</span> to orchestrate them. Each agent has its own personality, tools, and context. They read my files, check my repos, send me updates. It&apos;s the closest thing to having co-founders without giving up equity.
-                </p>
-                <p className="text-[var(--text-tertiary)] text-sm italic">
-                  Yes, one of those agents probably helped build this website. Meta, I know.
+                  The leverage is real. The headcount is not. If something is live, I shipped it.
                 </p>
               </motion.div>
             </div>
